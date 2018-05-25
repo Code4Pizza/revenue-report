@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">FbsReport</string>
+    <string name="FBS">FSB</string>
+    
+    <string name="action_back">Back</string>
+    <string name="action_cancel">Cancel</string>
+    
+    <string name="login_btn">Login</string>
+    <string name="login_txt_try">New to FBS? Try it for free</string>
+    <string name="login_txt_sign_up">Sign up</string>
+    
+    
 </resources>
