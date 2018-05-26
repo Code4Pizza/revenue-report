@@ -1,17 +1,16 @@
-package com.fr.fbsreport.ui.signup
+package com.fr.fbsreport.ui.forgotpassword
 
 import android.os.Bundle
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseActivity
 import com.fr.fbsreport.widget.AppToolbar
-import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.activity_forgot_password.*
 
-class SignUpActivity : BaseActivity() {
+class ForgotPasswordActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
-
+        setContentView(R.layout.activity_forgot_password)
         toolbar.setOnClickToolbarListener(object : AppToolbar.OnClickToolbarListener {
             override fun onItemLeft() {
                 finish()

@@ -10,7 +10,10 @@ import kotlinx.android.synthetic.main.view_app_toolbar.view.*
 
 class AppToolbar : RelativeLayout {
 
+    private var listener: OnClickToolbarListener? = null
+
     constructor(context: Context) : this(context, null)
+
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
@@ -19,28 +22,30 @@ class AppToolbar : RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.view_app_toolbar, this, true)
 
         attrs?.let {
-            val typedArray = context.obtainStyledAttributes(it, R.styleable.AppToolbar, 0, 0)
-            val textLeft = resources.getText(typedArray
-                    .getResourceId(R.styleable.AppToolbar_text_left, R.string.action_back))
-            val imageLeft = resources.getDrawable(typedArray
-                    .getResourceId(R.styleable.AppToolbar_image_left, R.drawable.icon_back), null)
-            val visibleImageLeft = resources.getBoolean(typedArray
-                    .getResourceId(R.styleable.AppToolbar_visible_image_left, 0))
+            val typedArray = context.obtainStyledAttributes(it, R.styleable.AppToolbar)
+            val textLeft = typedArray.getString(R.styleable.AppToolbar_atb_text_left)
+            val imageLeft = typedArray.getDrawable(R.styleable.AppToolbar_atb_image_left)
+            val textTitle = typedArray.getString(R.styleable.AppToolbar_atb_text_title)
 
             txt_left.text = textLeft
-            img_left.setImageDrawable(imageLeft)
-            if (visibleImageLeft) {
-                img_left.visibility = View.VISIBLE
-                val param = txt_left.layoutParams as LayoutParams
-                param.setMargins(0, 0, 0, 0);
-                img_left.layoutParams = param
-            } else {
-                img_left.visibility = View.GONE
-                val param = txt_left.layoutParams as LayoutParams
-                param.setMargins(10, 0, 0, 0);
-                img_left.layoutParams = param
+            imageLeft?.let {
+                imageLeft.setBounds(0, 0, imageLeft.getIntrinsicWidth(), imageLeft.getIntrinsicHeight());
+                txt_left.setCompoundDrawables(imageLeft, null, null, null)
+            }
+            textTitle?.let {
+                img_logo.visibility = View.GONE
+                txt_title.text = textTitle
             }
             typedArray.recycle()
         }
+        txt_left.setOnClickListener({ listener!!.onItemLeft() })
+    }
+
+    fun setOnClickToolbarListener(listener: OnClickToolbarListener) {
+        this.listener = listener
+    }
+
+    interface OnClickToolbarListener {
+        fun onItemLeft()
     }
 }

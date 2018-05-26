@@ -3,27 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/colorGray">
-
-    <ImageView
-        android:id="@+id/img_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:src="@drawable/icon_back"
-        tools:ignore="ContentDescription" />
+    android:background="@color/gray">
 
     <TextView
         android:id="@+id/txt_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginStart="5dp"
-        android:layout_toEndOf="@id/img_left"
+        android:layout_marginStart="16dp"
+        android:drawablePadding="5dp"
         android:fontFamily="@font/sf_regular"
-        android:text="@string/action_back"
         android:textColor="@android:color/white"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        tools:drawableStart="@drawable/icon_back"
+        tools:text="@string/action_back" />
 
     <ImageView
         android:id="@+id/img_logo"
@@ -32,5 +25,18 @@
         android:layout_centerInParent="true"
         android:src="@drawable/icon_logo"
         tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_regular"
+        android:maxLines="1"
+        android:textColor="@android:color/white"
+        android:textSize="17sp" />
 
 </RelativeLayout>

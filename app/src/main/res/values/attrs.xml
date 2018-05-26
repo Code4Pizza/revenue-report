@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="AppToolbar">
-        <attr name="text_left" format="reference" />
-        <attr name="image_left" format="reference" />
-        <attr name="visible_image_left" format="boolean" />
+        <attr name="atb_text_left" format="reference" />
+        <attr name="atb_image_left" format="reference" />
+        <attr name="atb_text_title" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ItemViewReport">
+        <attr name="ivr_image_icon" format="reference" />
+        <attr name="ivr_text_title" format="reference" />
+        <attr name="ivr_marginBorder" format="reference" />
     </declare-styleable>
 </resources>

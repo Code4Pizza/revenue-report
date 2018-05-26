@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    app:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="132dp"
+        android:padding="@dimen/spacing_normal">
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/restaurant_logo_1"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_toEndOf="@id/img_logo"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_semibold"
+            android:maxLines="1"
+            android:textColor="@color/gray"
+            tools:text="Gustavo Cafe" />
+
+        <TextView
+            android:id="@+id/txt_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_name"
+            android:layout_alignStart="@id/txt_name"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_toEndOf="@id/img_logo"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_regular"
+            android:maxLines="3"
+            android:textColor="@color/lightGray"
+            tools:text="39 Tran Van Cao Street, Ho Chi Minh City" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

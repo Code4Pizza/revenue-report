@@ -4,7 +4,11 @@
     <color name="colorPrimaryDark">#212b36</color>
     <color name="colorAccent">#900d1f</color>
     
-    <color name="colorOrange">#e63617</color>
-    <color name="colorOrangeGradient">#df4745</color>
-    <color name="colorGray">#212b36</color>
+    <color name="orange">#e63617</color>
+    <color name="orangeGradient">#df4745</color>
+    <color name="gray">#212b36</color>
+    <color name="lightGray">#637381</color>
+    <color name="brightGray">#919eab</color>
+    <color name="borderGray">#dfe3e8</color>
+    <color name="darkBlue">#212b36</color>
 </resources>

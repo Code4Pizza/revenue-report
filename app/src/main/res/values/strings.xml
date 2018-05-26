@@ -1,13 +1,36 @@
 <resources>
     <string name="app_name">FbsReport</string>
     <string name="FBS">FSB</string>
-    
+
     <string name="action_back">Back</string>
     <string name="action_cancel">Cancel</string>
-    
+    <string name="action_done">Done</string>
+    <string name="action_login">Login</string>
+
+    <string name="main_txt_try">New to FBS? Try it for free</string>
+    <string name="main_txt_sign_up">Sign up</string>
+
+    <string name="txt_title_email_address">Email address</string>
+    <string name="txt_title_password">Password</string>
+    <string name="hint_email_address">email@example.com</string>
+    <string name="hint_password">enter password</string>
+
+    <string name="sign_up_btn">Sign up</string>
+
+    <string name="forgot_password_title_phone_number">Phone number</string>
+    <string name="forgot_password_hint_phone_number">your phone number</string>
+
     <string name="login_btn">Login</string>
-    <string name="login_txt_try">New to FBS? Try it for free</string>
-    <string name="login_txt_sign_up">Sign up</string>
-    
-    
+    <string name="login_txt_forgot_password">Forgot password?</string>
+
+    <string name="bottom_bar_setting">Setting</string>
+    <string name="bottom_bar_report">Report</string>
+    <string name="bottom_bar_analytics">Analytics</string>
+
+    <string name="home_title_report">Report</string>
+    <string name="home_report_order_reject">Báo cáo hủy đơn</string>
+    <string name="home_report_by_bill">Báo cáo theo bill</string>
+    <string name="home_report_promotion">Báo cáo giảm giá</string>
+    <string name="home_report_by_product">Báo cáo theo mặt hàng</string>
+
 </resources>
