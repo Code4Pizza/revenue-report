@@ -1,4 +1,4 @@
-package com.fr.fbsreport.ui.forgotpassword
+package com.fr.fbsreport.ui.login.forgotpassword
 
 import android.os.Bundle
 import com.fr.fbsreport.R

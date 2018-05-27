@@ -30,7 +30,6 @@ class ItemViewReport @JvmOverloads constructor(context: Context, attrs: Attribut
             view_border.layoutParams = param
             typedArray.recycle()
         }
-        view_item.setOnClickListener({ listener?.onItemClick() })
     }
 
     interface OnClickItemReportListener {

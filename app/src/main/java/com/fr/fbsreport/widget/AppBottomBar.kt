@@ -9,9 +9,9 @@ import android.widget.LinearLayout
 import com.fr.fbsreport.R
 import kotlinx.android.synthetic.main.view_app_bottom_bar.view.*
 
-public const val INDEX_ANALYTICS: Int = 0
-public const val INDEX_REPORT: Int = 1
-public const val INDEX_SETTING: Int = 2
+const val INDEX_ANALYTICS: Int = 0
+const val INDEX_REPORT: Int = 1
+const val INDEX_SETTING: Int = 2
 
 class AppBottomBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
 
@@ -19,9 +19,6 @@ class AppBottomBar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_app_bottom_bar, this, true)
-        Handler().postDelayed({
-            setClicked(INDEX_REPORT)
-        }, 100)
         ll_analytics.setOnClickListener({ setClicked(INDEX_ANALYTICS) })
         ll_report.setOnClickListener({ setClicked(INDEX_REPORT) })
         ll_setting.setOnClickListener({ setClicked(INDEX_SETTING) })
@@ -35,7 +32,7 @@ class AppBottomBar @JvmOverloads constructor(context: Context, attrs: AttributeS
         this.listener = listener
     }
 
-    private fun setClicked(position: Int) {
+    fun setClicked(position: Int) {
         when (position) {
             INDEX_ANALYTICS -> {
                 img_analytics.setImageResource(R.drawable.icon_analytics_selected)
