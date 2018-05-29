@@ -1,8 +1,7 @@
 package com.fr.fbsreport.source
 
-import com.fr.fbsreport.base.FIELD_EMAIL
-import com.fr.fbsreport.base.FIELD_PASSWORD
-import com.fr.fbsreport.base.FIELD_USERNAME
+import com.fr.fbsreport.BuildConfig
+import com.fr.fbsreport.base.*
 import com.fr.fbsreport.model.TokenModel
 import com.fr.fbsreport.model.User
 import com.fr.fbsreport.network.AppService
@@ -32,8 +31,11 @@ class AppRemoteSource(private val appService: AppService) : AppDataSource {
 
     override fun login(email: String, password: String): Single<TokenModel> {
         val fields = HashMap<String, String>()
-        fields[FIELD_EMAIL] = email
+        fields[FIELD_GRANT_TYPE] = "password"
+        fields[FIELD_USERNAME] = email
         fields[FIELD_PASSWORD] = password
+        fields[FIELD_CLIENT_ID] = BuildConfig.CLIENT_ID
+        fields[FIELD_CLIENT_SECRET] = BuildConfig.CLIENT_SECRET
 
         return appService.login(fields)
     }

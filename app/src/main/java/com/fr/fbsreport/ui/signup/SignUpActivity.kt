@@ -54,23 +54,21 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun register(username: String, email: String, password: String) {
-        compositeDisposable.add(
-                AppRepository.instance
-                        .register(username, email, password)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSubscribe { showLoading() }
-                        .doFinally({ hideLoading() })
-                        .subscribe({ user ->
-                            run {
-                                Toast.makeText(this@SignUpActivity, "Success", Toast.LENGTH_SHORT).show()
-                                finish()
-                            }
-                        }, { error ->
-                            run {
-                                Toast.makeText(this@SignUpActivity, error.message, Toast.LENGTH_SHORT).show()
-                            }
-                        }))
+        requestApi(AppRepository.instance.register(username, email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doFinally({ hideLoading() })
+                .subscribe({ user ->
+                    run {
+                        Toast.makeText(this@SignUpActivity, "Success", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }, { error ->
+                    run {
+                        Toast.makeText(this@SignUpActivity, error.message, Toast.LENGTH_SHORT).show()
+                    }
+                }))
 
     }
 }

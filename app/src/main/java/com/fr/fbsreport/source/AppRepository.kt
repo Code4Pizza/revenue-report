@@ -2,7 +2,6 @@ package com.fr.fbsreport.source
 
 import com.fr.fbsreport.model.TokenModel
 import com.fr.fbsreport.model.User
-import com.fr.fbsreport.network.body.LoginBody
 import io.reactivex.Single
 
 class AppRepository private constructor(private val appRemoteSource: AppRemoteSource) : AppDataSource {

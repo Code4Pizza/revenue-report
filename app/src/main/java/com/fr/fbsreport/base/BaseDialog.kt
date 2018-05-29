@@ -1,30 +1,30 @@
 package com.fr.fbsreport.base
 
-import android.support.v4.app.Fragment
-import android.util.Log
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.support.v4.app.DialogFragment
+import android.view.ViewGroup
+import android.view.Window
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseDialog : DialogFragment() {
 
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser) {
-            Log.d(BaseFragment::class.simpleName, "visible")
-        } else {
-            Log.d(BaseFragment::class.simpleName, "hide")
-        }
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = Dialog(activity)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        return dialog
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (hidden) {
-            Log.d(BaseFragment::class.simpleName, "hidden")
-        } else {
-            Log.d(BaseFragment::class.simpleName, "show")
-        }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
     fun getBaseActivity(): BaseActivity? {

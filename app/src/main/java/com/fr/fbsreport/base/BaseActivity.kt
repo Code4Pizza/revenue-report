@@ -10,6 +10,7 @@ import com.fr.fbsreport.R
 import com.fr.fbsreport.source.AppRepository
 import com.fr.fbsreport.utils.EditTextUtils
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import java.util.*
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -17,7 +18,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private var fragmentStack: Stack<BaseFragment> = Stack()
     private var loadingDialog: Dialog? = null
 
-    protected var compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +90,17 @@ abstract class BaseActivity : AppCompatActivity() {
 //            super.onBackPressed()
 //        }
 //    }
+
+    fun showDialogFragment(dialog: BaseDialog) {
+        runOnUiThread {
+            val fragmentManager = supportFragmentManager
+            dialog.show(fragmentManager, dialog::class.java.name)
+        }
+    }
+
+    fun requestApi(disposable: Disposable) {
+        compositeDisposable.add(disposable)
+    }
 
     override fun onDestroy() {
         compositeDisposable.clear()

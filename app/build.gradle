@@ -20,6 +20,8 @@ android {
             minifyEnabled false
             shrinkResources false
             buildConfigField 'String', 'BASE_URL', '"http://api.reporter.demo.ngocnh.info"'
+            buildConfigField 'String', 'CLIENT_ID', '"ubyz1PFdjhKSk1Ng"'
+            buildConfigField 'String', 'CLIENT_SECRET', '"raN3uLibrX5l8Xe3mLk2cNHGcz7ZW5fe"'
         }
         release {
             minifyEnabled false

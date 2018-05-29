@@ -13,6 +13,7 @@ import com.fr.fbsreport.ui.login.forgotpassword.ForgotPasswordActivity
 import com.fr.fbsreport.utils.EditTextUtils
 import com.fr.fbsreport.widget.AppToolbar
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -55,24 +56,22 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun login(email: String, password: String) {
-        compositeDisposable.add(
-                AppRepository.instance
-                        .login(email, password)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSubscribe { showLoading() }
-                        .doFinally({ hideLoading() })
-                        .subscribe({ tokenModel ->
-                            run {
-                                UserPreference.instance.storeTokenModel(tokenModel)
-                                Toast.makeText(this@LoginActivity, "Success", Toast.LENGTH_SHORT).show()
-                                startActivity(Intent(this@LoginActivity, BrandActivity::class.java))
-                                finishAffinity()
-                            }
-                        }, { error ->
-                            run {
-                                Toast.makeText(this@LoginActivity, error.message, Toast.LENGTH_SHORT).show()
-                            }
-                        }))
+        requestApi(AppRepository.instance.login(email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doOnSuccess({ tokenModel ->
+                    run {
+                        hideLoading()
+                        UserPreference.instance.storeTokenModel(tokenModel)
+                        startActivity(Intent(this@LoginActivity, BrandActivity::class.java))
+                        finishAffinity()
+                    }
+                }).doOnError({ error ->
+                    run {
+                        hideLoading()
+                        Toast.makeText(this@LoginActivity, error.message, Toast.LENGTH_SHORT).show()
+                    }
+                }).subscribe())
     }
 }
