@@ -10,8 +10,10 @@
     <string name="main_txt_try">New to FBS? Try it for free</string>
     <string name="main_txt_sign_up">Sign up</string>
 
+    <string name="txt_title_username">Username</string>
     <string name="txt_title_email_address">Email address</string>
     <string name="txt_title_password">Password</string>
+    <string name="hint_username">enter username</string>
     <string name="hint_email_address">email@example.com</string>
     <string name="hint_password">enter password</string>
 

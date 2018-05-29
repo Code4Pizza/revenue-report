@@ -8,12 +8,9 @@ import com.fr.fbsreport.ui.chart.today.ChartTodayFragment
 import com.fr.fbsreport.ui.chart.week.ChartWeekFragment
 import com.fr.fbsreport.ui.chart.yesterday.ChartYesterdayFragment
 
-const val INDEX_TODAY: Int = 0
-const val INDEX_YESTERDAU: Int = 1
-const val INDEX_WEEK: Int = 2
-const val INDEX_MONTH: Int = 2
 
 class ReportPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
     override fun getItem(position: Int): Fragment {
         when (position) {
             0 -> return ChartTodayFragment.newInstance()

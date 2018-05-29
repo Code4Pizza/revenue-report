@@ -1,15 +1,27 @@
 package com.fr.fbsreport.base
 
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.fr.fbsreport.R
+import com.fr.fbsreport.source.AppRepository
 import com.fr.fbsreport.utils.EditTextUtils
+import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 
 abstract class BaseActivity : AppCompatActivity() {
 
     private var fragmentStack: Stack<BaseFragment> = Stack()
+    private var loadingDialog: Dialog? = null
+
+    protected var compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
 //    fun addFragment(fragment: BaseFragment, hasAnimation: Boolean = true) {
 //        if (fragmentStack.contains(fragment)) return
@@ -34,6 +46,37 @@ abstract class BaseActivity : AppCompatActivity() {
 //        fragmentTransaction.commit()
 //    }
 
+    private fun initDialog() {
+        loadingDialog = Dialog(this)
+        loadingDialog!!.setContentView(R.layout.view_dialog_loading)
+        loadingDialog!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        loadingDialog!!.setCancelable(false)
+        loadingDialog!!.setCanceledOnTouchOutside(false)
+    }
+
+    fun showLoading() {
+        if (isFinishing) return
+        runOnUiThread({
+            hideKeyboard()
+            if (loadingDialog == null) {
+                initDialog()
+            }
+            if (!loadingDialog!!.isShowing) {
+                loadingDialog!!.show()
+            }
+        })
+    }
+
+    fun hideLoading() {
+        if (isFinishing) return
+        runOnUiThread({
+            hideKeyboard()
+            if (loadingDialog!!.isShowing) {
+                loadingDialog!!.dismiss()
+            }
+        })
+    }
+
     fun hideKeyboard() {
         EditTextUtils.hideKeyboard(this)
         EditTextUtils.hideSoftKeyboard(this)
@@ -46,4 +89,9 @@ abstract class BaseActivity : AppCompatActivity() {
 //            super.onBackPressed()
 //        }
 //    }
+
+    override fun onDestroy() {
+        compositeDisposable.clear()
+        super.onDestroy()
+    }
 }

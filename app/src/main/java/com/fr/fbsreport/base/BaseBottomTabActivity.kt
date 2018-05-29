@@ -1,14 +1,10 @@
 package com.fr.fbsreport.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v4.app.FragmentTransaction
 import android.util.Log
 import com.fr.fbsreport.R
 import com.fr.fbsreport.utils.FragmentUtils
-import com.fr.fbsreport.widget.INDEX_ANALYTICS
-import com.fr.fbsreport.widget.INDEX_REPORT
-import com.fr.fbsreport.widget.INDEX_SETTING
 import java.util.*
 import kotlin.collections.HashMap
 

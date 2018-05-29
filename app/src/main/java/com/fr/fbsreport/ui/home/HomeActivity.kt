@@ -1,16 +1,15 @@
 package com.fr.fbsreport.ui.home
 
 import android.os.Bundle
-import android.widget.Toast
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseBottomTabActivity
+import com.fr.fbsreport.base.INDEX_ANALYTICS
+import com.fr.fbsreport.base.INDEX_REPORT
+import com.fr.fbsreport.base.INDEX_SETTING
 import com.fr.fbsreport.ui.home.analytic.AnalyticFragment
 import com.fr.fbsreport.ui.home.report.ReportFragment
 import com.fr.fbsreport.ui.home.setting.SettingFragment
 import com.fr.fbsreport.widget.AppBottomBar
-import com.fr.fbsreport.widget.INDEX_ANALYTICS
-import com.fr.fbsreport.widget.INDEX_REPORT
-import com.fr.fbsreport.widget.INDEX_SETTING
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseBottomTabActivity() {

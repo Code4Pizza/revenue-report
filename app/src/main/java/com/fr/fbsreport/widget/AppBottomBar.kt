@@ -1,17 +1,15 @@
 package com.fr.fbsreport.widget
 
 import android.content.Context
-import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.fr.fbsreport.R
+import com.fr.fbsreport.base.INDEX_ANALYTICS
+import com.fr.fbsreport.base.INDEX_REPORT
+import com.fr.fbsreport.base.INDEX_SETTING
 import kotlinx.android.synthetic.main.view_app_bottom_bar.view.*
-
-const val INDEX_ANALYTICS: Int = 0
-const val INDEX_REPORT: Int = 1
-const val INDEX_SETTING: Int = 2
 
 class AppBottomBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
 
