@@ -1,18 +1,19 @@
 package com.fr.fbsreport.base
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import java.util.*
 
-abstract class BaseRecyclerAdapter<I, VH> : RecyclerView.Adapter<VH>() where VH : RecyclerView.ViewHolder {
+abstract class BaseRecyclerAdapter<I, VH>(context: Context?) : RecyclerView.Adapter<VH>() where VH : RecyclerView.ViewHolder {
 
     interface OnRecyclerItemClickListener<I> {
         fun onItemClick(item: I, position: Int)
     }
 
-    private var items = ArrayList<I>()
     private var listener: OnRecyclerItemClickListener<I>? = null
-    private var inflater: LayoutInflater? = null
+    protected var items = ArrayList<I>()
+    protected var inflater: LayoutInflater? = LayoutInflater.from(context)
 
     fun setOnRecyclerItemClickListener(listener: OnRecyclerItemClickListener<I>) {
         this.listener = listener

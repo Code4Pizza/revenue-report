@@ -3,7 +3,9 @@
     <color name="colorPrimary">#212b36</color>
     <color name="colorPrimaryDark">#212b36</color>
     <color name="colorAccent">#900d1f</color>
-    
+
+    <color name="appBgGray">#f4f6f8</color>
+
     <color name="orange">#e63617</color>
     <color name="orangeGradient">#df4745</color>
     <color name="gray">#212b36</color>
@@ -12,4 +14,5 @@
     <color name="borderGray">#dfe3e8</color>
     <color name="darkBlue">#212b36</color>
     <color name="blue">#007aff</color>
+    <color name="mediumBlack">#161d25</color>
 </resources>

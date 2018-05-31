@@ -12,16 +12,16 @@ import kotlinx.android.synthetic.main.activity_brand.*
 
 class BrandActivity : BaseActivity() {
 
-    private var brandAdapter: BrandAdapter = BrandAdapter()
+    private lateinit var brandAdapter: BrandAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_brand)
 
+        setBrands()
+
         recycler_brand.layoutManager = LinearLayoutManager(this)
         recycler_brand.adapter = brandAdapter
-
-        setBrands()
     }
 
     private fun setBrands() {
@@ -31,6 +31,7 @@ class BrandActivity : BaseActivity() {
         brands.add(Brand(R.drawable.restaurant_logo_3, "Mon Hue", "3 Thanh Cong Street, Ho Chi Minh City"))
         brands.add(Brand(R.drawable.restaurant_logo_4, "Highland Coffee", "4 Ke Ninh Street, Ho Chi Minh City"))
 
+        brandAdapter = BrandAdapter(this)
         brandAdapter.setItems(brands)
         brandAdapter.setOnRecyclerItemClickListener(object : BaseRecyclerAdapter.OnRecyclerItemClickListener<Brand> {
             override fun onItemClick(item: Brand, position: Int) {
