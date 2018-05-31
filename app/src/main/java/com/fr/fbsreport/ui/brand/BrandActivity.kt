@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseActivity
+import com.fr.fbsreport.base.BaseRecyclerAdapter
 import com.fr.fbsreport.model.Brand
 import com.fr.fbsreport.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.activity_brand.*
@@ -30,12 +31,11 @@ class BrandActivity : BaseActivity() {
         brands.add(Brand(R.drawable.restaurant_logo_3, "Mon Hue", "3 Thanh Cong Street, Ho Chi Minh City"))
         brands.add(Brand(R.drawable.restaurant_logo_4, "Highland Coffee", "4 Ke Ninh Street, Ho Chi Minh City"))
 
-        brandAdapter.addBrands(brands)
-        brandAdapter.setOnItemBrandClickListener(object : BrandAdapter.OnItemBrandClickListener {
-            override fun onBrandClick(brand: Brand) {
+        brandAdapter.setItems(brands)
+        brandAdapter.setOnRecyclerItemClickListener(object : BaseRecyclerAdapter.OnRecyclerItemClickListener<Brand> {
+            override fun onItemClick(item: Brand, position: Int) {
                 startActivity(Intent(this@BrandActivity, HomeActivity::class.java))
             }
         })
-        brandAdapter.notifyDataSetChanged()
     }
 }

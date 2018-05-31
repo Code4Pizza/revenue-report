@@ -60,7 +60,7 @@ abstract class BaseBottomTabActivity : BaseActivity() {
         }
     }
 
-    fun hideAllFragment(fragmentTransaction: FragmentTransaction) {
+    private fun hideAllFragment(fragmentTransaction: FragmentTransaction) {
         for (key in fragmentMap.keys) {
             for (i in 0 until (fragmentMap[key]?.size ?: 0)) {
                 fragmentTransaction.hide(fragmentMap[key]?.get(i))
