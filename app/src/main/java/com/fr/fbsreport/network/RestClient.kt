@@ -39,7 +39,7 @@ class RestClient {
                     .readTimeout(30, TimeUnit.SECONDS)
                     .writeTimeout(30, TimeUnit.SECONDS)
                     .connectTimeout(30, TimeUnit.SECONDS)
-                    .addInterceptor(AuthorizationInterceptor())
+//                    .addInterceptor(AuthorizationInterceptor())
                     .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
 //                    .authenticator { _, _ -> null }
                     .build()
@@ -61,12 +61,12 @@ class RestClient {
 
             val response = chain.proceed(builder.build())
 
-            if (isTokenExpiredError(response)) {
-                synchronized(this) {
-                    //TODO call refresh token   
-                }
-                return chain.proceed(builder.build())
-            }
+//            if (isTokenExpiredError(response)) {
+//                synchronized(this) {
+//                    //TODO call refresh token   
+//                }
+//                return chain.proceed(builder.build())
+//            }
             return response
         }
 

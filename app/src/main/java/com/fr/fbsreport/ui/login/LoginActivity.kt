@@ -13,7 +13,6 @@ import com.fr.fbsreport.ui.login.forgotpassword.ForgotPasswordActivity
 import com.fr.fbsreport.utils.EditTextUtils
 import com.fr.fbsreport.widget.AppToolbar
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -29,7 +28,8 @@ class LoginActivity : BaseActivity() {
             }
         })
         btn_login.setOnClickListener({
-            validateInput()
+            startActivity(Intent(this@LoginActivity, BrandActivity::class.java))
+            // validateInput()
         })
         txt_forgot_password.setOnClickListener({
             startActivity(Intent(this@LoginActivity, ForgotPasswordActivity::class.java))
@@ -60,18 +60,18 @@ class LoginActivity : BaseActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
-                .doOnSuccess({ tokenModel ->
-                    run {
-                        hideLoading()
-                        UserPreference.instance.storeTokenModel(tokenModel)
-                        startActivity(Intent(this@LoginActivity, BrandActivity::class.java))
-                        finishAffinity()
-                    }
-                }).doOnError({ error ->
-                    run {
-                        hideLoading()
-                        Toast.makeText(this@LoginActivity, error.message, Toast.LENGTH_SHORT).show()
-                    }
-                }).subscribe())
+                .flatMap { tokenModel ->
+                    UserPreference.instance.storeTokenModel(tokenModel)
+                    return@flatMap AppRepository.instance.getUserInfo()
+                }
+                .subscribe({ user ->
+                    UserPreference.instance.storeUserInfo(user)
+                    hideLoading()
+                    startActivity(Intent(this@LoginActivity, BrandActivity::class.java))
+                    finishAffinity()
+                }, { err ->
+                    hideLoading()
+                    Toast.makeText(this@LoginActivity, err.message, Toast.LENGTH_SHORT).show()
+                }))
     }
 }

@@ -17,5 +17,9 @@ const val FIELD_CLIENT_ID = "client_id"
 const val FIELD_CLIENT_SECRET = "client_secret"
 
 const val VIEW_TYPE_ITEM = 0
+
 const val VIEW_TYPE_REJECT_REPORT_TITLE = 1
 const val VIEW_TYPE_REJECT_REPORT_TOTAL = 2
+
+const val VIEW_TYPE_CHART = 1
+const val VIEW_TYPE_CHART_CATEGORY = 2
