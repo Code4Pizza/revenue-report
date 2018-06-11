@@ -29,7 +29,7 @@ class AppToolbar : RelativeLayout {
 
             txt_left.text = textLeft
             imageLeft?.let {
-                imageLeft.setBounds(0, 0, imageLeft.getIntrinsicWidth(), imageLeft.getIntrinsicHeight());
+                imageLeft.setBounds(0, 0, imageLeft.intrinsicWidth, imageLeft.intrinsicHeight)
                 txt_left.setCompoundDrawables(imageLeft, null, null, null)
             }
             textTitle?.let {

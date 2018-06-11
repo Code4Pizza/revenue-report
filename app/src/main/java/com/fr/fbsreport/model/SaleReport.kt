@@ -1,12 +1,9 @@
 package com.fr.fbsreport.model
 
-import com.google.gson.annotations.SerializedName
-
 @Suppress("unused")
-class RejectReport(
+class SaleReport(
         saleDate: String,
         saleNum: String,
         total: Long,
-        @SerializedName("discount_reason")
-        var discountReason: String
+        var discount: Long
 ) : BaseReport(saleDate, saleNum, total)

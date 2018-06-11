@@ -39,6 +39,7 @@ abstract class BaseBottomTabActivity : BaseActivity() {
                     pushFragment(index, fragment, true, true)
                 }
             }
+            updateToolbar(fragment)
             previousTab = currentTab
         }
     }
@@ -92,8 +93,10 @@ abstract class BaseBottomTabActivity : BaseActivity() {
             fragmentTransaction.remove(fragmentMap[currentTab]?.pop())
             fragmentTransaction.show(fragmentMap[currentTab]?.lastElement())
             fragmentTransaction.commit()
+            fragmentMap[currentTab]?.lastElement()?.let { updateToolbar(it) }
         }
     }
+    
 
     override fun onBackPressed() {
         if (fragmentMap[currentTab]!!.size > 1) {

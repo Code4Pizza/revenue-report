@@ -6,6 +6,8 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseActivity
+import com.fr.fbsreport.network.ApiException
+import com.fr.fbsreport.network.ErrorUtils
 import com.fr.fbsreport.source.AppRepository
 import com.fr.fbsreport.source.UserPreference
 import com.fr.fbsreport.ui.brand.BrandActivity
@@ -28,8 +30,8 @@ class LoginActivity : BaseActivity() {
             }
         })
         btn_login.setOnClickListener({
-            startActivity(Intent(this@LoginActivity, BrandActivity::class.java))
-            // validateInput()
+            //startActivity(Intent(this@LoginActivity, BrandActivity::class.java))
+            validateInput()
         })
         txt_forgot_password.setOnClickListener({
             startActivity(Intent(this@LoginActivity, ForgotPasswordActivity::class.java))
@@ -57,13 +59,13 @@ class LoginActivity : BaseActivity() {
 
     private fun login(email: String, password: String) {
         requestApi(AppRepository.instance.login(email, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .flatMap { tokenModel ->
                     UserPreference.instance.storeTokenModel(tokenModel)
                     return@flatMap AppRepository.instance.getUserInfo()
                 }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ user ->
                     UserPreference.instance.storeUserInfo(user)
                     hideLoading()
@@ -71,7 +73,15 @@ class LoginActivity : BaseActivity() {
                     finishAffinity()
                 }, { err ->
                     hideLoading()
-                    Toast.makeText(this@LoginActivity, err.message, Toast.LENGTH_SHORT).show()
+                    handleLoginError(err)
                 }))
+    }
+
+    private fun handleLoginError(err: Throwable) {
+        if (err is ApiException && err.type == ApiException.Type.INVALID_REQUEST) {
+            Toast.makeText(this, "Email or password invalid", Toast.LENGTH_SHORT).show()
+            return
+        }
+        ErrorUtils.handleCommonError(this, err)
     }
 }

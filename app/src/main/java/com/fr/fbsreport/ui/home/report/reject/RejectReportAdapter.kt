@@ -28,6 +28,10 @@ class RejectReportAdapter(context: Context?) : BaseRecyclerAdapter<BaseItem, Rec
         super.onBindViewHolder(holder, position)
         if (holder is RejectReportViewHolder) {
             holder.bind(items[position] as RejectReport)
+            holder.itemView.view_underline.visibility = View.VISIBLE
+            if (position == items.size - 2) {
+                holder.itemView.view_underline.visibility = View.GONE
+            }
         }
     }
 
@@ -39,9 +43,9 @@ class RejectReportAdapter(context: Context?) : BaseRecyclerAdapter<BaseItem, Rec
 
         fun bind(rejectReport: RejectReport) {
             itemView.txt_sale_num.text = rejectReport.saleNum
-            itemView.txt_sale_date.text = rejectReport.saleDate
-            itemView.txt_total.text = rejectReport.total.toString()
-            itemView.txt_reason.text = rejectReport.deleteReason
+            itemView.txt_sale_date.text = rejectReport.getFormatDate()
+            itemView.txt_total.text = rejectReport.getFormatTotal()
+            itemView.txt_reason.text = rejectReport.discountReason
         }
     }
 

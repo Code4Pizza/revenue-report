@@ -28,7 +28,7 @@ class RestClient {
             return Retrofit.Builder()
                     .baseUrl("http://api.reporter.demo.ngocnh.info")
                     .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addCallAdapterFactory(RxErrorHandling.create())
                     .client(getOkHttpClient())
                     .build()
                     .create(AppService::class.java)
@@ -39,7 +39,7 @@ class RestClient {
                     .readTimeout(30, TimeUnit.SECONDS)
                     .writeTimeout(30, TimeUnit.SECONDS)
                     .connectTimeout(30, TimeUnit.SECONDS)
-//                    .addInterceptor(AuthorizationInterceptor())
+                    .addInterceptor(AuthorizationInterceptor())
                     .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
 //                    .authenticator { _, _ -> null }
                     .build()
@@ -73,7 +73,7 @@ class RestClient {
         private fun setAuthHeader(builder: Request.Builder, token: String?) {
             // Add Auth token to each request if authorized
             if (!TextUtils.isEmpty(token)) {
-                builder.header("Authorization", String.format("Bearer %s", token))
+                builder.header("authorization", String.format("Bearer %s", token))
             }
         }
 

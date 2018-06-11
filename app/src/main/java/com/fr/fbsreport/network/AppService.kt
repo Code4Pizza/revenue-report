@@ -1,7 +1,6 @@
 package com.fr.fbsreport.network
 
-import com.fr.fbsreport.model.TokenModel
-import com.fr.fbsreport.model.User
+import com.fr.fbsreport.model.*
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -20,4 +19,12 @@ interface AppService {
     @PUT("/user")
     fun editUserInfo(): Single<User>
 
+    @GET("/report?type=delete")
+    fun getRejectReport(@Query("branch") branch: String): Single<BaseResponse.Report<RejectReport>>
+
+    @GET("/report?type=bill")
+    fun getBillReport(@Query("branch") branch: String): Single<BaseResponse.Report<BillReport>>
+
+    @GET("/report?type=sale")
+    fun getSaleReport(@Query("branch") branch: String): Single<BaseResponse.Report<SaleReport>>
 }

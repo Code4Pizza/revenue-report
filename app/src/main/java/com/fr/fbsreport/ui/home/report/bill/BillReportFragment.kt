@@ -31,4 +31,8 @@ class BillReportFragment : BaseFragment() {
         view_pager.offscreenPageLimit = 4
         tab_layout.setupWithViewPager(view_pager)
     }
+
+    override fun hasToolbar(): Boolean {
+        return false
+    }
 }

@@ -1,7 +1,7 @@
 package com.fr.fbsreport.source
 
-import com.fr.fbsreport.model.TokenModel
-import com.fr.fbsreport.model.User
+import com.fr.fbsreport.model.*
+import com.fr.fbsreport.network.BaseResponse
 import io.reactivex.Single
 
 interface AppDataSource {
@@ -13,4 +13,10 @@ interface AppDataSource {
     fun getUserInfo(): Single<User>
 
     fun editUserInfo(): Single<User>
+
+    fun getRejectReport(branch: String): Single<BaseResponse.Report<RejectReport>>
+
+    fun getBillReport(branch: String): Single<BaseResponse.Report<BillReport>>
+
+    fun getSaleReport(branch: String): Single<BaseResponse.Report<SaleReport>>
 }

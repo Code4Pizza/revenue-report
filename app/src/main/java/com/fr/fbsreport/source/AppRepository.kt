@@ -1,7 +1,7 @@
 package com.fr.fbsreport.source
 
-import com.fr.fbsreport.model.TokenModel
-import com.fr.fbsreport.model.User
+import com.fr.fbsreport.model.*
+import com.fr.fbsreport.network.BaseResponse
 import io.reactivex.Single
 
 class AppRepository private constructor(private val appRemoteSource: AppRemoteSource) : AppDataSource {
@@ -30,5 +30,17 @@ class AppRepository private constructor(private val appRemoteSource: AppRemoteSo
 
     override fun editUserInfo(): Single<User> {
         return appRemoteSource.editUserInfo()
+    }
+
+    override fun getRejectReport(branch: String): Single<BaseResponse.Report<RejectReport>> {
+        return appRemoteSource.getRejectReport(branch)
+    }
+
+    override fun getBillReport(branch: String): Single<BaseResponse.Report<BillReport>> {
+        return appRemoteSource.getBillReport(branch)
+    }
+
+    override fun getSaleReport(branch: String): Single<BaseResponse.Report<SaleReport>> {
+        return appRemoteSource.getSaleReport(branch)
     }
 }

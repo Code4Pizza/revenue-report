@@ -20,8 +20,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    open fun updateToolbar(baseFragment: BaseFragment) {
     }
 
 //    fun addFragment(fragment: BaseFragment, hasAnimation: Boolean = true) {

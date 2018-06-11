@@ -2,9 +2,9 @@ package com.fr.fbsreport.source
 
 import com.fr.fbsreport.BuildConfig
 import com.fr.fbsreport.base.*
-import com.fr.fbsreport.model.TokenModel
-import com.fr.fbsreport.model.User
+import com.fr.fbsreport.model.*
 import com.fr.fbsreport.network.AppService
+import com.fr.fbsreport.network.BaseResponse
 import com.fr.fbsreport.network.RestClient
 import io.reactivex.Single
 
@@ -46,5 +46,17 @@ class AppRemoteSource(private val appService: AppService) : AppDataSource {
 
     override fun editUserInfo(): Single<User> {
         return appService.editUserInfo()
+    }
+
+    override fun getRejectReport(branch: String): Single<BaseResponse.Report<RejectReport>> {
+        return appService.getRejectReport(branch)
+    }
+
+    override fun getBillReport(branch: String): Single<BaseResponse.Report<BillReport>> {
+        return appService.getBillReport(branch)
+    }
+
+    override fun getSaleReport(branch: String): Single<BaseResponse.Report<SaleReport>> {
+        return appService.getSaleReport(branch)
     }
 }
