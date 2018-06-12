@@ -8,8 +8,6 @@ import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseActivity
 import com.fr.fbsreport.network.ApiException
 import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.source.AppRepository
-import com.fr.fbsreport.source.UserPreference
 import com.fr.fbsreport.ui.brand.BrandActivity
 import com.fr.fbsreport.ui.login.forgotpassword.ForgotPasswordActivity
 import com.fr.fbsreport.utils.EditTextUtils
@@ -58,16 +56,16 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun login(email: String, password: String) {
-        requestApi(AppRepository.instance.login(email, password)
+        requestApi(appRepository.login(email, password)
                 .doOnSubscribe { showLoading() }
                 .flatMap { tokenModel ->
-                    UserPreference.instance.storeTokenModel(tokenModel)
-                    return@flatMap AppRepository.instance.getUserInfo()
+                    userPreference.storeTokenModel(tokenModel)
+                    return@flatMap appRepository.getUserInfo()
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ user ->
-                    UserPreference.instance.storeUserInfo(user)
+                    userPreference.storeUserInfo(user)
                     hideLoading()
                     startActivity(Intent(this@LoginActivity, BrandActivity::class.java))
                     finishAffinity()

@@ -16,7 +16,7 @@ class SplashActivity : BaseActivity() {
         setContentView(R.layout.activity_splash)
         Handler().postDelayed({
             run {
-                if (UserPreference.instance.isSignedIn()) {
+                if (userPreference.isSignedIn()) {
                     startActivity(Intent(this@SplashActivity, BrandActivity::class.java))
                 } else {
                     startActivity(Intent(this@SplashActivity, MainActivity::class.java))

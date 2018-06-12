@@ -2,22 +2,20 @@ package com.fr.fbsreport
 
 import android.support.multidex.MultiDexApplication
 import com.facebook.drawee.backends.pipeline.Fresco
-import com.fr.fbsreport.source.UserPreference
+import com.fr.fbsreport.di.AppComponent
+import com.fr.fbsreport.di.AppModule
+import com.fr.fbsreport.di.DaggerAppComponent
 
 class App : MultiDexApplication() {
 
     companion object {
-
-        private var instance: App? = null
-
-        fun getInstance(): App? {
-            return instance
-        }
+        @JvmStatic
+        lateinit var component: AppComponent
     }
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        component = DaggerAppComponent.builder().appModule(AppModule(this)).build()
         Fresco.initialize(this)
     }
 }

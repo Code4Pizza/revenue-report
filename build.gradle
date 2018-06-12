@@ -30,6 +30,9 @@ ext {
     // Android dependencies
     supportLibraryVersion = '27.1.1'
     lifecycleVersion = '1.1.1'
+    
+    //Injection
+    daggerVersion = '2.15'
 
     // Reactive programming
     rxJavaVersion = '2.1.12'

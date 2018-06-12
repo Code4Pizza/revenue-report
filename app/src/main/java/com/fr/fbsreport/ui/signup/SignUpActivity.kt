@@ -54,7 +54,7 @@ class SignUpActivity : BaseActivity() {
     }
 
     private fun register(username: String, email: String, password: String) {
-        requestApi(AppRepository.instance.register(username, email, password)
+        requestApi(appRepository.register(username, email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }

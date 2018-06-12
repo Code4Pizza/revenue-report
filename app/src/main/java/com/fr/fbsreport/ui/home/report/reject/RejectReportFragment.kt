@@ -58,14 +58,13 @@ class RejectReportFragment : BaseFragment() {
     }
 
     private fun fetchData() {
-        requestApi(AppRepository.instance.getRejectReport("CNRoll_HDT")
+        requestApi(appRepository.getRejectReport("CNRoll_HDT")
                 .doOnSubscribe { showLoading() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ reportResponse ->
                     hideLoading()
                     showReportData(reportResponse)
-                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
                 }, { err ->
                     hideLoading()
                     context?.let { ErrorUtils.handleCommonError(it, err) }

@@ -1,14 +1,31 @@
 package com.fr.fbsreport.base
 
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
+import com.fr.fbsreport.App
+import com.fr.fbsreport.source.AppRepository
+import com.fr.fbsreport.source.UserPreference
 import com.fr.fbsreport.widget.AppToolbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
+import javax.inject.Named
 
 abstract class BaseFragment : Fragment(), AppToolbar.OnClickToolbarListener {
 
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+    @Inject
+    lateinit var userPreference: UserPreference
+
+    @field:[Inject Named("app_repository")]
+    lateinit var appRepository: AppRepository
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        App.component.inject(this)
+    }
 
     open fun hasToolbar(): Boolean {
         return true

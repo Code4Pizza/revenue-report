@@ -1,26 +1,18 @@
 package com.fr.fbsreport.source
 
+import com.fr.fbsreport.App
 import com.fr.fbsreport.model.TokenModel
 import com.fr.fbsreport.model.User
 import com.fr.fbsreport.utils.PreferenceUtils
 import com.google.gson.Gson
+import javax.inject.Inject
 
-class UserPreference private constructor() {
+class UserPreference(app: App) {
 
     private val PREF_TOKEN_MODEL = "PREF_TOKEN_MODEL"
     private val PREF_USER_INFO = "PREF_USER_INFO"
 
-    private object LazyHolder {
-        val INSTANCE = UserPreference()
-    }
-
-    companion object {
-        val instance: UserPreference by lazy {
-            LazyHolder.INSTANCE
-        }
-    }
-
-    private var preferenceUtils: PreferenceUtils = PreferenceUtils.instance
+    private var preferenceUtils: PreferenceUtils = PreferenceUtils(app)
 
     fun signOut() {
         preferenceUtils.removeKey(PREF_TOKEN_MODEL)

@@ -4,17 +4,17 @@ import com.fr.fbsreport.model.*
 import com.fr.fbsreport.network.BaseResponse
 import io.reactivex.Single
 
-class AppRepository private constructor(private val appRemoteSource: AppRemoteSource) : AppDataSource {
+class AppRepository(private val appRemoteSource: AppRemoteSource) : AppDataSource {
 
-    private object LazyHolder {
-        val INSTANCE = AppRepository(AppRemoteSource.instance)
-    }
-
-    companion object {
-        val instance: AppRepository by lazy {
-            LazyHolder.INSTANCE
-        }
-    }
+//    private object LazyHolder {
+//        val INSTANCE = AppRepository(AppRemoteSource.instance)
+//    }
+//
+//    companion object {
+//        val instance: AppRepository by lazy {
+//            LazyHolder.INSTANCE
+//        }
+//    }
 
     override fun register(username: String, email: String, password: String): Single<User> {
         return appRemoteSource.register(username, email, password)

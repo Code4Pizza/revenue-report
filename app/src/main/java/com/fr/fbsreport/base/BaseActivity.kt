@@ -6,12 +6,16 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import com.fr.fbsreport.App
 import com.fr.fbsreport.R
 import com.fr.fbsreport.source.AppRepository
+import com.fr.fbsreport.source.UserPreference
 import com.fr.fbsreport.utils.EditTextUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Named
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -19,6 +23,17 @@ abstract class BaseActivity : AppCompatActivity() {
     private var loadingDialog: Dialog? = null
 
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+    @Inject
+    lateinit var userPreference: UserPreference
+
+    @field:[Inject Named("app_repository")]
+    lateinit var appRepository: AppRepository
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        App.component.inject(this)
+    }
 
     open fun updateToolbar(baseFragment: BaseFragment) {
     }

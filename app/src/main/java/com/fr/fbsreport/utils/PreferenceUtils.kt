@@ -4,20 +4,9 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.fr.fbsreport.App
 
-class PreferenceUtils private constructor() {
+class PreferenceUtils(app: App) {
 
-    private object LazyHolder {
-        val INSTANCE = PreferenceUtils()
-    }
-
-    companion object {
-        val instance: PreferenceUtils by lazy {
-            LazyHolder.INSTANCE
-        }
-    }
-
-    private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(App.getInstance())
-
+    private var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(app)
 
     fun removeKey(key: String) {
         if (sharedPreferences.contains(key)) sharedPreferences.edit().remove(key).apply()

@@ -5,20 +5,9 @@ import com.fr.fbsreport.base.*
 import com.fr.fbsreport.model.*
 import com.fr.fbsreport.network.AppService
 import com.fr.fbsreport.network.BaseResponse
-import com.fr.fbsreport.network.RestClient
 import io.reactivex.Single
 
-class AppRemoteSource(private val appService: AppService) : AppDataSource {
-
-    private object LazyHolder {
-        val INSTANCE = AppRemoteSource(RestClient.createService())
-    }
-
-    companion object {
-        val instance: AppRemoteSource by lazy {
-            LazyHolder.INSTANCE
-        }
-    }
+class AppRemoteSource(val appService: AppService) : AppDataSource {
 
     override fun register(username: String, email: String, password: String): Single<User> {
         val fields = HashMap<String, String>()
