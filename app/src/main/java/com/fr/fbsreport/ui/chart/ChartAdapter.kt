@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.BaseItem
+import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.BaseRecyclerAdapter
 import com.fr.fbsreport.base.VIEW_TYPE_CHART
 import com.fr.fbsreport.base.VIEW_TYPE_CHART_CATEGORY
@@ -19,7 +19,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import kotlinx.android.synthetic.main.item_view_chart.view.*
 import kotlinx.android.synthetic.main.item_view_chart_category.view.*
 
-class ChartAdapter(context: Context) : BaseRecyclerAdapter<BaseItem, RecyclerView.ViewHolder>(context) {
+class ChartAdapter(context: Context) : BaseRecyclerAdapter<ViewType, RecyclerView.ViewHolder>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
@@ -30,7 +30,7 @@ class ChartAdapter(context: Context) : BaseRecyclerAdapter<BaseItem, RecyclerVie
     }
 
     override fun getItemViewType(position: Int): Int {
-        return items[position].itemType
+        return items[position].getViewType()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

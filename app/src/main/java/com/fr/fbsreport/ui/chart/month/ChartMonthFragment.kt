@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
-import com.fr.fbsreport.base.BaseItem
-import com.fr.fbsreport.base.VIEW_TYPE_CHART
-import com.fr.fbsreport.base.VIEW_TYPE_CHART_CATEGORY
+import com.fr.fbsreport.base.ViewType
+import com.fr.fbsreport.model.Chart
+import com.fr.fbsreport.model.ChartCategory
 import com.fr.fbsreport.ui.chart.ChartAdapter
 import kotlinx.android.synthetic.main.fragment_chart_month.*
 
@@ -35,13 +35,13 @@ class ChartMonthFragment : BaseFragment() {
         recycler_chart.layoutManager = LinearLayoutManager(context)
         recycler_chart.adapter = chartAdapter
 
-        val items = ArrayList<BaseItem>()
-        items.add(BaseItem(VIEW_TYPE_CHART))
-        items.add(BaseItem(VIEW_TYPE_CHART_CATEGORY))
-        items.add(BaseItem(VIEW_TYPE_CHART_CATEGORY))
-        
+        val items = ArrayList<ViewType>()
+        items.add(Chart())
+        items.add(ChartCategory())
+        items.add(ChartCategory())
+
         chartAdapter.setItems(items)
-        
+
 //        val values = ArrayList<Entry>()
 //        values.add(Entry(0f, 10f))
 //        values.add(Entry(5f, 15f))

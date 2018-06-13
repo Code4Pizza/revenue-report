@@ -1,6 +1,7 @@
 package com.fr.fbsreport.model
 
-import com.fr.fbsreport.base.BaseItem
+import com.fr.fbsreport.base.ViewType
+import com.fr.fbsreport.base.VIEW_TYPE_ITEM
 import com.fr.fbsreport.utils.formatWithDot
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
@@ -11,7 +12,7 @@ open class BaseReport(@SerializedName("sale_date")
                       @SerializedName("sale_num")
                       var saleNum: String,
                       @SerializedName("total")
-                      var total: Long) : BaseItem() {
+                      var total: Long) : ViewType {
 
     fun getFormatDate(): String? {
         return try {
@@ -28,5 +29,9 @@ open class BaseReport(@SerializedName("sale_date")
         } catch (e: Exception) {
             null
         }
+    }
+
+    override fun getViewType(): Int {
+        return VIEW_TYPE_ITEM
     }
 }

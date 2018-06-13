@@ -5,37 +5,29 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
-import com.fr.fbsreport.base.BaseItem
+import com.fr.fbsreport.base.InfiniteScrollListener
+import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.RejectReport
-import com.fr.fbsreport.network.BaseResponse
 import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.source.AppRepository
+import com.fr.fbsreport.ui.home.report.adapter.DeleteReportAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_reject_report.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
+import kotlin.coroutines.experimental.suspendCoroutine
 
 class RejectReportFragment : BaseFragment() {
 
-    private lateinit var rejectReportAdapter: RejectReportAdapter
+    private val rejectReportAdapter by androidLazy { DeleteReportAdapter() }
+    private lateinit var infiniteScrollListener: InfiniteScrollListener
 
     companion object {
         @JvmStatic
         fun newInstance() = RejectReportFragment().apply {
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_reject_report, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        rejectReportAdapter = RejectReportAdapter(context)
-        recycler_reject_report.layoutManager = LinearLayoutManager(context)
-        recycler_reject_report.adapter = rejectReportAdapter
     }
 
     override fun getTitleToolbar(): String? {
@@ -51,33 +43,47 @@ class RejectReportFragment : BaseFragment() {
         getBaseBottomTabActivity()?.onBackPressed()
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        fetchData()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_reject_report, container, false)
     }
 
-    private fun fetchData() {
-        requestApi(appRepository.getRejectReport("CNRoll_HDT")
-                .doOnSubscribe { showLoading() }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ reportResponse ->
-                    hideLoading()
-                    showReportData(reportResponse)
-                }, { err ->
-                    hideLoading()
-                    context?.let { ErrorUtils.handleCommonError(it, err) }
-                }))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recycler_reject_report.apply {
+            setHasFixedSize(true)
+            val linearLayout = LinearLayoutManager(context)
+            layoutManager = linearLayout
+            clearOnScrollListeners()
+            infiniteScrollListener = InfiniteScrollListener({ requestReports() }, linearLayout)
+            addOnScrollListener(infiniteScrollListener)
+        }
+        recycler_reject_report.adapter = rejectReportAdapter
+        requestReports()
     }
 
-    private fun showReportData(reportResponse: BaseResponse.Report<RejectReport>?) {
-        if (reportResponse != null) {
-            val data = ArrayList<BaseItem>()
-            data.add(RejectReportAdapter.ItemRejectReportTitle())
-            data.addAll(reportResponse.data)
-            data.add(RejectReportAdapter.ItemRejectReportTotal(400000000))
-            rejectReportAdapter.setItems(data)
+    private fun requestReports() {
+        job = launch(UI) {
+            try {
+                val rejectReports = fetchData()
+                rejectReportAdapter.addReports(rejectReports)
+            } catch (e: Throwable) {
+                rejectReportAdapter.dismissLoading()
+                infiniteScrollListener.setLoading(false)
+                context?.let { ErrorUtils.handleCommonError(it, e) }
+            }
+        }
+    }
+
+    private suspend fun fetchData(): ArrayList<RejectReport> {
+        return suspendCoroutine { continuation ->
+            requestApi(appRepository.getRejectReport("CNRoll_HDT")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ reportResponse ->
+                        continuation.resume(reportResponse.data)
+                    }, { err ->
+                        continuation.resumeWithException(err)
+                    }))
         }
     }
 }

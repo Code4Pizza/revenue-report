@@ -1,5 +1,8 @@
 package com.fr.fbsreport
 
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -12,6 +15,15 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        println("Start")
+//        launch {
+//            //delay(1000)
+//            println("Hello")
+//        }
+        runBlocking {
+            //delay(1000)
+            println("Hello") 
+        }
+        println("Stop")
     }
 }

@@ -9,12 +9,14 @@ import com.fr.fbsreport.source.UserPreference
 import com.fr.fbsreport.widget.AppToolbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.experimental.Job
 import javax.inject.Inject
 import javax.inject.Named
 
 abstract class BaseFragment : Fragment(), AppToolbar.OnClickToolbarListener {
 
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
+    protected var job: Job? = null
 
     @Inject
     lateinit var userPreference: UserPreference
@@ -84,6 +86,17 @@ abstract class BaseFragment : Fragment(), AppToolbar.OnClickToolbarListener {
 
     fun requestApi(disposable: Disposable) {
         compositeDisposable.add(disposable)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        job = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        job?.cancel()
+        job = null
     }
 
     override fun onDestroyView() {

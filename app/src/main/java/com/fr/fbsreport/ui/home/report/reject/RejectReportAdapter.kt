@@ -9,7 +9,7 @@ import com.fr.fbsreport.base.*
 import com.fr.fbsreport.model.RejectReport
 import kotlinx.android.synthetic.main.item_view_reject_report.view.*
 
-class RejectReportAdapter(context: Context?) : BaseRecyclerAdapter<BaseItem, RecyclerView.ViewHolder>(context) {
+class RejectReportAdapter(context: Context?) : BaseRecyclerAdapter<ViewType, RecyclerView.ViewHolder>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
@@ -21,7 +21,7 @@ class RejectReportAdapter(context: Context?) : BaseRecyclerAdapter<BaseItem, Rec
     }
 
     override fun getItemViewType(position: Int): Int {
-        return items[position].itemType
+        return items[position].getViewType()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -37,7 +37,11 @@ class RejectReportAdapter(context: Context?) : BaseRecyclerAdapter<BaseItem, Rec
 
     class RejectReportTitleViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
 
-    class ItemRejectReportTitle : BaseItem(VIEW_TYPE_REJECT_REPORT_TITLE)
+    class ItemRejectReportTitle : ViewType {
+        override fun getViewType(): Int {
+            return VIEW_TYPE_REJECT_REPORT_TITLE
+        }
+    }
 
     class RejectReportViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
@@ -51,5 +55,9 @@ class RejectReportAdapter(context: Context?) : BaseRecyclerAdapter<BaseItem, Rec
 
     class RejectReportTotalViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
 
-    class ItemRejectReportTotal(val total: Long) : BaseItem(VIEW_TYPE_REJECT_REPORT_TOTAL)
+    class ItemRejectReportTotal(val total: Long) : ViewType {
+        override fun getViewType(): Int {
+            return VIEW_TYPE_REJECT_REPORT_TOTAL
+        }
+    }
 }
