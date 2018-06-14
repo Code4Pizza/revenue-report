@@ -5,13 +5,15 @@ import com.google.gson.annotations.SerializedName
 class BaseResponse {
 
     data class Default<T>(var data: T)
-    
+
     data class Report<T>(
             var data: ArrayList<T>,
             var meta: Meta
     )
 
     data class Meta(
+            @SerializedName("total_page")
+            var totalPage: Long,
             var pagination: Pagination
     )
 
@@ -23,8 +25,7 @@ class BaseResponse {
             @SerializedName("current_page")
             var currentPage: Int,
             @SerializedName("total_pages")
-            var totalPages: Int,
-            var links: Links)
+            var totalPages: Int)
 
     data class Links(var next: String)
 }

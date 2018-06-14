@@ -20,7 +20,10 @@ interface AppService {
     fun editUserInfo(): Single<User>
 
     @GET("/report?type=delete")
-    fun getRejectReport(@Query("branch") branch: String): Single<BaseResponse.Report<RejectReport>>
+    fun getRejectReport(@Query("branch") branch: String,
+                        @Query("filter") filter: String?,
+                        @Query("limit") limit: Int?,
+                        @Query("page") page: Int): Single<BaseResponse.Report<RejectReport>>
 
     @GET("/report?type=bill")
     fun getBillReport(@Query("branch") branch: String): Single<BaseResponse.Report<BillReport>>

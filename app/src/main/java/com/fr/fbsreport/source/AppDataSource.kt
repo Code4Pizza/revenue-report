@@ -14,7 +14,7 @@ interface AppDataSource {
 
     fun editUserInfo(): Single<User>
 
-    fun getRejectReport(branch: String): Single<BaseResponse.Report<RejectReport>>
+    fun getRejectReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<RejectReport>>
 
     fun getBillReport(branch: String): Single<BaseResponse.Report<BillReport>>
 

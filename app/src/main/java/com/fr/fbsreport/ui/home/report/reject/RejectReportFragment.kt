@@ -10,8 +10,11 @@ import com.fr.fbsreport.base.BaseFragment
 import com.fr.fbsreport.base.InfiniteScrollListener
 import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.RejectReport
+import com.fr.fbsreport.network.BaseResponse
 import com.fr.fbsreport.network.ErrorUtils
 import com.fr.fbsreport.ui.home.report.adapter.DeleteReportAdapter
+import com.fr.fbsreport.utils.formatWithDot
+import com.fr.fbsreport.widget.FilterDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_reject_report.*
@@ -23,6 +26,9 @@ class RejectReportFragment : BaseFragment() {
 
     private val rejectReportAdapter by androidLazy { DeleteReportAdapter() }
     private lateinit var infiniteScrollListener: InfiniteScrollListener
+    private var filter: String? = null
+    private var limit: Int? = 20
+    private var page = 1
 
     companion object {
         @JvmStatic
@@ -58,29 +64,86 @@ class RejectReportFragment : BaseFragment() {
             addOnScrollListener(infiniteScrollListener)
         }
         recycler_reject_report.adapter = rejectReportAdapter
+
+        txt_filter.setOnClickListener({
+            val filterDialog = FilterDialog.newInstance(txt_filter.text.toString())
+            filterDialog.setOnClickFilterDialogListener(object : FilterDialog.OnClickFilterDialogListener {
+                override fun onClickNone() {
+                    setupFilter(null, 20, "Recent", false)
+                }
+
+                override fun onClickToday() {
+                    setupFilter("today", null, "Today", true)
+                }
+
+                override fun onClickYesterday() {
+                    setupFilter("yesterday", null, "Yesterday", true)
+                }
+
+                override fun onClickWeek() {
+                    setupFilter("week", null, "Week", true)
+                }
+
+                override fun onClickMonth() {
+                    setupFilter("month", null, "Month", true)
+                }
+            })
+            getBaseActivity()?.showDialogFragment(filterDialog)
+        })
+        ll_total.visibility = View.GONE
+        getBaseActivity()?.showLoading()
         requestReports()
     }
 
-    private fun requestReports() {
+    fun setupFilter(filter: String?, limit: Int?, textFilter: String, totalVisible: Boolean) {
+        this.filter = filter
+        this.limit = limit
+        this.page = 0
+        txt_filter.text = textFilter
+        txt_total.text = ""
+        ll_total.visibility = if (totalVisible) View.VISIBLE else View.GONE
+        filterReports()
+    }
+
+    private fun filterReports() {
+        getBaseActivity()?.showLoading()
+        rejectReportAdapter.clear()
         job = launch(UI) {
             try {
-                val rejectReports = fetchData()
-                rejectReportAdapter.addReports(rejectReports)
+                val rejectReportsResponse = fetchData()
+                getBaseActivity()?.hideLoading()
+                rejectReportAdapter.addReports(rejectReportsResponse.data)
+                txt_total.text = rejectReportsResponse.meta.totalPage.formatWithDot() + "đ"
             } catch (e: Throwable) {
-                rejectReportAdapter.dismissLoading()
+                getBaseActivity()?.hideLoading()
                 infiniteScrollListener.setLoading(false)
                 context?.let { ErrorUtils.handleCommonError(it, e) }
             }
         }
     }
 
-    private suspend fun fetchData(): ArrayList<RejectReport> {
+    private fun requestReports() {
+        job = launch(UI) {
+            try {
+                val rejectReportsResponse = fetchData()
+                getBaseActivity()?.hideLoading()
+                rejectReportAdapter.addReports(rejectReportsResponse.data)
+            } catch (e: Throwable) {
+                getBaseActivity()?.hideLoading()
+                infiniteScrollListener.setLoading(false)
+                context?.let { ErrorUtils.handleCommonError(it, e) }
+            }
+        }
+    }
+
+    private suspend fun fetchData(): BaseResponse.Report<RejectReport> {
         return suspendCoroutine { continuation ->
-            requestApi(appRepository.getRejectReport("CNRoll_HDT")
+            requestApi(appRepository.getRejectReport("CNRoll_HDT", filter, limit, page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ reportResponse ->
-                        continuation.resume(reportResponse.data)
+                        page++
+                        continuation.resume(reportResponse)
                     }, { err ->
                         continuation.resumeWithException(err)
                     }))

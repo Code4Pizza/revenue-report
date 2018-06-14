@@ -24,8 +24,6 @@ class DeleteReportAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         delegateAdapters.put(VIEW_TYPE_REJECT_REPORT_TITLE, DeleteReportTitleDelegateAdapter())
         delegateAdapters.put(VIEW_TYPE_ITEM, DeleteReportDelegateAdapter())
         items = ArrayList()
-        items.add(titleItem)
-        items.add(loadingItem)
     }
 
     override fun getItemCount(): Int {
@@ -42,54 +40,19 @@ class DeleteReportAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int) = items[position].getViewType()
 
-    fun showLoading() {
-        val initPosition = items.lastIndex
-        if (items[initPosition].getViewType() != VIEW_TYPE_LOADING) {
-            items.add(loadingItem)
-            notifyItemInserted(getLastPosition())
-        }
-    }
-
-    fun dismissLoading() {
-        val initPosition = items.lastIndex
-        if (items[initPosition].getViewType() == VIEW_TYPE_LOADING) {
-            items.removeAt(initPosition)
-            notifyItemRemoved(initPosition)
-        }
-    }
-
-    fun addReports(reports: List<RejectReport>) {
-//        val initPosition = items.lastIndex
-//        dismissLoading()
-//
-//        items.addAll(reports)
-//        notifyItemRangeChanged(initPosition, getLastPosition())
-
-        // first remove loading and notify
-        val initPosition = items.size - 1
-        items.removeAt(initPosition)
-        notifyItemRemoved(initPosition)
-
-        // insert news and the loading at the end of the list
-        items.addAll(reports)
-        items.add(loadingItem)
-        notifyItemRangeChanged(initPosition, items.size + 1 /* plus loading item */)
-    }
-
-    fun clearAndAddReports(reports: List<RejectReport>) {
+    fun clear() {
         items.clear()
-        notifyItemRangeRemoved(0, getLastPosition())
+        notifyDataSetChanged()
+    }
 
+    fun addReports(reports: ArrayList<RejectReport>) {
+        val initPosition = items.size + 1
         items.addAll(reports)
-        items.add(loadingItem)
-        notifyItemRangeInserted(0, items.size)
+        notifyItemRangeInserted(initPosition, items.size)
     }
 
     fun getReports(): List<RejectReport> =
             items
                     .filter { it.getViewType() == VIEW_TYPE_ITEM }
                     .map { it as RejectReport }
-
-    private fun getLastPosition() = if (items.lastIndex == -1) 0 else items.lastIndex
-
 }

@@ -18,7 +18,6 @@ abstract class BaseDialog : DialogFragment() {
         val dialog = Dialog(activity)
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(false)
         return dialog
     }
 

@@ -37,8 +37,8 @@ class AppRemoteSource(val appService: AppService) : AppDataSource {
         return appService.editUserInfo()
     }
 
-    override fun getRejectReport(branch: String): Single<BaseResponse.Report<RejectReport>> {
-        return appService.getRejectReport(branch)
+    override fun getRejectReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<RejectReport>> {
+        return appService.getRejectReport(branch, filter, limit, page)
     }
 
     override fun getBillReport(branch: String): Single<BaseResponse.Report<BillReport>> {
