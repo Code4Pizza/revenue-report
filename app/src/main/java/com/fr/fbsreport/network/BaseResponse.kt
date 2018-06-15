@@ -1,12 +1,13 @@
 package com.fr.fbsreport.network
 
+import com.fr.fbsreport.model.BaseReport
 import com.google.gson.annotations.SerializedName
 
 class BaseResponse {
 
     data class Default<T>(var data: T)
 
-    data class Report<T>(
+    data class Report<T : BaseReport>(
             var data: ArrayList<T>,
             var meta: Meta
     )

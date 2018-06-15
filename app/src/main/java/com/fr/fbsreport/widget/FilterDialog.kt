@@ -22,7 +22,7 @@ class FilterDialog : BaseDialog() {
     }
 
     interface OnClickFilterDialogListener {
-        fun onClickNone()
+        fun onClickRecent()
         fun onClickToday()
         fun onClickYesterday()
         fun onClickWeek()
@@ -64,26 +64,26 @@ class FilterDialog : BaseDialog() {
                 }
             }
         }
-        txt_recent.setOnClickListener({
-            listener?.onClickNone()
+        txt_recent.setOnClickListener {
+            listener?.onClickRecent()
             dismiss()
-        })
-        txt_today.setOnClickListener({
+        }
+        txt_today.setOnClickListener {
             listener?.onClickToday()
             dismiss()
-        })
-        txt_yesterday.setOnClickListener({
+        }
+        txt_yesterday.setOnClickListener {
             listener?.onClickYesterday()
             dismiss()
-        })
-        txt_week.setOnClickListener({
+        }
+        txt_week.setOnClickListener {
             listener?.onClickWeek()
             dismiss()
-        })
-        txt_month.setOnClickListener({
+        }
+        txt_month.setOnClickListener {
             listener?.onClickMonth()
             dismiss()
-        })
+        }
     }
 
     override fun onResume() {

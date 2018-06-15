@@ -6,16 +6,6 @@ import io.reactivex.Single
 
 class AppRepository(private val appRemoteSource: AppRemoteSource) : AppDataSource {
 
-//    private object LazyHolder {
-//        val INSTANCE = AppRepository(AppRemoteSource.instance)
-//    }
-//
-//    companion object {
-//        val instance: AppRepository by lazy {
-//            LazyHolder.INSTANCE
-//        }
-//    }
-
     override fun register(username: String, email: String, password: String): Single<User> {
         return appRemoteSource.register(username, email, password)
     }
@@ -32,15 +22,19 @@ class AppRepository(private val appRemoteSource: AppRemoteSource) : AppDataSourc
         return appRemoteSource.editUserInfo()
     }
 
-    override fun getRejectReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<RejectReport>> {
-        return appRemoteSource.getRejectReport(branch, filter, limit, page)
+    override fun getDeleteReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<DeleteReport>> {
+        return appRemoteSource.getDeleteReport(branch, filter, limit, page)
     }
 
-    override fun getBillReport(branch: String): Single<BaseResponse.Report<BillReport>> {
-        return appRemoteSource.getBillReport(branch)
+    override fun getBillReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<BillReport>> {
+        return appRemoteSource.getBillReport(branch, filter, limit, page)
     }
 
-    override fun getSaleReport(branch: String): Single<BaseResponse.Report<SaleReport>> {
-        return appRemoteSource.getSaleReport(branch)
+    override fun getSaleReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<SaleReport>> {
+        return appRemoteSource.getSaleReport(branch, filter, limit, page)
+    }
+
+    override fun getItemReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<ItemReport>> {
+        return appRemoteSource.getItemReport(branch, filter, limit, page)
     }
 }

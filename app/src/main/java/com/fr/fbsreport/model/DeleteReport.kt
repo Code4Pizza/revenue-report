@@ -3,7 +3,7 @@ package com.fr.fbsreport.model
 import com.google.gson.annotations.SerializedName
 
 @Suppress("unused")
-class RejectReport(
+class DeleteReport(
         saleDate: String,
         saleNum: String,
         total: Long,

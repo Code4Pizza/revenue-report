@@ -1,4 +1,4 @@
-package com.fr.fbsreport.ui.home.report.adapter
+package com.fr.fbsreport.ui.home.report.delete.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup

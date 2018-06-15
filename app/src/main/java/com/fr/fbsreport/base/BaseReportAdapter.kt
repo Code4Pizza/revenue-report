@@ -1,28 +1,16 @@
-package com.fr.fbsreport.ui.home.report.adapter
+package com.fr.fbsreport.base
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.fr.fbsreport.base.*
-import com.fr.fbsreport.model.RejectReport
 
-class DeleteReportAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class BaseReportAdapter<T : ViewType>(delegateAdapter: ViewTypeDelegateAdapter) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items: ArrayList<ViewType>
+    private var items: ArrayList<T>
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
-    private val titleItem = object : ViewType {
-        override fun getViewType() = VIEW_TYPE_REJECT_REPORT_TITLE
-    }
-
-    private val loadingItem = object : ViewType {
-        override fun getViewType() = VIEW_TYPE_LOADING
-    }
-
     init {
-        delegateAdapters.put(VIEW_TYPE_LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(VIEW_TYPE_REJECT_REPORT_TITLE, DeleteReportTitleDelegateAdapter())
-        delegateAdapters.put(VIEW_TYPE_ITEM, DeleteReportDelegateAdapter())
+        delegateAdapters.put(VIEW_TYPE_ITEM, delegateAdapter)
         items = ArrayList()
     }
 
@@ -45,14 +33,14 @@ class DeleteReportAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun addReports(reports: ArrayList<RejectReport>) {
+    fun addReports(reports: ArrayList<T>) {
         val initPosition = items.size + 1
         items.addAll(reports)
         notifyItemRangeInserted(initPosition, items.size)
     }
 
-    fun getReports(): List<RejectReport> =
+    fun getReports(): List<T> =
             items
                     .filter { it.getViewType() == VIEW_TYPE_ITEM }
-                    .map { it as RejectReport }
+                    .map { it }
 }

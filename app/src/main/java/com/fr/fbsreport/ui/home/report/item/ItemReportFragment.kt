@@ -1,16 +1,15 @@
-package com.fr.fbsreport.ui.home.report.bill
+package com.fr.fbsreport.ui.home.report.item
 
 import android.os.Bundle
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportFragment
 import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.model.BillReport
+import com.fr.fbsreport.model.ItemReport
 import com.fr.fbsreport.network.BaseResponse
 import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.ui.home.report.bill.adapter.BillReportAdapter
-import com.fr.fbsreport.ui.home.report.bill.adapter.BillReportDelegateAdapter
-import com.fr.fbsreport.ui.home.report.delete.DeleteReportFragment
+import com.fr.fbsreport.ui.home.report.item.adapter.ItemReportAdapter
+import com.fr.fbsreport.ui.home.report.item.adapter.ItemReportDelegateAdapter
 import com.fr.fbsreport.utils.formatWithDot
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,18 +18,18 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlin.coroutines.experimental.suspendCoroutine
 
-class BillReportFragment : BaseReportFragment<BaseResponse.Report<BillReport>>() {
+class ItemReportFragment : BaseReportFragment<BaseResponse.Report<ItemReport>>() {
 
-    private val reportAdapter by androidLazy { BillReportAdapter(BillReportDelegateAdapter()) }
+    private val reportAdapter by androidLazy { ItemReportAdapter(ItemReportDelegateAdapter()) }
 
     companion object {
         @JvmStatic
-        fun newInstance() = BillReportFragment().apply {
+        fun newInstance() = ItemReportFragment().apply {
         }
     }
 
     override fun getTitleToolbar(): String? {
-        return "Bill Report"
+        return "Item Report"
     }
 
     override fun getTextToolbarLeft(): String? {
@@ -45,7 +44,7 @@ class BillReportFragment : BaseReportFragment<BaseResponse.Report<BillReport>>()
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_bill_report
+        return R.layout.fragment_item_report
     }
 
     override fun requestReports() {
@@ -79,9 +78,9 @@ class BillReportFragment : BaseReportFragment<BaseResponse.Report<BillReport>>()
         }
     }
 
-    override suspend fun fetchData(): BaseResponse.Report<BillReport> {
+    override suspend fun fetchData(): BaseResponse.Report<ItemReport> {
         return suspendCoroutine { continuation ->
-            requestApi(appRepository.getBillReport("CNRoll_HDT", filter, limit, page)
+            requestApi(appRepository.getItemReport("CNRoll_HDT", filter, limit, page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ reportResponse ->

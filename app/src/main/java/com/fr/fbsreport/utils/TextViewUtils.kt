@@ -9,5 +9,5 @@ fun Long.formatWithDot(): String {
     val symbols = formatter.decimalFormatSymbols
     symbols.groupingSeparator = '.'
     formatter.decimalFormatSymbols = symbols
-    return formatter.format(this)
+    return String.format("%sđ", formatter.format(this))
 }

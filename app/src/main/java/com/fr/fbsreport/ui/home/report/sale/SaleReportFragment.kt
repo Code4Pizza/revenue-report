@@ -1,16 +1,15 @@
-package com.fr.fbsreport.ui.home.report.bill
+package com.fr.fbsreport.ui.home.report.sale
 
 import android.os.Bundle
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportFragment
 import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.model.BillReport
+import com.fr.fbsreport.model.SaleReport
 import com.fr.fbsreport.network.BaseResponse
 import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.ui.home.report.bill.adapter.BillReportAdapter
-import com.fr.fbsreport.ui.home.report.bill.adapter.BillReportDelegateAdapter
-import com.fr.fbsreport.ui.home.report.delete.DeleteReportFragment
+import com.fr.fbsreport.ui.home.report.sale.adapter.SaleReportAdapter
+import com.fr.fbsreport.ui.home.report.sale.adapter.SaleReportDelegateAdapter
 import com.fr.fbsreport.utils.formatWithDot
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,18 +18,18 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlin.coroutines.experimental.suspendCoroutine
 
-class BillReportFragment : BaseReportFragment<BaseResponse.Report<BillReport>>() {
+class SaleReportFragment : BaseReportFragment<BaseResponse.Report<SaleReport>>()  {
 
-    private val reportAdapter by androidLazy { BillReportAdapter(BillReportDelegateAdapter()) }
+    private val reportAdapter by androidLazy { SaleReportAdapter(SaleReportDelegateAdapter()) }
+
 
     companion object {
         @JvmStatic
-        fun newInstance() = BillReportFragment().apply {
+        fun newInstance() = SaleReportFragment().apply {
         }
     }
-
     override fun getTitleToolbar(): String? {
-        return "Bill Report"
+        return "Sale Report"
     }
 
     override fun getTextToolbarLeft(): String? {
@@ -79,9 +78,9 @@ class BillReportFragment : BaseReportFragment<BaseResponse.Report<BillReport>>()
         }
     }
 
-    override suspend fun fetchData(): BaseResponse.Report<BillReport> {
+    override suspend fun fetchData(): BaseResponse.Report<SaleReport> {
         return suspendCoroutine { continuation ->
-            requestApi(appRepository.getBillReport("CNRoll_HDT", filter, limit, page)
+            requestApi(appRepository.getSaleReport("CNRoll_HDT", filter, limit, page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ reportResponse ->
@@ -92,4 +91,5 @@ class BillReportFragment : BaseReportFragment<BaseResponse.Report<BillReport>>()
                     }))
         }
     }
+
 }

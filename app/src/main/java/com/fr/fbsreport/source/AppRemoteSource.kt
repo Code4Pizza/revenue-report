@@ -37,15 +37,19 @@ class AppRemoteSource(val appService: AppService) : AppDataSource {
         return appService.editUserInfo()
     }
 
-    override fun getRejectReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<RejectReport>> {
-        return appService.getRejectReport(branch, filter, limit, page)
+    override fun getDeleteReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<DeleteReport>> {
+        return appService.getDeleteReport(branch, filter, limit, page)
     }
 
-    override fun getBillReport(branch: String): Single<BaseResponse.Report<BillReport>> {
-        return appService.getBillReport(branch)
+    override fun getBillReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<BillReport>> {
+        return appService.getBillReport(branch, filter, limit, page)
     }
 
-    override fun getSaleReport(branch: String): Single<BaseResponse.Report<SaleReport>> {
-        return appService.getSaleReport(branch)
+    override fun getSaleReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<SaleReport>> {
+        return appService.getSaleReport(branch, filter, limit, page)
+    }
+
+    override fun getItemReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<ItemReport>> {
+        return appService.getItemReport(branch, filter, limit, page)
     }
 }

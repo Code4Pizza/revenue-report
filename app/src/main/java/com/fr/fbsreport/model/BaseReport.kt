@@ -1,7 +1,7 @@
 package com.fr.fbsreport.model
 
-import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.VIEW_TYPE_ITEM
+import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.utils.formatWithDot
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
@@ -25,7 +25,7 @@ open class BaseReport(@SerializedName("sale_date")
 
     fun getFormatTotal(): String? {
         return try {
-            total.formatWithDot() + "đ"
+            total.formatWithDot()
         } catch (e: Exception) {
             null
         }
