@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginBottom="@dimen/spacing_tiny"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:paddingStart="@dimen/spacing_normal"
-        android:paddingTop="@dimen/spacing_normal"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/spacing_small"
         android:paddingEnd="@dimen/spacing_normal"
-        android:paddingBottom="@dimen/spacing_small">
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_small">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.4"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/txt_sale_num"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
@@ -33,51 +35,99 @@
 
             <TextView
                 android:id="@+id/txt_sale_date"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
+                android:gravity="end"
                 android:maxLines="1"
                 android:text="20/05/2018"
                 android:textColor="@color/lightGray"
                 android:textSize="15sp" />
-
         </LinearLayout>
 
         <TextView
-            android:id="@+id/txt_total"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_normal"
-            android:layout_weight="1"
-            android:ellipsize="end"
             android:fontFamily="@font/sf_regular"
-            android:maxLines="1"
-            android:text="10.000.000đ"
+            android:text="Các món ăn"
             android:textColor="@color/gray"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/txt_reason"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/ll_items"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:fontFamily="@font/sf_regular"
-            android:gravity="end"
-            android:maxLines="2"
-            android:text="Đổi hàng"
-            android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/spacing_tiny" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/brightGray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_regular"
+                android:maxLines="1"
+                android:text="Giảm giá"
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/txt_discount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_regular"
+                android:gravity="end"
+                android:maxLines="1"
+                android:text="1"
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_regular"
+                android:maxLines="1"
+                android:text="Thành tiền"
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/txt_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_regular"
+                android:gravity="end"
+                android:maxLines="1"
+                android:text="1"
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:id="@+id/view_underline"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:background="@color/brightGray" />
-
-</LinearLayout>
+</android.support.v7.widget.CardView>
 

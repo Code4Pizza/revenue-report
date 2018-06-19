@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportFragment
+import com.fr.fbsreport.base.EXTRA_BRAND
 import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.BillReport
 import com.fr.fbsreport.network.BaseResponse
@@ -21,20 +22,31 @@ import kotlin.coroutines.experimental.suspendCoroutine
 
 class BillReportFragment : BaseReportFragment<BaseResponse.Report<BillReport>>() {
 
+    private lateinit var brand: String
     private val reportAdapter by androidLazy { BillReportAdapter(BillReportDelegateAdapter()) }
 
     companion object {
         @JvmStatic
-        fun newInstance() = BillReportFragment().apply {
+        fun newInstance(brand : String) = BillReportFragment().apply {
+            val bundle = Bundle()
+            bundle.putString(EXTRA_BRAND, brand)
+            arguments = bundle
         }
     }
 
     override fun getTitleToolbar(): String? {
-        return "Bill Report"
+        return "Báo cáo theo bill"
     }
 
     override fun getTextToolbarLeft(): String? {
-        return "Back"
+        return "Quay lại"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            brand = arguments!!.getString(EXTRA_BRAND)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,7 +93,7 @@ class BillReportFragment : BaseReportFragment<BaseResponse.Report<BillReport>>()
 
     override suspend fun fetchData(): BaseResponse.Report<BillReport> {
         return suspendCoroutine { continuation ->
-            requestApi(appRepository.getBillReport("CNRoll_HDT", filter, limit, page)
+            requestApi(appRepository.getBillReport(brand, filter, limit, page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ reportResponse ->

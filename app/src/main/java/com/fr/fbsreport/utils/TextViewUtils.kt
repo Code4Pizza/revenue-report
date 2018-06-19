@@ -11,3 +11,11 @@ fun Long.formatWithDot(): String {
     formatter.decimalFormatSymbols = symbols
     return String.format("%sđ", formatter.format(this))
 }
+
+fun Int.formatWithDot(): String {
+    val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
+    val symbols = formatter.decimalFormatSymbols
+    symbols.groupingSeparator = '.'
+    formatter.decimalFormatSymbols = symbols
+    return String.format("%sđ", formatter.format(this))
+}

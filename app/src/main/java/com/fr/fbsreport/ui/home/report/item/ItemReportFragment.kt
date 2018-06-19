@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportFragment
+import com.fr.fbsreport.base.EXTRA_BRAND
 import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.ItemReport
 import com.fr.fbsreport.network.BaseResponse
@@ -20,20 +21,31 @@ import kotlin.coroutines.experimental.suspendCoroutine
 
 class ItemReportFragment : BaseReportFragment<BaseResponse.Report<ItemReport>>() {
 
+    private lateinit var brand: String
     private val reportAdapter by androidLazy { ItemReportAdapter(ItemReportDelegateAdapter()) }
 
     companion object {
         @JvmStatic
-        fun newInstance() = ItemReportFragment().apply {
+        fun newInstance(brand: String) = ItemReportFragment().apply {
+            val bundle = Bundle()
+            bundle.putString(EXTRA_BRAND, brand)
+            arguments = bundle
         }
     }
 
     override fun getTitleToolbar(): String? {
-        return "Item Report"
+        return "Báo cáo theo mặt hàng"
     }
 
     override fun getTextToolbarLeft(): String? {
-        return "Back"
+        return "Quay lại"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            brand = arguments!!.getString(EXTRA_BRAND)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,7 +92,7 @@ class ItemReportFragment : BaseReportFragment<BaseResponse.Report<ItemReport>>()
 
     override suspend fun fetchData(): BaseResponse.Report<ItemReport> {
         return suspendCoroutine { continuation ->
-            requestApi(appRepository.getItemReport("CNRoll_HDT", filter, limit, page)
+            requestApi(appRepository.getItemReport(brand, filter, limit, page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ reportResponse ->

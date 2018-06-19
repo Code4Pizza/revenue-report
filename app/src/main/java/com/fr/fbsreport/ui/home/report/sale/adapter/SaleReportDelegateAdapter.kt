@@ -7,6 +7,7 @@ import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.ViewTypeDelegateAdapter
 import com.fr.fbsreport.extension.inflate
 import com.fr.fbsreport.model.SaleReport
+import com.fr.fbsreport.utils.formatWithDot
 import kotlinx.android.synthetic.main.item_view_sale_report.view.*
 
 class SaleReportDelegateAdapter : ViewTypeDelegateAdapter {
@@ -26,7 +27,8 @@ class SaleReportDelegateAdapter : ViewTypeDelegateAdapter {
         fun bind(saleReport: SaleReport) {
             itemView.txt_sale_num.text = if (saleReport.saleNum.isEmpty()) "Unknown" else saleReport.saleNum
             itemView.txt_sale_date.text = saleReport.getFormatDate()
-            itemView.txt_total.text = saleReport.getFormatTotal()
+            itemView.txt_total.text = saleReport.total.formatWithDot()
+            itemView.txt_discount.text = saleReport.discount.formatWithDot()
         }
     }
 }

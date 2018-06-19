@@ -11,7 +11,7 @@ class BillReport(
         var tableId: Int,
         @SerializedName("sub_total")
         var subTotal: Long,
-        var discount: Long,
+        var discount: Int,
         var tax: Int,
         @SerializedName("service_charge_amount")
         var serviceChargeAmount: Int

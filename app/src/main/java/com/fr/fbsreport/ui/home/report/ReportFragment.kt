@@ -8,37 +8,41 @@ import android.view.View
 import android.view.ViewGroup
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
+import com.fr.fbsreport.base.EXTRA_BRAND
 import com.fr.fbsreport.base.INDEX_REPORT
 import com.fr.fbsreport.ui.home.report.bill.BillReportFragment
+import com.fr.fbsreport.ui.home.report.delete.DeleteReportFragment
 import com.fr.fbsreport.ui.home.report.item.ItemReportFragment
 import com.fr.fbsreport.ui.home.report.sale.SaleReportFragment
-import com.fr.fbsreport.ui.home.report.delete.DeleteReportFragment
 import kotlinx.android.synthetic.main.fragment_report.*
 
 class ReportFragment : BaseFragment(), View.OnClickListener {
 
-
+    private lateinit var brand: String
     private var listener: OnFragmentInteractionListener? = null
 
     companion object {
         @JvmStatic
-        fun newInstance() = ReportFragment().apply {
+        fun newInstance(brand: String) = ReportFragment().apply {
+            val bundle = Bundle()
+            bundle.putString(EXTRA_BRAND, brand)
+            arguments = bundle
         }
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.item_reject -> {
-                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, DeleteReportFragment.newInstance())
+                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, DeleteReportFragment.newInstance(brand))
             }
             R.id.item_bill -> {
-                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance())
+                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(brand))
             }
             R.id.item_promotion -> {
-                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, SaleReportFragment.newInstance())
+                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, SaleReportFragment.newInstance(brand))
             }
             R.id.item_product -> {
-                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, ItemReportFragment.newInstance())
+                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, ItemReportFragment.newInstance(brand))
             }
         }
     }
@@ -46,6 +50,7 @@ class ReportFragment : BaseFragment(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            brand = arguments!!.getString(EXTRA_BRAND)
         }
     }
 

@@ -24,3 +24,5 @@ const val VIEW_TYPE_REJECT_REPORT_TOTAL = 3
 
 const val VIEW_TYPE_CHART = 4
 const val VIEW_TYPE_CHART_CATEGORY = 5
+
+const val EXTRA_BRAND = "EXTRA_BRAND"

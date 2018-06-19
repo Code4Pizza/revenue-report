@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportFragment
+import com.fr.fbsreport.base.EXTRA_BRAND
 import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.DeleteReport
 import com.fr.fbsreport.network.BaseResponse
@@ -20,20 +21,31 @@ import kotlin.coroutines.experimental.suspendCoroutine
 
 class DeleteReportFragment : BaseReportFragment<BaseResponse.Report<DeleteReport>>() {
 
+    private lateinit var brand: String
     private val reportAdapter by androidLazy { DeleteReportAdapter(DeleteReportDelegateAdapter()) }
 
     companion object {
         @JvmStatic
-        fun newInstance() = DeleteReportFragment().apply {
+        fun newInstance(brand: String) = DeleteReportFragment().apply {
+            val bundle = Bundle()
+            bundle.putString(EXTRA_BRAND, brand)
+            arguments = bundle
         }
     }
 
     override fun getTitleToolbar(): String? {
-        return "Delete Report"
+        return "Báo cáo hủy hóa đơn"
     }
 
     override fun getTextToolbarLeft(): String? {
-        return "Back"
+        return "Quay lại"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            brand = arguments!!.getString(EXTRA_BRAND)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,7 +92,7 @@ class DeleteReportFragment : BaseReportFragment<BaseResponse.Report<DeleteReport
 
     override suspend fun fetchData(): BaseResponse.Report<DeleteReport> {
         return suspendCoroutine { continuation ->
-            requestApi(appRepository.getDeleteReport("CNRoll_HDT", filter, limit, page)
+            requestApi(appRepository.getDeleteReport(brand, filter, limit, page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ reportResponse ->
