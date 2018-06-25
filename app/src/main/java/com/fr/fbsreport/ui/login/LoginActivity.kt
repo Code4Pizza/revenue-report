@@ -1,14 +1,13 @@
 package com.fr.fbsreport.ui.login
 
 import android.content.Intent
-import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseActivity
 import com.fr.fbsreport.network.ApiException
 import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.ui.brand.BrandActivity
+import com.fr.fbsreport.ui.branch.BranchActivity
 import com.fr.fbsreport.ui.login.forgotpassword.ForgotPasswordActivity
 import com.fr.fbsreport.utils.EditTextUtils
 import com.fr.fbsreport.widget.AppToolbar
@@ -18,22 +17,23 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+    override fun getLayoutId(): Int {
+        return R.layout.activity_login
+    }
 
+    override fun initViews() {
         toolbar.setOnClickToolbarListener(object : AppToolbar.OnClickToolbarListener {
             override fun onItemLeft() {
                 finish()
             }
         })
-        btn_login.setOnClickListener({
-            //startActivity(Intent(this@LoginActivity, BrandActivity::class.java))
+        btn_login.setOnClickListener {
+            // startActivity(Intent(this@LoginActivity, BranchActivity::class.java))
             validateInput()
-        })
-        txt_forgot_password.setOnClickListener({
+        }
+        txt_forgot_password.setOnClickListener {
             startActivity(Intent(this@LoginActivity, ForgotPasswordActivity::class.java))
-        })
+        }
     }
 
     private fun validateInput() {
@@ -67,7 +67,7 @@ class LoginActivity : BaseActivity() {
                 .subscribe({ user ->
                     userPreference.storeUserInfo(user)
                     hideLoading()
-                    startActivity(Intent(this@LoginActivity, BrandActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, BranchActivity::class.java))
                     finishAffinity()
                 }, { err ->
                     hideLoading()

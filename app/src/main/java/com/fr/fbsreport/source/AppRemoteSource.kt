@@ -7,7 +7,7 @@ import com.fr.fbsreport.network.AppService
 import com.fr.fbsreport.network.BaseResponse
 import io.reactivex.Single
 
-class AppRemoteSource(val appService: AppService) : AppDataSource {
+class AppRemoteSource(private val appService: AppService) : AppDataSource {
 
     override fun register(username: String, email: String, password: String): Single<User> {
         val fields = HashMap<String, String>()
@@ -37,19 +37,23 @@ class AppRemoteSource(val appService: AppService) : AppDataSource {
         return appService.editUserInfo()
     }
 
-    override fun getDeleteReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<DeleteReport>> {
-        return appService.getDeleteReport(branch, filter, limit, page)
+    override fun getBranch(): Single<BaseResponse.Default<List<Branch>>> {
+        return appService.getBranch()
     }
 
-    override fun getBillReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<BillReport>> {
-        return appService.getBillReport(branch, filter, limit, page)
+    override fun getDeleteReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<DeleteReport>> {
+        return appService.getDeleteReport(branchCode, filter, limit, page)
     }
 
-    override fun getSaleReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<SaleReport>> {
-        return appService.getSaleReport(branch, filter, limit, page)
+    override fun getBillReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<BillReport>> {
+        return appService.getBillReport(branchCode, filter, limit, page)
     }
 
-    override fun getItemReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<ItemReport>> {
-        return appService.getItemReport(branch, filter, limit, page)
+    override fun getSaleReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<SaleReport>> {
+        return appService.getSaleReport(branchCode, filter, limit, page)
+    }
+
+    override fun getItemReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<ItemReport>> {
+        return appService.getItemReport(branchCode, filter, limit, page)
     }
 }

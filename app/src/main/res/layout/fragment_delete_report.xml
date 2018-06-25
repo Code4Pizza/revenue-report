@@ -77,10 +77,52 @@
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_column"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_overview"
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_tiny"
+        android:paddingEnd="@dimen/spacing_normal"
+        android:paddingBottom="@dimen/spacing_tiny">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:fontFamily="@font/sf_regular"
+            android:text="Số hóa đơn"
+            android:textColor="@color/mediumBlack"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/sf_regular"
+            android:text="Tổng tiền"
+            android:textColor="@color/mediumBlack"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:fontFamily="@font/sf_regular"
+            android:gravity="end"
+            android:text="Lý do hủy"
+            android:textColor="@color/mediumBlack"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_report"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/ll_overview" />
+        android:layout_below="@id/ll_column" />
 
 </RelativeLayout>

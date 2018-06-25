@@ -23,7 +23,7 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/txt_number_order"
+            android:id="@+id/txt_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -36,6 +36,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/view_underline"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/borderGray" />

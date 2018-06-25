@@ -6,20 +6,40 @@ import android.view.View
 import android.view.ViewGroup
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
-import com.github.mikephil.charting.components.AxisBase
+import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
+import com.fr.fbsreport.extension.androidLazy
+import com.fr.fbsreport.model.ItemReport
+import com.fr.fbsreport.network.BaseResponse
+import com.fr.fbsreport.network.ErrorUtils
+import com.fr.fbsreport.utils.formatWithDot
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_chart_week.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
+import kotlin.coroutines.experimental.suspendCoroutine
 
 
 class ChartWeekFragment : BaseFragment() {
+
+    private val branchCode: String by androidLazy {
+        arguments?.getString(EXTRA_BRANCH_CODE) ?: ""
+    }
+    private var firstLoad = true
+    private var total = 0L
+
     companion object {
         @JvmStatic
-        fun newInstance() = ChartWeekFragment().apply {
+        fun newInstance(branchCode: String) = ChartWeekFragment().apply {
+            val bundle = Bundle()
+            bundle.putString(EXTRA_BRANCH_CODE, branchCode)
+            arguments = bundle
         }
     }
 
@@ -27,26 +47,75 @@ class ChartWeekFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_chart_week, container, false)
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser && firstLoad) {
+            getBaseActivity()?.showLoading()
+            requestData()
+            firstLoad = false
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        line_chart.apply {
+            val dataDate = ArrayList<String>()
+            dataDate.add("Sun")
+            dataDate.add("Mon")
+            dataDate.add("Tue")
+            dataDate.add("Wed")
+            dataDate.add("Thu")
+            dataDate.add("Fri")
+            dataDate.add("Sat")
+            line_chart.legend.isEnabled = false
+            line_chart.description.text = ""
+            line_chart.setNoDataText("")
+            line_chart.axisRight.isEnabled = false
+            line_chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+            line_chart.axisLeft.axisMinimum = 0f
+            line_chart.isDragEnabled = false
+            line_chart.setScaleEnabled(false)
+            line_chart.isScaleXEnabled = false
+            line_chart.isScaleYEnabled = false
+            line_chart.xAxis.valueFormatter = IAxisValueFormatter { value, _ ->
+                dataDate[value.toInt()] // xVal is a string array
+            }
+        }
+    }
 
+    private fun requestData() {
+        launch(UI) {
+            try {
+                val response = fetchData()
+                getBaseActivity()?.hideLoading()
+                fillChart(response.data)
+                txt_total.text = total.formatWithDot()
+            } catch (e: Throwable) {
+                getBaseActivity()?.hideLoading()
+                context?.let { ErrorUtils.handleCommonError(it, e) }
+            }
+        }
+    }
+
+    suspend fun fetchData(): BaseResponse.Report<ItemReport> {
+        return suspendCoroutine { continuation ->
+            requestApi(appRepository.getItemReport(branchCode, null, null, 1)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ reportResponse ->
+                        continuation.resume(reportResponse)
+                    }, { err ->
+                        continuation.resumeWithException(err)
+                    }))
+        }
+    }
+
+    private fun fillChart(data: ArrayList<ItemReport>) {
         val values = ArrayList<Entry>()
-        values.add(Entry(0f, 8f))
-        values.add(Entry(1f, 12f))
-        values.add(Entry(2f, 4f))
-        values.add(Entry(3f, 7f))
-        values.add(Entry(4f, 20f))
-        values.add(Entry(5f, 22f))
-        values.add(Entry(6f, 12f))
-
-        val dataDate = ArrayList<String>()
-        dataDate.add("Sun")
-        dataDate.add("Mon")
-        dataDate.add("Tue")
-        dataDate.add("Wed")
-        dataDate.add("Thu")
-        dataDate.add("Fri")
-        dataDate.add("Sat")
+        for (i in 0..6) {
+            values.add(Entry(i.toFloat(), data[i].total.toFloat()))
+            total += data[i].total
+        }
 
         val lineDataSet = LineDataSet(values, "Data set 1")
         lineDataSet.color = resources.getColor(R.color.orange)
@@ -57,17 +126,7 @@ class ChartWeekFragment : BaseFragment() {
         dataSets.add(lineDataSet)
         val lineData = LineData(dataSets)
         lineData.setDrawValues(false)
-        line_chart.legend.isEnabled = false
-        line_chart.description.text = ""
-        line_chart.axisRight.isEnabled = false
-        line_chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        line_chart.axisLeft.axisMinimum = 0f
-        line_chart.xAxis.setValueFormatter(object : IAxisValueFormatter {
-
-            override fun getFormattedValue(value: Float, axis: AxisBase): String {
-                return dataDate[value.toInt()] // xVal is a string array
-            }
-        })
         line_chart.data = lineData
+        line_chart.invalidate()
     }
 }

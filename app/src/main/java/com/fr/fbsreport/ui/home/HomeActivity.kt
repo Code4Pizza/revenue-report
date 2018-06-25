@@ -2,10 +2,10 @@ package com.fr.fbsreport.ui.home
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.*
+import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.ui.home.analytic.AnalyticFragment
 import com.fr.fbsreport.ui.home.report.ReportFragment
 import com.fr.fbsreport.ui.home.setting.SettingFragment
@@ -15,29 +15,36 @@ import kotlinx.android.synthetic.main.view_app_toolbar.view.*
 
 class HomeActivity : BaseBottomTabActivity() {
 
-    private lateinit var brand: String
+    private val branchCode: String by androidLazy {
+        intent.getStringExtra(EXTRA_BRANCH_CODE) ?: ""
+    }
 
     companion object {
-        fun newIntent(context: Context, brand: String): Intent {
-            var intent = Intent(context, HomeActivity::class.java)
-            intent.putExtra(EXTRA_BRAND, brand)
+        fun newIntent(context: Context, branchCode: String): Intent {
+            val intent = Intent(context, HomeActivity::class.java)
+            intent.putExtra(EXTRA_BRANCH_CODE, branchCode)
             return intent
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-        brand = intent.getStringExtra(EXTRA_BRAND)
+    override fun getLayoutId(): Int {
+        return R.layout.activity_home
+    }
+
+    override fun initViews() {
+        initBottomBar()
+    }
+
+    private fun initBottomBar() {
         bottom_bar.setOnClickBottombarListener(object : AppBottomBar.OnClickBottomBarListener {
             override fun onItemBottomClick(position: Int) {
                 currentTab = position
                 when (currentTab) {
                     INDEX_ANALYTICS -> {
-                        addFragmentTab(INDEX_ANALYTICS, AnalyticFragment.newInstance())
+                        addFragmentTab(INDEX_ANALYTICS, AnalyticFragment.newInstance(branchCode))
                     }
                     INDEX_REPORT -> {
-                        addFragmentTab(INDEX_REPORT, ReportFragment.newInstance(brand))
+                        addFragmentTab(INDEX_REPORT, ReportFragment.newInstance(branchCode))
                     }
                     INDEX_SETTING -> {
                         addFragmentTab(INDEX_SETTING, SettingFragment.newInstance())

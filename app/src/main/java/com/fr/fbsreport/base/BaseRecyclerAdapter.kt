@@ -1,11 +1,9 @@
 package com.fr.fbsreport.base
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import java.util.*
 
-abstract class BaseRecyclerAdapter<I, VH>(context: Context?) : RecyclerView.Adapter<VH>() where VH : RecyclerView.ViewHolder {
+abstract class BaseRecyclerAdapter<I, VH> : RecyclerView.Adapter<VH>() where VH : RecyclerView.ViewHolder, I : ViewType {
 
     interface OnRecyclerItemClickListener<I> {
         fun onItemClick(item: I, position: Int)
@@ -13,7 +11,6 @@ abstract class BaseRecyclerAdapter<I, VH>(context: Context?) : RecyclerView.Adap
 
     private var listener: OnRecyclerItemClickListener<I>? = null
     protected var items = ArrayList<I>()
-    protected var inflater: LayoutInflater? = LayoutInflater.from(context)
 
     fun setOnRecyclerItemClickListener(listener: OnRecyclerItemClickListener<I>) {
         this.listener = listener
@@ -24,7 +21,7 @@ abstract class BaseRecyclerAdapter<I, VH>(context: Context?) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.itemView.setOnClickListener({ listener?.onItemClick(items[position], position) })
+        holder.itemView.setOnClickListener { listener?.onItemClick(items[position], position) }
     }
 
     fun setItems(items: List<I>) {

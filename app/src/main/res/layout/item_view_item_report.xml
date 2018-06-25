@@ -3,131 +3,171 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/spacing_tiny"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
-    app:cardBackgroundColor="@android:color/white"
-    app:cardElevation="4dp">
+    app:cardBackgroundColor="@android:color/white">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/spacing_small"
-        android:paddingEnd="@dimen/spacing_normal"
-        android:paddingStart="@dimen/spacing_normal"
-        android:paddingTop="@dimen/spacing_small">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/ll_overview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_toStartOf="@+id/img_detail"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_small">
 
-            <TextView
-                android:id="@+id/txt_sale_num"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:fontFamily="@font/sf_regular"
-                android:maxLines="1"
-                android:text="1234ABCD12"
-                android:textColor="@color/gray"
-                android:textSize="15sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/txt_sale_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:fontFamily="@font/sf_regular"
-                android:gravity="end"
-                android:maxLines="1"
-                android:text="20/05/2018"
-                android:textColor="@color/lightGray"
-                android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/txt_sale_num"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/sf_regular"
+                    android:maxLines="1"
+                    android:text="1234ABCD12"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/txt_sale_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/sf_regular"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:text="20/05/2018"
+                    android:textColor="@color/lightGray"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sf_regular"
+                    android:text="Món ăn"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/txt_items"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/sf_regular"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/ll_items"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingBottom="@dimen/spacing_tiny" />-->
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.5dp"-->
+            <!--android:background="@color/brightGray" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/sf_regular"
+                    android:maxLines="1"
+                    android:text="Giảm giá"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/txt_discount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/sf_regular"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:text="1"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/sf_regular"
+                    android:maxLines="1"
+                    android:text="Thành tiền"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/txt_total"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/sf_regular"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:text="1"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp" />
+            </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sf_regular"
-            android:text="Các món ăn"
-            android:textColor="@color/gray"
-            android:textSize="15sp" />
-
-        <LinearLayout
-            android:id="@+id/ll_items"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/spacing_tiny" />
+        <ImageView
+            android:id="@+id/img_detail"
+            android:layout_width="@dimen/spacing_small"
+            android:layout_height="@dimen/spacing_small"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:src="@drawable/icon_arrow_right" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/brightGray" />
+            android:layout_height="1dp"
+            android:layout_below="@id/ll_overview"
+            android:background="@color/appBgGray" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_tiny">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:fontFamily="@font/sf_regular"
-                android:maxLines="1"
-                android:text="Giảm giá"
-                android:textColor="@color/gray"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/txt_discount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:fontFamily="@font/sf_regular"
-                android:gravity="end"
-                android:maxLines="1"
-                android:text="1"
-                android:textColor="@color/gray"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:fontFamily="@font/sf_regular"
-                android:maxLines="1"
-                android:text="Thành tiền"
-                android:textColor="@color/gray"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/txt_total"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:fontFamily="@font/sf_regular"
-                android:gravity="end"
-                android:maxLines="1"
-                android:text="1"
-                android:textColor="@color/gray"
-                android:textSize="15sp" />
-        </LinearLayout>
-    </LinearLayout>
-
+    </RelativeLayout>
 </android.support.v7.widget.CardView>
 

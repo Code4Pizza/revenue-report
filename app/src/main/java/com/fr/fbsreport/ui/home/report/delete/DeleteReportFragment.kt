@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportFragment
-import com.fr.fbsreport.base.EXTRA_BRAND
+import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.DeleteReport
 import com.fr.fbsreport.network.BaseResponse
@@ -21,14 +21,16 @@ import kotlin.coroutines.experimental.suspendCoroutine
 
 class DeleteReportFragment : BaseReportFragment<BaseResponse.Report<DeleteReport>>() {
 
-    private lateinit var brand: String
+    private val branchCode: String by androidLazy {
+        arguments?.getString(EXTRA_BRANCH_CODE) ?: ""
+    }
     private val reportAdapter by androidLazy { DeleteReportAdapter(DeleteReportDelegateAdapter()) }
 
     companion object {
         @JvmStatic
-        fun newInstance(brand: String) = DeleteReportFragment().apply {
+        fun newInstance(branchCode: String) = DeleteReportFragment().apply {
             val bundle = Bundle()
-            bundle.putString(EXTRA_BRAND, brand)
+            bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             arguments = bundle
         }
     }
@@ -41,13 +43,6 @@ class DeleteReportFragment : BaseReportFragment<BaseResponse.Report<DeleteReport
         return "Quay lại"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            brand = arguments!!.getString(EXTRA_BRAND)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerReport.adapter = reportAdapter
@@ -56,7 +51,7 @@ class DeleteReportFragment : BaseReportFragment<BaseResponse.Report<DeleteReport
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_item_report
+        return R.layout.fragment_delete_report
     }
 
     override fun requestReports() {
@@ -92,7 +87,7 @@ class DeleteReportFragment : BaseReportFragment<BaseResponse.Report<DeleteReport
 
     override suspend fun fetchData(): BaseResponse.Report<DeleteReport> {
         return suspendCoroutine { continuation ->
-            requestApi(appRepository.getDeleteReport(brand, filter, limit, page)
+            requestApi(appRepository.getDeleteReport(branchCode, filter, limit, page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ reportResponse ->

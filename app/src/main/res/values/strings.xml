@@ -29,6 +29,8 @@
     <string name="bottom_bar_report">Report</string>
     <string name="bottom_bar_analytics">Analytics</string>
 
+    <string name="branch_title">Danh sách chi nhánh</string>
+
     <string name="home_title_report">Report</string>
     <string name="home_report_order_reject">Báo cáo hủy đơn</string>
     <string name="home_report_by_bill">Báo cáo theo bill</string>

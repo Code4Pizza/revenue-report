@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'io.fabric'
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -22,14 +24,16 @@ android {
             minifyEnabled false
             shrinkResources false
             buildConfigField 'String', 'BASE_URL', '"http://api.reporter.demo.ngocnh.info"'
-            buildConfigField 'String', 'CLIENT_ID', '"ubyz1PFdjhKSk1Ng"'
-            buildConfigField 'String', 'CLIENT_SECRET', '"raN3uLibrX5l8Xe3mLk2cNHGcz7ZW5fe"'
+            buildConfigField 'String', 'CLIENT_ID', '"tToAjJ3KXzVXhnbK"'
+            buildConfigField 'String', 'CLIENT_SECRET', '"yI0MZQ1xqp4vl2zywzOVQcuNfhapmnud"'
         }
         release {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'BASE_URL', '"http://api.reporter.demo.ngocnh.info"'
+            buildConfigField 'String', 'CLIENT_ID', '"tToAjJ3KXzVXhnbK"'
+            buildConfigField 'String', 'CLIENT_SECRET', '"yI0MZQ1xqp4vl2zywzOVQcuNfhapmnud"'
         }
     }
     packagingOptions {
@@ -48,7 +52,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.2.41'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     
     implementation "com.android.support:support-v4:$supportLibraryVersion"
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
@@ -85,6 +89,10 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:1.4.0'
     
     implementation 'com.android.support:multidex:1.0.3'
+
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
+        transitive = true;
+    }
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

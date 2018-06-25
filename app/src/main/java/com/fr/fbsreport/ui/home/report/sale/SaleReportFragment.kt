@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportFragment
-import com.fr.fbsreport.base.EXTRA_BRAND
+import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.SaleReport
 import com.fr.fbsreport.network.BaseResponse
@@ -19,32 +19,28 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlin.coroutines.experimental.suspendCoroutine
 
-class SaleReportFragment : BaseReportFragment<BaseResponse.Report<SaleReport>>()  {
+class SaleReportFragment : BaseReportFragment<BaseResponse.Report<SaleReport>>() {
 
-    private lateinit var brand: String
+    private val branchCode: String by androidLazy {
+        arguments?.getString(EXTRA_BRANCH_CODE) ?: ""
+    }
     private val reportAdapter by androidLazy { SaleReportAdapter(SaleReportDelegateAdapter()) }
 
     companion object {
         @JvmStatic
-        fun newInstance(brand : String) = SaleReportFragment().apply {
+        fun newInstance(branchCode: String) = SaleReportFragment().apply {
             val bundle = Bundle()
-            bundle.putString(EXTRA_BRAND, brand)
+            bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             arguments = bundle
         }
     }
+
     override fun getTitleToolbar(): String? {
         return "Báo cáo giảm giá"
     }
 
     override fun getTextToolbarLeft(): String? {
         return "Quay lại"
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            brand = arguments!!.getString(EXTRA_BRAND)
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,7 +51,7 @@ class SaleReportFragment : BaseReportFragment<BaseResponse.Report<SaleReport>>()
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_bill_report
+        return R.layout.fragment_sale_report
     }
 
     override fun requestReports() {
@@ -91,7 +87,7 @@ class SaleReportFragment : BaseReportFragment<BaseResponse.Report<SaleReport>>()
 
     override suspend fun fetchData(): BaseResponse.Report<SaleReport> {
         return suspendCoroutine { continuation ->
-            requestApi(appRepository.getSaleReport(brand, filter, limit, page)
+            requestApi(appRepository.getSaleReport(branchCode, filter, limit, page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ reportResponse ->
@@ -102,5 +98,4 @@ class SaleReportFragment : BaseReportFragment<BaseResponse.Report<SaleReport>>()
                     }))
         }
     }
-
 }

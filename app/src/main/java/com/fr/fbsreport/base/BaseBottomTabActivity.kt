@@ -13,8 +13,7 @@ abstract class BaseBottomTabActivity : BaseActivity() {
     var currentTab: Int = -1
     var previousTab: Int = -1
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    init {
         fragmentMap[INDEX_ANALYTICS] = Stack()
         fragmentMap[INDEX_REPORT] = Stack()
         fragmentMap[INDEX_SETTING] = Stack()
@@ -96,7 +95,7 @@ abstract class BaseBottomTabActivity : BaseActivity() {
             fragmentMap[currentTab]?.lastElement()?.let { updateToolbar(it) }
         }
     }
-    
+
 
     override fun onBackPressed() {
         if (fragmentMap[currentTab]!!.size > 1) {

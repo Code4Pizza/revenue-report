@@ -9,16 +9,16 @@ import com.fr.fbsreport.ui.chart.week.ChartWeekFragment
 import com.fr.fbsreport.ui.chart.yesterday.ChartYesterdayFragment
 
 
-class ReportPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class ReportPagerAdapter(private val branchCode: String, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItem(position: Int): Fragment? {
         when (position) {
-            0 -> return ChartTodayFragment.newInstance()
-            1 -> return ChartYesterdayFragment.newInstance()
-            2 -> return ChartWeekFragment.newInstance()
-            3 -> return ChartMonthFragment.newInstance()
+            0 -> return ChartMonthFragment.newInstance(branchCode)
+            1 -> return ChartYesterdayFragment.newInstance(branchCode)
+            2 -> return ChartWeekFragment.newInstance(branchCode)
+            3 -> return ChartTodayFragment.newInstance(branchCode)
         }
-        return ChartTodayFragment.newInstance()
+        return null
     }
 
     override fun getCount(): Int {

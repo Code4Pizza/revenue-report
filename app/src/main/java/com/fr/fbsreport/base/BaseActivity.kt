@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
 import com.fr.fbsreport.App
 import com.fr.fbsreport.R
@@ -33,7 +33,14 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.component.inject(this)
+        setContentView(getLayoutId())
+        initViews()
     }
+
+    @LayoutRes
+    abstract fun getLayoutId(): Int
+
+    abstract fun initViews()
 
     open fun updateToolbar(baseFragment: BaseFragment) {
     }

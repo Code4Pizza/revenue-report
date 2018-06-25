@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportFragment
-import com.fr.fbsreport.base.EXTRA_BRAND
+import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
+import com.fr.fbsreport.base.INDEX_REPORT
 import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.ItemReport
 import com.fr.fbsreport.network.BaseResponse
@@ -21,14 +22,16 @@ import kotlin.coroutines.experimental.suspendCoroutine
 
 class ItemReportFragment : BaseReportFragment<BaseResponse.Report<ItemReport>>() {
 
-    private lateinit var brand: String
+    private val branchCode: String by androidLazy {
+        arguments?.getString(EXTRA_BRANCH_CODE) ?: ""
+    }
     private val reportAdapter by androidLazy { ItemReportAdapter(ItemReportDelegateAdapter()) }
 
     companion object {
         @JvmStatic
-        fun newInstance(brand: String) = ItemReportFragment().apply {
+        fun newInstance(branchCode: String) = ItemReportFragment().apply {
             val bundle = Bundle()
-            bundle.putString(EXTRA_BRAND, brand)
+            bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             arguments = bundle
         }
     }
@@ -41,15 +44,13 @@ class ItemReportFragment : BaseReportFragment<BaseResponse.Report<ItemReport>>()
         return "Quay lại"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            brand = arguments!!.getString(EXTRA_BRAND)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        reportAdapter.setOnItemReportAdapterClickListener(object : ItemReportAdapter.OnItemReportAdapterClickListener {
+            override fun onClickItemReport(itemReport: ItemReport) {
+                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, DetailItemFragment.newInstance(itemReport))
+            }
+        })
         recyclerReport.adapter = reportAdapter
         getBaseActivity()?.showLoading()
         requestReports()
@@ -92,7 +93,7 @@ class ItemReportFragment : BaseReportFragment<BaseResponse.Report<ItemReport>>()
 
     override suspend fun fetchData(): BaseResponse.Report<ItemReport> {
         return suspendCoroutine { continuation ->
-            requestApi(appRepository.getItemReport(brand, filter, limit, page)
+            requestApi(appRepository.getItemReport(branchCode, filter, limit, page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ reportResponse ->

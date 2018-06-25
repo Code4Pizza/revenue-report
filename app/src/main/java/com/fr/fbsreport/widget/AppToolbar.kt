@@ -38,7 +38,7 @@ class AppToolbar : RelativeLayout {
             }
             typedArray.recycle()
         }
-        txt_left.setOnClickListener({ listener!!.onItemLeft() })
+        txt_left.setOnClickListener { listener!!.onItemLeft() }
     }
 
     fun setOnClickToolbarListener(listener: OnClickToolbarListener) {

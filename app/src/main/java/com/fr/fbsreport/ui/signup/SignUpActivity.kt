@@ -1,11 +1,9 @@
 package com.fr.fbsreport.ui.signup
 
-import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseActivity
-import com.fr.fbsreport.source.AppRepository
 import com.fr.fbsreport.utils.EditTextUtils
 import com.fr.fbsreport.widget.AppToolbar
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,19 +12,17 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+    override fun getLayoutId(): Int {
+        return R.layout.activity_sign_up
+    }
 
+    override fun initViews() {
         toolbar.setOnClickToolbarListener(object : AppToolbar.OnClickToolbarListener {
             override fun onItemLeft() {
                 finish()
             }
         })
-
-        btn_sign_up.setOnClickListener({
-            validateInput()
-        })
+        btn_sign_up.setOnClickListener { validateInput() }
     }
 
     private fun validateInput() {
@@ -69,6 +65,5 @@ class SignUpActivity : BaseActivity() {
                         Toast.makeText(this@SignUpActivity, error.message, Toast.LENGTH_SHORT).show()
                     }
                 }))
-
     }
 }

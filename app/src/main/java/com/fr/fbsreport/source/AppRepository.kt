@@ -22,19 +22,23 @@ class AppRepository(private val appRemoteSource: AppRemoteSource) : AppDataSourc
         return appRemoteSource.editUserInfo()
     }
 
-    override fun getDeleteReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<DeleteReport>> {
-        return appRemoteSource.getDeleteReport(branch, filter, limit, page)
+    override fun getBranch(): Single<BaseResponse.Default<List<Branch>>> {
+        return appRemoteSource.getBranch()
     }
 
-    override fun getBillReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<BillReport>> {
-        return appRemoteSource.getBillReport(branch, filter, limit, page)
+    override fun getDeleteReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<DeleteReport>> {
+        return appRemoteSource.getDeleteReport(branchCode, filter, limit, page)
     }
 
-    override fun getSaleReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<SaleReport>> {
-        return appRemoteSource.getSaleReport(branch, filter, limit, page)
+    override fun getBillReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<BillReport>> {
+        return appRemoteSource.getBillReport(branchCode, filter, limit, page)
     }
 
-    override fun getItemReport(branch: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<ItemReport>> {
-        return appRemoteSource.getItemReport(branch, filter, limit, page)
+    override fun getSaleReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<SaleReport>> {
+        return appRemoteSource.getSaleReport(branchCode, filter, limit, page)
+    }
+
+    override fun getItemReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<ItemReport>> {
+        return appRemoteSource.getItemReport(branchCode, filter, limit, page)
     }
 }

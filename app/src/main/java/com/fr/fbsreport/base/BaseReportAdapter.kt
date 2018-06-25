@@ -6,8 +6,8 @@ import android.view.ViewGroup
 
 open class BaseReportAdapter<T : ViewType>(delegateAdapter: ViewTypeDelegateAdapter) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items: ArrayList<T>
-    private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
+    protected var items: ArrayList<T>
+    protected var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
         delegateAdapters.put(VIEW_TYPE_ITEM, delegateAdapter)

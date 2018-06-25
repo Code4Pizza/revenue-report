@@ -30,13 +30,14 @@
         android:id="@+id/txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="70dp"
+        android:layout_marginEnd="@dimen/spacing_normal"
         android:ellipsize="end"
         android:fontFamily="@font/sf_regular"
         android:maxLines="1"
         android:textColor="@android:color/white"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        tools:text="Báo cáo hủy hóa đơn" />
 
 </RelativeLayout>

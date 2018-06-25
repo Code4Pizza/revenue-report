@@ -1,15 +1,15 @@
 package com.fr.fbsreport.ui.chart
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.BaseRecyclerAdapter
 import com.fr.fbsreport.base.VIEW_TYPE_CHART
 import com.fr.fbsreport.base.VIEW_TYPE_CHART_CATEGORY
+import com.fr.fbsreport.base.ViewType
+import com.fr.fbsreport.extension.inflate
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -19,14 +19,14 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import kotlinx.android.synthetic.main.item_view_chart.view.*
 import kotlinx.android.synthetic.main.item_view_chart_category.view.*
 
-class ChartAdapter(context: Context) : BaseRecyclerAdapter<ViewType, RecyclerView.ViewHolder>(context) {
+class ChartAdapter : BaseRecyclerAdapter<ViewType, RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        when (viewType) {
-            VIEW_TYPE_CHART -> return ChartViewHolder(inflater?.inflate(R.layout.item_view_chart, parent, false))
-            VIEW_TYPE_CHART_CATEGORY -> return CategoryViewHolder(inflater?.inflate(R.layout.item_view_chart_category, parent, false))
+        return when (viewType) {
+            VIEW_TYPE_CHART -> ChartViewHolder(parent.inflate(R.layout.item_view_chart))
+            VIEW_TYPE_CHART_CATEGORY -> CategoryViewHolder(parent.inflate(R.layout.item_view_chart_category))
+            else -> throw RuntimeException("View holder not available")
         }
-        return CategoryViewHolder(inflater?.inflate(R.layout.item_view_chart_category, parent, false))
     }
 
     override fun getItemViewType(position: Int): Int {
