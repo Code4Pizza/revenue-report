@@ -49,8 +49,8 @@ class ChartMonthFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_chart_month, container, false)
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_chart_month
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -62,8 +62,11 @@ class ChartMonthFragment : BaseFragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initViews() {
+        initChart()
+    }
+
+    private fun initChart() {
         line_chart.apply {
             val dataDate = ArrayList<String>()
             dataDate.add("")

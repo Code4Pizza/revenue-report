@@ -45,4 +45,9 @@ interface AppService {
                       @Query("filter") filter: String?,
                       @Query("limit") limit: Int?,
                       @Query("page") page: Int): Single<BaseResponse.Report<ItemReport>>
+
+    @GET("/report/dashboard")
+    fun getDashboard(@Query("branch") branchCode: String,
+                     @Query("type") type: String,
+                     @Query("date") date: String?): Single<BaseResponse.Sections>
 }

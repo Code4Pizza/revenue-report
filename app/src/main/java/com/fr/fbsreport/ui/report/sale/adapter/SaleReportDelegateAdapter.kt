@@ -1,8 +1,9 @@
-package com.fr.fbsreport.ui.home.report.sale.adapter
+package com.fr.fbsreport.ui.report.sale.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.fr.fbsreport.R
+import com.fr.fbsreport.base.BaseReportAdapter
 import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.ViewTypeDelegateAdapter
 import com.fr.fbsreport.extension.inflate
@@ -16,9 +17,11 @@ class SaleReportDelegateAdapter : ViewTypeDelegateAdapter {
         return SaleReportViewHolder(parent)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
-        holder as SaleReportViewHolder
-        holder.bind(item as SaleReport)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, listener: BaseReportAdapter.OnReportClickListener?) {
+        if (holder is SaleReportViewHolder) {
+            holder.bind(item as SaleReport)
+            holder.itemView.setOnClickListener { listener?.onReportClick(item) }
+        }
     }
 
     inner class SaleReportViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(

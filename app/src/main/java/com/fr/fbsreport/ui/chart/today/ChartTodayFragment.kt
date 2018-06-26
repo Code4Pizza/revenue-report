@@ -1,9 +1,6 @@
 package com.fr.fbsreport.ui.chart.today
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
 import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
@@ -41,12 +38,11 @@ class ChartTodayFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_chart_today, container, false)
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_chart_today
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initViews() {
         line_chart.apply {
             val dataDate = ArrayList<String>()
             dataDate.add("")

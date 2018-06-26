@@ -23,4 +23,6 @@ interface AppDataSource {
     fun getSaleReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<SaleReport>>
 
     fun getItemReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<BaseResponse.Report<ItemReport>>
+
+    fun getDashboard(branchCode: String, type: String, date: String?): Single<BaseResponse.Sections>
 }

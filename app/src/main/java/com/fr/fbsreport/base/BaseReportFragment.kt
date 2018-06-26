@@ -1,17 +1,15 @@
 package com.fr.fbsreport.base
 
-import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.fr.fbsreport.R
+import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.widget.FilterDialog
 
-abstract class BaseReportFragment<T> : BaseFragment() {
+abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
 
     protected lateinit var infiniteScrollListener: InfiniteScrollListener
     protected var filter: String? = null
@@ -23,29 +21,37 @@ abstract class BaseReportFragment<T> : BaseFragment() {
     protected lateinit var viewTotal: LinearLayout
     protected lateinit var txtTotal: TextView
 
+    protected val branchCode: String by androidLazy { arguments?.getString(EXTRA_BRANCH_CODE) ?: "" }
+    protected lateinit var reportAdapter: BaseReportAdapter<T>
+
     override fun onItemLeft() {
         super.onItemLeft()
         getBaseBottomTabActivity()?.onBackPressed()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getLayoutId(), container, false)
+    override fun getTextIdToolbarLeft(): Int? {
+        return R.string.action_back
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initViews() {
+        initFilterView()
+        initReportList()
+    }
 
-        recyclerReport = view.findViewById(R.id.recycler_report)
+    open fun initReportList() {
+        recyclerReport = view!!.findViewById(R.id.recycler_report)
         recyclerReport.apply {
             setHasFixedSize(true)
             val linearLayout = LinearLayoutManager(context)
             layoutManager = linearLayout
             clearOnScrollListeners()
-            infiniteScrollListener = InfiniteScrollListener({ requestReports() }, linearLayout)
+            infiniteScrollListener = InfiniteScrollListener({ requestReports(false) }, linearLayout)
             addOnScrollListener(infiniteScrollListener)
         }
+    }
 
-        txtFilter = view.findViewById(R.id.txt_filter)
+    private fun initFilterView() {
+        txtFilter = view!!.findViewById(R.id.txt_filter)
         txtFilter.setOnClickListener {
             val filterDialog = FilterDialog.newInstance(txtFilter.text.toString())
             filterDialog.setOnClickFilterDialogListener(object : FilterDialog.OnClickFilterDialogListener {
@@ -72,10 +78,10 @@ abstract class BaseReportFragment<T> : BaseFragment() {
             getBaseActivity()?.showDialogFragment(filterDialog)
         }
 
-        viewTotal = view.findViewById(R.id.ll_total)
+        viewTotal = view!!.findViewById(R.id.ll_total)
         viewTotal.visibility = View.GONE
 
-        txtTotal = view.findViewById(R.id.txt_total)
+        txtTotal = view!!.findViewById(R.id.txt_total)
     }
 
     fun setupFilter(filter: String?, limit: Int?, textFilter: String, totalVisible: Boolean) {
@@ -85,14 +91,8 @@ abstract class BaseReportFragment<T> : BaseFragment() {
         txtFilter.text = textFilter
         txtTotal.text = ""
         viewTotal.visibility = if (totalVisible) View.VISIBLE else View.GONE
-        filterReports()
+        requestReports(true)
     }
 
-    protected abstract fun getLayoutId(): Int
-
-    protected abstract fun requestReports()
-
-    protected abstract fun filterReports()
-
-    protected abstract suspend fun fetchData(): T
+    protected abstract fun requestReports(forceRefresh: Boolean)
 }

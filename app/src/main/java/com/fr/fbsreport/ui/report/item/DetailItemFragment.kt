@@ -1,9 +1,6 @@
-package com.fr.fbsreport.ui.home.report.item
+package com.fr.fbsreport.ui.report.item
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
@@ -28,12 +25,12 @@ class DetailItemFragment : BaseFragment() {
         }
     }
 
-    override fun getTitleToolbar(): String? {
-        return "Chi tiết đơn hàng"
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_detail_item
     }
 
-    override fun getTextToolbarLeft(): String? {
-        return "Quay lại"
+    override fun getTitleIdToolbar(): Int? {
+        return R.string.home_title_report
     }
 
     override fun onItemLeft() {
@@ -48,16 +45,11 @@ class DetailItemFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_detail_item, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initViews() {
         txt_sale_num.text = if (itemReport.saleNum.isEmpty()) "Unknown" else itemReport.saleNum
         txt_sale_date.text = itemReport.getFormatDate()
         txt_discount.text = itemReport.discount.formatWithDot()
-        view.findViewById<TextView>(R.id.txt_total).text = itemReport.total.formatWithDot()
+        view!!.findViewById<TextView>(R.id.txt_total).text = itemReport.total.formatWithDot()
         ll_items.removeAllViewsInLayout()
         for (item in itemReport.items) {
             addViewDish(item)

@@ -2,37 +2,37 @@
     <string name="app_name">FbsReport</string>
     <string name="FBS">FSB</string>
 
-    <string name="action_back">Back</string>
-    <string name="action_cancel">Cancel</string>
-    <string name="action_done">Done</string>
-    <string name="action_login">Login</string>
+    <string name="action_back">Quay lại</string>
+    <string name="action_cancel">Hủy</string>
+    <string name="action_done">Xong</string>
+    <string name="action_login">Đăng nhập</string>
 
-    <string name="main_txt_try">New to FBS? Try it for free</string>
-    <string name="main_txt_sign_up">Sign up</string>
+    <string name="main_txt_try">Trải nghiệm FBS hoàn toàn miễn phí</string>
+    <string name="main_txt_sign_up">Đăng ký</string>
 
-    <string name="txt_title_username">Username</string>
-    <string name="txt_title_email_address">Email address</string>
-    <string name="txt_title_password">Password</string>
-    <string name="hint_username">enter username</string>
+    <string name="txt_title_username">Tên</string>
+    <string name="txt_title_email_address">Địa chỉ email</string>
+    <string name="txt_title_password">Mật khẩu</string>
+    <string name="hint_username">nhập tên người dùng</string>
     <string name="hint_email_address">email@example.com</string>
-    <string name="hint_password">enter password</string>
+    <string name="hint_password">nhập mật khẩu</string>
 
-    <string name="sign_up_btn">Sign up</string>
+    <string name="sign_up_btn">Đăng ký</string>
 
-    <string name="forgot_password_title_phone_number">Phone number</string>
-    <string name="forgot_password_hint_phone_number">your phone number</string>
+    <string name="forgot_password_title_phone_number">Số điện thoại</string>
+    <string name="forgot_password_hint_phone_number">nhập số điện thoại</string>
 
-    <string name="login_btn">Login</string>
-    <string name="login_txt_forgot_password">Forgot password?</string>
+    <string name="login_btn">Đăng nhập</string>
+    <string name="login_txt_forgot_password">Quên mật khẩu?</string>
 
-    <string name="bottom_bar_setting">Setting</string>
-    <string name="bottom_bar_report">Report</string>
-    <string name="bottom_bar_analytics">Analytics</string>
+    <string name="bottom_bar_setting">Cài đặt</string>
+    <string name="bottom_bar_report">Báo cáo</string>
+    <string name="bottom_bar_analytics">Phân tích</string>
 
     <string name="branch_title">Danh sách chi nhánh</string>
 
-    <string name="home_title_report">Report</string>
-    <string name="home_report_order_reject">Báo cáo hủy đơn</string>
+    <string name="home_title_report">Báo cáo</string>
+    <string name="home_report_order_delete">Báo cáo hủy đơn</string>
     <string name="home_report_by_bill">Báo cáo theo bill</string>
     <string name="home_report_promotion">Báo cáo giảm giá</string>
     <string name="home_report_by_product">Báo cáo theo mặt hàng</string>

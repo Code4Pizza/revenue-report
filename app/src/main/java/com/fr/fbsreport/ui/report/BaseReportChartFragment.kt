@@ -1,14 +1,11 @@
-package com.fr.fbsreport.ui.chart.yesterday
+package com.fr.fbsreport.ui.report
 
 import android.os.Bundle
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
 import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.model.BillReport
-import com.fr.fbsreport.network.BaseResponse
 import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.utils.formatWithDot
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -17,21 +14,16 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_chart_yesterday.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
-import kotlin.coroutines.experimental.suspendCoroutine
+import kotlinx.android.synthetic.main.fragment_chart_today.*
+import java.util.*
 
-class ChartYesterdayFragment : BaseFragment() {
+class BaseReportChartFragment : BaseFragment() {
 
-    private val branchCode: String by androidLazy {
-        arguments?.getString(EXTRA_BRANCH_CODE) ?: ""
-    }
-    private var firstLoad = true
-    private var total = 0L
+    val branchCode: String by androidLazy { arguments?.getString(EXTRA_BRANCH_CODE) ?: "" }
 
     companion object {
-        fun newInstance(branchCode: String) = ChartYesterdayFragment().apply {
+        @JvmStatic
+        fun newInstance(branchCode: String) = BaseReportChartFragment().apply {
             val bundle = Bundle()
             bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             arguments = bundle
@@ -39,19 +31,15 @@ class ChartYesterdayFragment : BaseFragment() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_chart_yesterday
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser && firstLoad) {
-            getBaseActivity()?.showLoading()
-            requestData()
-            firstLoad = false
-        }
+        return R.layout.fragment_base_report_chart
     }
 
     override fun initViews() {
+        initLineChart()
+        requestData()
+    }
+
+    private fun initLineChart() {
         line_chart.apply {
             val dataDate = ArrayList<String>()
             dataDate.add("")
@@ -78,37 +66,25 @@ class ChartYesterdayFragment : BaseFragment() {
     }
 
     private fun requestData() {
-        launch(UI) {
-            try {
-                val response = fetchData()
-                getBaseActivity()?.hideLoading()
-                fillChart(response.data)
-                txt_total.text = total.formatWithDot()
-            } catch (e: Throwable) {
-                getBaseActivity()?.hideLoading()
-                context?.let { ErrorUtils.handleCommonError(it, e) }
-            }
-        }
+        requestApi(appRepository.getDashboard(branchCode, "today", null)
+                .doOnSubscribe {
+                    getBaseActivity()?.showLoading()
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    getBaseActivity()?.hideLoading()
+                    fillChart()
+                }, { err ->
+                    getBaseActivity()?.hideLoading()
+                    context?.let { ErrorUtils.handleCommonError(it, err) }
+                }))
     }
 
-    suspend fun fetchData(): BaseResponse.Report<BillReport> {
-        return suspendCoroutine { continuation ->
-            requestApi(appRepository.getBillReport(branchCode, null, null, 1)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ reportResponse ->
-                        continuation.resume(reportResponse)
-                    }, { err ->
-                        continuation.resumeWithException(err)
-                    }))
-        }
-    }
-
-    private fun fillChart(data: ArrayList<BillReport>) {
+    private fun fillChart() {
         val values = ArrayList<Entry>()
         for (i in 0..6) {
-            values.add(Entry(i.toFloat(), data[i].subTotal.toFloat()))
-            total += data[i].subTotal
+            values.add(Entry(i.toFloat(), Random().nextInt(50).toFloat()))
         }
         val lineDataSet = LineDataSet(values, "Data set 1")
         lineDataSet.color = resources.getColor(R.color.orange)

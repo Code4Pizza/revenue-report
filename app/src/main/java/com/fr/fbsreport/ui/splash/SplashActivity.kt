@@ -17,7 +17,7 @@ class SplashActivity : BaseActivity() {
         Handler().postDelayed({
             run {
                 if (userPreference.isSignedIn()) {
-                    startActivity(Intent(this@SplashActivity, BranchActivity::class.java))
+                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                 } else {
                     startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                 }

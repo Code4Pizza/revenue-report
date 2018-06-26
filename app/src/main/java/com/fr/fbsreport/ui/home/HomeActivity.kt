@@ -6,18 +6,16 @@ import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.*
 import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.ui.home.analytic.AnalyticFragment
-import com.fr.fbsreport.ui.home.report.ReportFragment
-import com.fr.fbsreport.ui.home.setting.SettingFragment
+import com.fr.fbsreport.ui.analytic.AnalyticFragment
+import com.fr.fbsreport.ui.report.ReportFragment
+import com.fr.fbsreport.ui.setting.SettingFragment
 import com.fr.fbsreport.widget.AppBottomBar
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.view_app_toolbar.view.*
 
 class HomeActivity : BaseBottomTabActivity() {
 
-    private val branchCode: String by androidLazy {
-        intent.getStringExtra(EXTRA_BRANCH_CODE) ?: ""
-    }
+    private val branchCode: String by androidLazy { intent.getStringExtra(EXTRA_BRANCH_CODE) ?: "" }
 
     companion object {
         fun newIntent(context: Context, branchCode: String): Intent {
@@ -61,17 +59,17 @@ class HomeActivity : BaseBottomTabActivity() {
         } else {
             toolbar.visibility = View.GONE
         }
-        baseFragment.getTitleToolbar()?.let {
-            toolbar.img_logo.visibility = View.GONE
+        baseFragment.getTitleIdToolbar()?.let {
+            toolbar.txt_title.setText(it)
             toolbar.txt_title.visibility = View.VISIBLE
-            toolbar.txt_title.text = baseFragment.getTitleToolbar()
+            toolbar.img_logo.visibility = View.GONE
         } ?: run {
-            toolbar.img_logo.visibility = View.VISIBLE
             toolbar.txt_title.visibility = View.GONE
+            toolbar.img_logo.visibility = View.VISIBLE
         }
-        baseFragment.getTextToolbarLeft()?.let {
+        baseFragment.getTextIdToolbarLeft()?.let {
+            toolbar.txt_left.setText(it)
             toolbar.txt_left.visibility = View.VISIBLE
-            toolbar.txt_left.text = baseFragment.getTextToolbarLeft()
             val imageLeft = getDrawable(R.drawable.icon_back)
             imageLeft.setBounds(0, 0, imageLeft.intrinsicWidth, imageLeft.intrinsicHeight)
             toolbar.txt_left.setCompoundDrawables(imageLeft, null, null, null)

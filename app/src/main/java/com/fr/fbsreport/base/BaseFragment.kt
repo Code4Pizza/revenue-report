@@ -1,8 +1,12 @@
 package com.fr.fbsreport.base
 
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.fr.fbsreport.App
 import com.fr.fbsreport.source.AppRepository
 import com.fr.fbsreport.source.UserPreference
@@ -24,9 +28,22 @@ abstract class BaseFragment : Fragment(), AppToolbar.OnClickToolbarListener {
     @field:[Inject Named("app_repository")]
     lateinit var appRepository: AppRepository
 
+    abstract fun getLayoutId(): Int
+
+    abstract fun initViews()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.component.inject(this)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(getLayoutId(), container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
     }
 
     open fun hasToolbar(): Boolean {
@@ -37,11 +54,21 @@ abstract class BaseFragment : Fragment(), AppToolbar.OnClickToolbarListener {
         return null
     }
 
+    @StringRes
+    open fun getTitleIdToolbar(): Int? {
+        return null
+    }
+
     open fun getTextToolbarLeft(): String? {
         return null
     }
 
+    open fun getTextIdToolbarLeft(): Int? {
+        return null
+    }
+
     override fun onItemLeft() {
+        // Need override in fragment to register listener
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {

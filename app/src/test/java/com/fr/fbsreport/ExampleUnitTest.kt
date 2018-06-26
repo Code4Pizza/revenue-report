@@ -1,11 +1,7 @@
 package com.fr.fbsreport
 
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Test
-
-import org.junit.Assert.*
+import java.util.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -13,17 +9,29 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+    val lady: String by lazy {
+        val name = Random().nextInt(10).toString()
+        name
+    }
+
+    open class ViewTest<T> where T : String {
+        fun ok(): String {
+            return "okf"
+        }
+    }
+
+    class ViewChild<T : String> : ViewTest<T>() {
+        var a: Int = 0
+        fun fail() {
+
+        }
+    }
+
+    lateinit var test: ViewTest<String>
+
     @Test
     fun addition_isCorrect() {
-        println("Start")
-//        launch {
-//            //delay(1000)
-//            println("Hello")
-//        }
-        runBlocking {
-            //delay(1000)
-            println("Hello") 
-        }
-        println("Stop")
+        test = ViewChild()
+        println(test.ok())
     }
 }
