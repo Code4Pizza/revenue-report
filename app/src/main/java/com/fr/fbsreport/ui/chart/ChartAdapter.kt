@@ -57,7 +57,7 @@ class ChartAdapter : BaseRecyclerAdapter<ViewType, RecyclerView.ViewHolder>() {
             values.add(Entry(25f, 25f))
             values.add(Entry(30f, 30f))
 
-            val lineDataSet = LineDataSet(values, "Data set 1")
+            val lineDataSet = LineDataSet(values, "DataResponse set 1")
             lineDataSet.color = itemView?.context?.resources?.getColor(R.color.orange)!!
             lineDataSet.setDrawCircles(false)
             lineDataSet.setDrawCircleHole(false)

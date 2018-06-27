@@ -27,3 +27,10 @@ const val VIEW_TYPE_CHART_CATEGORY = 5
 
 const val EXTRA_BRANCH_CODE = "EXTRA_BRANCH_CODE"
 const val EXTRA_ITEM_REPORT = "EXTRA_ITEM_REPORT"
+const val EXTRA_BILL_REPORT = "EXTRA_BILL_REPORT"
+
+const val FILTER_TYPE_TODAY = "today"
+const val FILTER_TYPE_YESTERDAY = "yesterday"
+const val FILTER_TYPE_WEEK = "week"
+const val FILTER_TYPE_MONTH = "month"
+

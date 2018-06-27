@@ -6,8 +6,8 @@ import com.fr.fbsreport.base.BaseFragment
 import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.SaleReport
-import com.fr.fbsreport.network.BaseResponse
 import com.fr.fbsreport.network.ErrorUtils
+import com.fr.fbsreport.network.ReportResponse
 import com.fr.fbsreport.utils.formatWithDot
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -84,7 +84,7 @@ class ChartTodayFragment : BaseFragment() {
         }
     }
 
-    suspend fun fetchData(): BaseResponse.Report<SaleReport> {
+    suspend fun fetchData(): ReportResponse<SaleReport> {
         return suspendCoroutine { continuation ->
             requestApi(appRepository.getSaleReport(branchCode, null, null, 1)
                     .subscribeOn(Schedulers.io())
@@ -104,7 +104,7 @@ class ChartTodayFragment : BaseFragment() {
             total += data[i].total
         }
 
-        val lineDataSet = LineDataSet(values, "Data set 1")
+        val lineDataSet = LineDataSet(values, "DataResponse set 1")
         lineDataSet.color = resources.getColor(R.color.orange)
         lineDataSet.setDrawCircles(false)
         lineDataSet.setDrawCircleHole(false)

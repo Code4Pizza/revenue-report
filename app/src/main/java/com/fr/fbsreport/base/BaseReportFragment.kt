@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.fr.fbsreport.R
 import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.widget.FilterDialog
+import com.fr.fbsreport.widget.FilterTimeDialog
 
 abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
 
@@ -16,12 +16,14 @@ abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
     protected var limit: Int? = 20
     protected var page = 1
 
-    protected lateinit var recyclerReport: RecyclerView
+    protected lateinit var reportList: RecyclerView
     protected lateinit var txtFilter: TextView
     protected lateinit var viewTotal: LinearLayout
     protected lateinit var txtTotal: TextView
 
-    protected val branchCode: String by androidLazy { arguments?.getString(EXTRA_BRANCH_CODE) ?: "" }
+    protected val branchCode: String by androidLazy {
+        arguments?.getString(EXTRA_BRANCH_CODE) ?: ""
+    }
     protected lateinit var reportAdapter: BaseReportAdapter<T>
 
     override fun onItemLeft() {
@@ -39,8 +41,8 @@ abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
     }
 
     open fun initReportList() {
-        recyclerReport = view!!.findViewById(R.id.recycler_report)
-        recyclerReport.apply {
+        reportList = view!!.findViewById(R.id.bill_report_list)
+        reportList.apply {
             setHasFixedSize(true)
             val linearLayout = LinearLayoutManager(context)
             layoutManager = linearLayout
@@ -53,26 +55,14 @@ abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
     private fun initFilterView() {
         txtFilter = view!!.findViewById(R.id.txt_filter)
         txtFilter.setOnClickListener {
-            val filterDialog = FilterDialog.newInstance(txtFilter.text.toString())
-            filterDialog.setOnClickFilterDialogListener(object : FilterDialog.OnClickFilterDialogListener {
-                override fun onClickRecent() {
-                    setupFilter(null, 20, "Recent", false)
-                }
-
-                override fun onClickToday() {
-                    setupFilter("today", null, "Today", true)
-                }
-
-                override fun onClickYesterday() {
-                    setupFilter("yesterday", null, "Yesterday", true)
-                }
-
-                override fun onClickWeek() {
-                    setupFilter("week", null, "Week", true)
-                }
-
-                override fun onClickMonth() {
-                    setupFilter("month", null, "Month", true)
+            val filterDialog = FilterTimeDialog.newInstance(txtFilter.text.toString(), object : FilterTimeDialog.OnClickFilterDialogListener {
+                override fun onClickFilter(time: String) {
+                    when (time) {
+                        FILTER_TYPE_TODAY -> setupFilter(FILTER_TYPE_TODAY, null, FILTER_TYPE_TODAY, true)
+                        FILTER_TYPE_YESTERDAY -> setupFilter(FILTER_TYPE_YESTERDAY, null, FILTER_TYPE_YESTERDAY, true)
+                        FILTER_TYPE_WEEK -> setupFilter(FILTER_TYPE_WEEK, null, FILTER_TYPE_WEEK, true)
+                        FILTER_TYPE_MONTH -> setupFilter(FILTER_TYPE_MONTH, null, FILTER_TYPE_MONTH, true)
+                    }
                 }
             })
             getBaseActivity()?.showDialogFragment(filterDialog)

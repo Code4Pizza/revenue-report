@@ -6,27 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.BaseDialog
+import com.fr.fbsreport.base.*
 import kotlinx.android.synthetic.main.view_filter_dialog.*
 
-class FilterDialog : BaseDialog() {
+class FilterTimeDialog : BaseDialog() {
 
-    private var listener: OnClickFilterDialogListener? = null
-    private var filter: String? = null
+    private lateinit var listener: OnClickFilterDialogListener
+    private lateinit var time: String
 
     companion object {
         @JvmStatic
-        fun newInstance(filter: String) = FilterDialog().apply {
-            this.filter = filter
+        fun newInstance(time: String, listener: OnClickFilterDialogListener) = FilterTimeDialog().apply {
+            this.time = time
+            this.listener = listener
         }
     }
 
     interface OnClickFilterDialogListener {
-        fun onClickRecent()
-        fun onClickToday()
-        fun onClickYesterday()
-        fun onClickWeek()
-        fun onClickMonth()
+        fun onClickFilter(time: String)
     }
 
     fun setOnClickFilterDialogListener(listener: OnClickFilterDialogListener) {
@@ -41,47 +38,39 @@ class FilterDialog : BaseDialog() {
         super.onViewCreated(view, savedInstanceState)
         context?.let {
             val colorBlack = ContextCompat.getColor(it, R.color.mediumBlack)
-            when (filter) {
-                "Recent" -> {
-                    txt_recent.setTextColor(colorBlack)
-                    txt_recent.isEnabled = false
-                }
-                "Today" -> {
+            when (time) {
+                FILTER_TYPE_TODAY -> {
                     txt_today.setTextColor(colorBlack)
                     txt_today.isEnabled = false
                 }
-                "Yesterday" -> {
+                FILTER_TYPE_YESTERDAY -> {
                     txt_yesterday.setTextColor(colorBlack)
                     txt_yesterday.isEnabled = false
                 }
-                "Week" -> {
+                FILTER_TYPE_WEEK -> {
                     txt_week.setTextColor(colorBlack)
                     txt_week.isEnabled = false
                 }
-                "Month" -> {
+                FILTER_TYPE_MONTH -> {
                     txt_month.setTextColor(colorBlack)
                     txt_month.isEnabled = false
                 }
             }
         }
-        txt_recent.setOnClickListener {
-            listener?.onClickRecent()
-            dismiss()
-        }
         txt_today.setOnClickListener {
-            listener?.onClickToday()
+            listener.onClickFilter(FILTER_TYPE_TODAY)
             dismiss()
         }
         txt_yesterday.setOnClickListener {
-            listener?.onClickYesterday()
+            listener.onClickFilter(FILTER_TYPE_YESTERDAY)
             dismiss()
         }
         txt_week.setOnClickListener {
-            listener?.onClickWeek()
+            listener.onClickFilter(FILTER_TYPE_WEEK)
             dismiss()
         }
         txt_month.setOnClickListener {
-            listener?.onClickMonth()
+            listener.onClickFilter(FILTER_TYPE_MONTH)
             dismiss()
         }
     }
@@ -94,4 +83,3 @@ class FilterDialog : BaseDialog() {
         dialog.window?.attributes = params as android.view.WindowManager.LayoutParams
     }
 }
-

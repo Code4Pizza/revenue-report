@@ -20,34 +20,34 @@ interface AppService {
     fun editUserInfo(): Single<User>
 
     @GET("/branch")
-    fun getBranch(): Single<BaseResponse.Default<List<Branch>>>
+    fun getBranch(): Single<DataResponse<List<Branch>>>
 
     @GET("/report?type=delete")
     fun getDeleteReport(@Query("branch") branchCode: String,
                         @Query("filter") filter: String?,
                         @Query("limit") limit: Int?,
-                        @Query("page") page: Int): Single<BaseResponse.Report<DeleteReport>>
+                        @Query("page") page: Int): Single<ReportResponse<DeleteReport>>
 
     @GET("/report?type=bill")
     fun getBillReport(@Query("branch") branchCode: String,
                       @Query("filter") filter: String?,
                       @Query("limit") limit: Int?,
-                      @Query("page") page: Int): Single<BaseResponse.Report<BillReport>>
+                      @Query("page") page: Int): Single<ReportResponse<BillReport>>
 
     @GET("/report?type=sale")
     fun getSaleReport(@Query("branch") branchCode: String,
                       @Query("filter") filter: String?,
                       @Query("limit") limit: Int?,
-                      @Query("page") page: Int): Single<BaseResponse.Report<SaleReport>>
+                      @Query("page") page: Int): Single<ReportResponse<SaleReport>>
 
     @GET("/report?type=item")
     fun getItemReport(@Query("branch") branchCode: String,
                       @Query("filter") filter: String?,
                       @Query("limit") limit: Int?,
-                      @Query("page") page: Int): Single<BaseResponse.Report<ItemReport>>
+                      @Query("page") page: Int): Single<ReportResponse<ItemReport>>
 
     @GET("/report/dashboard")
     fun getDashboard(@Query("branch") branchCode: String,
                      @Query("type") type: String,
-                     @Query("date") date: String?): Single<BaseResponse.Sections>
+                     @Query("date") date: String?): Single<DataResponse<Dashboard>>
 }

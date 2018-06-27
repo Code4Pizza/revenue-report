@@ -6,7 +6,8 @@ import com.fr.fbsreport.base.BaseFragment
 import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.base.INDEX_REPORT
 import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.ui.report.bill.BillReportFragment
+import com.fr.fbsreport.ui.report.bill.BillReportChartFragment
+import com.fr.fbsreport.ui.report.delete.DeleteReportFragment
 import com.fr.fbsreport.ui.report.item.ItemReportFragment
 import com.fr.fbsreport.ui.report.sale.SaleReportFragment
 import kotlinx.android.synthetic.main.fragment_report.*
@@ -30,10 +31,10 @@ class ReportFragment : BaseFragment() {
 
     override fun initViews() {
         item_reject.setOnClickListener {
-            getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BaseReportChartFragment.newInstance(branchCode))
+            getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, DeleteReportFragment.newInstance(branchCode))
         }
         item_bill.setOnClickListener {
-            getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode))
+            getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportChartFragment.newInstance(branchCode))
         }
         item_promotion.setOnClickListener {
             getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, SaleReportFragment.newInstance(branchCode))

@@ -40,7 +40,7 @@ class ItemReportFragment : BaseReportFragment<ItemReport>() {
                 getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, DetailItemFragment.newInstance(report as ItemReport))
             }
         })
-        recyclerReport.adapter = reportAdapter
+        reportList.adapter = reportAdapter
         getBaseActivity()?.showLoading()
         requestReports(true)
     }

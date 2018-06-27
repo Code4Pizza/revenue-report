@@ -33,7 +33,7 @@ class SaleReportFragment : BaseReportFragment<SaleReport>() {
     override fun initReportList() {
         super.initReportList()
         reportAdapter = BaseReportAdapter(SaleReportDelegateAdapter())
-        recyclerReport.adapter = reportAdapter
+        reportList.adapter = reportAdapter
         getBaseActivity()?.showLoading()
         requestReports(true)
     }

@@ -38,7 +38,7 @@ class DeleteReportFragment : BaseReportFragment<DeleteReport>() {
             override fun onReportClick(report: BaseReport) {
             }
         })
-        recyclerReport.adapter = reportAdapter
+        reportList.adapter = reportAdapter
         requestReports(true)
     }
 

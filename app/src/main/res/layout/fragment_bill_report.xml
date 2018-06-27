@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBgGray"
-    android:clickable="true">
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:focusable="true">
 
     <LinearLayout
         android:id="@+id/ll_overview"
@@ -19,7 +20,8 @@
             android:paddingStart="@dimen/spacing_normal"
             android:paddingTop="@dimen/spacing_tiny"
             android:paddingEnd="@dimen/spacing_normal"
-            android:paddingBottom="@dimen/spacing_tiny">
+            android:paddingBottom="@dimen/spacing_tiny"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,7 +58,8 @@
             android:paddingStart="@dimen/spacing_normal"
             android:paddingTop="@dimen/spacing_tiny"
             android:paddingEnd="@dimen/spacing_normal"
-            android:paddingBottom="@dimen/spacing_tiny">
+            android:paddingBottom="@dimen/spacing_tiny"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -77,10 +80,51 @@
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_column"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_overview"
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingEnd="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:fontFamily="@font/sf_regular"
+            android:text="@string/bill_report_orders"
+            android:textColor="@color/mediumBlack"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/sf_regular"
+            android:gravity="center"
+            android:text="@string/bill_report_tables"
+            android:textColor="@color/mediumBlack"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:fontFamily="@font/sf_regular"
+            android:gravity="end"
+            android:text="@string/bill_report_sales"
+            android:textColor="@color/mediumBlack"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_report"
+        android:id="@+id/bill_report_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/ll_overview" />
+        android:layout_below="@id/ll_column" />
 
 </RelativeLayout>

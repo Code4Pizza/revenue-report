@@ -5,6 +5,8 @@ import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportAdapter
 import com.fr.fbsreport.base.BaseReportFragment
 import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
+import com.fr.fbsreport.base.INDEX_REPORT
+import com.fr.fbsreport.model.BaseReport
 import com.fr.fbsreport.model.BillReport
 import com.fr.fbsreport.network.ErrorUtils
 import com.fr.fbsreport.ui.report.bill.adapter.BillReportDelegateAdapter
@@ -33,7 +35,12 @@ class BillReportFragment : BaseReportFragment<BillReport>() {
     override fun initReportList() {
         super.initReportList()
         reportAdapter = BaseReportAdapter(BillReportDelegateAdapter())
-        recyclerReport.adapter = reportAdapter
+        reportAdapter.setOnReportClickListener(object : BaseReportAdapter.OnReportClickListener {
+            override fun onReportClick(report: BaseReport) {
+                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportDetailFragment.newInstance(report as BillReport))
+            }
+        })
+        reportList.adapter = reportAdapter
         requestReports(true)
     }
 

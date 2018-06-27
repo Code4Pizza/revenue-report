@@ -31,10 +31,7 @@ class BillReportDelegateAdapter : ViewTypeDelegateAdapter {
             itemView.txt_sale_num.text = if (billReport.saleNum.isEmpty()) "Unknown" else billReport.saleNum
             itemView.txt_sale_date.text = billReport.getFormatDate()
             itemView.txt_table.text = billReport.tableId.toString()
-            itemView.txt_sub_total.text = billReport.subTotal.formatWithDot()
-            itemView.txt_discount.text = billReport.discount.formatWithDot()
-            itemView.txt_vat.text = billReport.tax.formatWithDot()
-            itemView.txt_service_charge.text = billReport.serviceChargeAmount.formatWithDot()
+            itemView.txt_total.text = billReport.subTotal.formatWithDot()
         }
     }
 }

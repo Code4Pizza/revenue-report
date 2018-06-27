@@ -1,9 +1,7 @@
 package com.fr.fbsreport.ui.chart.month
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
 import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
@@ -13,8 +11,8 @@ import com.fr.fbsreport.model.BillReport
 import com.fr.fbsreport.model.DeleteReport
 import com.fr.fbsreport.model.ItemReport
 import com.fr.fbsreport.model.SaleReport
-import com.fr.fbsreport.network.BaseResponse
 import com.fr.fbsreport.network.ErrorUtils
+import com.fr.fbsreport.network.ReportResponse
 import com.fr.fbsreport.ui.chart.ChartAdapter
 import com.fr.fbsreport.utils.formatWithDot
 import com.github.mikephil.charting.components.XAxis
@@ -159,7 +157,7 @@ class ChartMonthFragment : BaseFragment() {
         }
     }
 
-    suspend fun fetchDelete(): BaseResponse.Report<DeleteReport> {
+    suspend fun fetchDelete(): ReportResponse<DeleteReport> {
         return suspendCoroutine { continuation ->
             requestApi(appRepository.getDeleteReport(branchCode, null, null, 1)
                     .subscribeOn(Schedulers.io())
@@ -172,7 +170,7 @@ class ChartMonthFragment : BaseFragment() {
         }
     }
 
-    suspend fun fetchBill(): BaseResponse.Report<BillReport> {
+    suspend fun fetchBill(): ReportResponse<BillReport> {
         return suspendCoroutine { continuation ->
             requestApi(appRepository.getBillReport(branchCode, null, null, 1)
                     .subscribeOn(Schedulers.io())
@@ -185,7 +183,7 @@ class ChartMonthFragment : BaseFragment() {
         }
     }
 
-    suspend fun fetchSale(): BaseResponse.Report<SaleReport> {
+    suspend fun fetchSale(): ReportResponse<SaleReport> {
         return suspendCoroutine { continuation ->
             requestApi(appRepository.getSaleReport(branchCode, null, null, 1)
                     .subscribeOn(Schedulers.io())
@@ -198,7 +196,7 @@ class ChartMonthFragment : BaseFragment() {
         }
     }
 
-    suspend fun fetchItem(): BaseResponse.Report<ItemReport> {
+    suspend fun fetchItem(): ReportResponse<ItemReport> {
         return suspendCoroutine { continuation ->
             requestApi(appRepository.getItemReport(branchCode, null, null, 1)
                     .subscribeOn(Schedulers.io())
@@ -217,7 +215,7 @@ class ChartMonthFragment : BaseFragment() {
             values.add(Entry(i.toFloat(), data[i].total.toFloat()))
             total += data[i].total
         }
-        val lineDataSet = LineDataSet(values, "Data set 1")
+        val lineDataSet = LineDataSet(values, "DataResponse set 1")
         lineDataSet.color = resources.getColor(R.color.orange)
         lineDataSet.setDrawCircles(false)
         lineDataSet.setDrawCircleHole(false)
