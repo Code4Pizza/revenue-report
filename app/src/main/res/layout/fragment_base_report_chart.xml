@@ -7,23 +7,30 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/view_data"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/ll_report_chart"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/view_data"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <include layout="@layout/view_report_chart" />
+            <LinearLayout
+                android:id="@+id/ll_report_chart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <include layout="@layout/view_bill_section_1" />
+                <include layout="@layout/view_report_chart" />
 
-            <include layout="@layout/view_bill_section_2" />
+                <include layout="@layout/view_bill_section_1" />
 
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+                <include layout="@layout/view_bill_section_2" />
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

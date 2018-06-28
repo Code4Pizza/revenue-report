@@ -23,11 +23,11 @@ class BranchActivity : BaseActivity() {
     override fun initViews() {
         initSwipeRefresh()
         initBranchList()
-        requestBranchs()
+        requestBranches()
     }
 
     private fun initSwipeRefresh() {
-        swipe_refresh.setOnRefreshListener({ requestBranchs() })
+        swipe_refresh.setOnRefreshListener { requestBranches() }
     }
 
     private fun initBranchList() {
@@ -42,7 +42,7 @@ class BranchActivity : BaseActivity() {
         })
     }
 
-    private fun requestBranchs() {
+    private fun requestBranches() {
         requestApi(appRepository.getBranch()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

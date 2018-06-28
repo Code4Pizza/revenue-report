@@ -44,7 +44,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource) : AppDataSourc
         return appRemoteSource.getItemReport(branchCode, filter, limit, page)
     }
 
-    override fun getDashboard(branchCode: String, type: String, date: String?): Single<DataResponse<Dashboard>> {
-        return appRemoteSource.getDashboard(branchCode, type, date)
+    override fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Single<DataResponse<Dashboard>> {
+        return appRemoteSource.getDashboard(branchCode, type, date, startDate, endDate)
     }
 }

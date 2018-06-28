@@ -33,30 +33,33 @@ class BaseReportPagerFragment : BaseFragment() {
         view_pager.adapter = pagerAdapter
         view_pager.offscreenPageLimit = 4
         tab_layout.setupWithViewPager(view_pager)
+        view_pager.setCurrentItem(1, true)
     }
 
     class ReportPagerAdapter(private val branchCode: String, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment? {
             return when (position) {
-                0 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_TODAY)
-                1 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_YESTERDAY)
-                2 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_YESTERDAY)
-                3 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_YESTERDAY)
+                0 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_YESTERDAY)
+                1 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_TODAY)
+                2 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_WEEK)
+                3 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_MONTH)
+                4 -> BaseReportCustomFragment.newInstance(branchCode, FILTER_TYPE_CUSTOM)
                 else -> throw IllegalArgumentException("Not valid pager")
             }
         }
 
         override fun getCount(): Int {
-            return 4
+            return 5
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
             return when (position) {
-                0 -> "Hôm nay"
-                1 -> "Hôm qua"
+                0 -> "Hôm qua"
+                1 -> "Hôm nay"
                 2 -> "Tuần"
                 3 -> "Tháng"
+                4 -> "Tùy chọn"
                 else -> throw IllegalArgumentException("Not valid pager title")
             }
         }

@@ -49,5 +49,7 @@ interface AppService {
     @GET("/report/dashboard")
     fun getDashboard(@Query("branch") branchCode: String,
                      @Query("type") type: String,
-                     @Query("date") date: String?): Single<DataResponse<Dashboard>>
+                     @Query("date") date: String?,
+                     @Query("start_date") startDate: String?,
+                     @Query("end_date") endDate: String?): Single<DataResponse<Dashboard>>
 }
