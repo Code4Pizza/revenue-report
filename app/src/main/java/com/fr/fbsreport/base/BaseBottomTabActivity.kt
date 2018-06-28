@@ -28,6 +28,7 @@ abstract class BaseBottomTabActivity : BaseActivity() {
         synchronized(fragmentMap) {
             if (fragmentMap[index]!!.size == 0) {
                 pushFragment(index, fragment, false, true)
+                updateToolbar(fragment)
             } else {
                 if (FragmentUtils.isAddFirstFragmentAgain(fragmentMap[index]!!, fragment)) {
                     if (currentTab == previousTab) {
@@ -36,9 +37,9 @@ abstract class BaseBottomTabActivity : BaseActivity() {
                     pushFragment(index, fragment, false, false)
                 } else {
                     pushFragment(index, fragment, true, true)
+                    updateToolbar(fragment)
                 }
             }
-            updateToolbar(fragment)
             previousTab = currentTab
         }
     }
@@ -55,6 +56,7 @@ abstract class BaseBottomTabActivity : BaseActivity() {
             } else {
                 hideAllFragment(fragmentTransaction)
                 fragmentTransaction.show(fragmentMap[index]!!.lastElement())
+                updateToolbar(fragmentMap[index]!!.lastElement())
             }
             fragmentTransaction.commit()
         }

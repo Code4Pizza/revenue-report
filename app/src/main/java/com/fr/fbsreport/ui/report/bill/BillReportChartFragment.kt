@@ -1,15 +1,16 @@
 package com.fr.fbsreport.ui.report.bill
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.*
+import com.fr.fbsreport.network.Chart
 import com.fr.fbsreport.network.ErrorUtils
 import com.fr.fbsreport.network.Section
 import com.fr.fbsreport.ui.report.BaseReportChartFragment
 import com.fr.fbsreport.utils.formatWithDot
-import com.fr.fbsreport.widget.FilterTimeDialog
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -30,9 +31,10 @@ class BillReportChartFragment : BaseReportChartFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(branchCode: String) = BillReportChartFragment().apply {
+        fun newInstance(branchCode: String, date: String) = BillReportChartFragment().apply {
             val bundle = Bundle()
             bundle.putString(EXTRA_BRANCH_CODE, branchCode)
+            bundle.putString(EXTRA_FILTER_DATE, date)
             arguments = bundle
         }
     }
@@ -41,49 +43,50 @@ class BillReportChartFragment : BaseReportChartFragment() {
         return R.layout.fragment_base_report_chart
     }
 
+    override fun getTextIdToolbarLeft(): Int? {
+        return R.string.action_back
+    }
+
+    override fun onItemLeft() {
+        super.onItemLeft()
+        getBaseBottomTabActivity()?.onBackPressed()
+    }
+
     override fun initChart() {
         line_chart.apply {
-            xAxisValues = resources.getStringArray(R.array.axis_date)
-            line_chart.legend.isEnabled = false
-            line_chart.description.text = ""
-            line_chart.setNoDataText("")
-            line_chart.axisRight.isEnabled = false
-            line_chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-            line_chart.axisLeft.axisMinimum = 0f
-            line_chart.isDragEnabled = false
-            line_chart.setScaleEnabled(false)
-            line_chart.isScaleXEnabled = false
-            line_chart.isScaleYEnabled = false
-            line_chart.xAxis.valueFormatter = IAxisValueFormatter { value, _ ->
+            xAxisValues = when (date) {
+                FILTER_TYPE_TODAY, FILTER_TYPE_YESTERDAY -> resources.getStringArray(R.array.axis_date)
+                FILTER_TYPE_WEEK -> resources.getStringArray(R.array.axis_week)
+                FILTER_TYPE_MONTH -> resources.getStringArray(R.array.axis_month)
+                else -> throw Throwable("Unavailable date")
+            }
+            legend.isEnabled = false
+            description.text = ""
+            setNoDataText("")
+
+            isDragEnabled = false
+            setScaleEnabled(false)
+            isScaleXEnabled = false
+            isScaleYEnabled = false
+
+            axisRight.isEnabled = false
+
+            axisLeft.axisMinimum = 0f
+            axisLeft.valueFormatter = IAxisValueFormatter { value, axis ->
+                val yValue: String
+                if (value > 1000000) yValue = String.format("%s tr", (value / 1000000).toInt().toString())
+                else if (value > 100000) yValue = String.format("%s tr", (value / 100).toInt().toString())
+                else yValue = value.toInt().toString()
+                yValue
+            }
+
+            xAxis.setLabelCount(14, true)
+            xAxis.setDrawGridLines(false)
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.valueFormatter = IAxisValueFormatter { value, _ ->
                 xAxisValues[value.toInt()] // xVal is a string array
             }
-        }
-    }
 
-    override fun initFilter() {
-        txt_filter.setText(R.string.filter_time_dialog_today)
-        txt_filter.setOnClickListener {
-            val filterDialog = FilterTimeDialog.newInstance(date, object : FilterTimeDialog.OnClickFilterDialogListener {
-                override fun onClickFilter(time: String) {
-                    // Assign new time filter to request data
-                    date = time
-                    when (date) {
-                        FILTER_TYPE_TODAY -> txt_filter.setText(R.string.filter_time_dialog_today)
-                        FILTER_TYPE_YESTERDAY -> txt_filter.setText(R.string.filter_time_dialog_yesterday)
-                        FILTER_TYPE_WEEK -> txt_filter.setText(R.string.filter_time_dialog_week)
-                        FILTER_TYPE_MONTH -> txt_filter.setText(R.string.filter_time_dialog_month)
-                    }
-                    requestData()
-                }
-            })
-            getBaseActivity()?.showDialogFragment(filterDialog)
-        }
-    }
-
-    override fun initViews() {
-        super.initViews()
-        txt_detail.setOnClickListener {
-            getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode))
         }
     }
 
@@ -92,13 +95,13 @@ class BillReportChartFragment : BaseReportChartFragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
-                    getBaseActivity()?.showLoading()
+                    //      getBaseActivity()?.showLoading()
                     view_data.visibility = View.GONE
                 }
                 .subscribe({ response ->
                     getBaseActivity()?.hideLoading()
                     view_data.visibility = View.VISIBLE
-                    fillChart()
+                    fillChart(response.data.charts)
                     showSections(response.data.sections)
                 }, { err ->
                     getBaseActivity()?.hideLoading()
@@ -106,27 +109,42 @@ class BillReportChartFragment : BaseReportChartFragment() {
                 }))
     }
 
-    override fun fillChart() {
-        line_chart.clear()
-        val values = ArrayList<Entry>()
-        for (i in 0..6) {
-            values.add(Entry(i.toFloat(), Random().nextInt(50).toFloat()))
+    override fun fillChart(charts: ArrayList<Chart>) {
+        var totalSale: Long = 0
+        for (i in 0 until charts.size) {
+            val chart = charts[i]
+            chartMap.put(chart.time.toInt(), chart.total.toFloat())
         }
-        val lineDataSet = LineDataSet(values, "DataResponse set 1")
-        lineDataSet.color = resources.getColor(R.color.orange)
-        lineDataSet.setDrawCircles(false)
-        lineDataSet.setDrawCircleHole(false)
-        lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+        val values = ArrayList<Entry>()
+        for (i in 0 until chartMap.size()) {
+            val key = chartMap.keyAt(i)
+            totalSale += chartMap[key].toLong()
+            values.add(Entry(key.toFloat(), chartMap[key].toFloat()))
+        }
+        val lineDataSet = LineDataSet(values, "")
+        context?.let {
+            lineDataSet.color = ContextCompat.getColor(it, R.color.orange)
+            lineDataSet.setDrawCircles(false)
+            lineDataSet.setDrawCircleHole(true)
+            lineDataSet.mode = LineDataSet.Mode.LINEAR
+        }
         val dataSets = ArrayList<ILineDataSet>()
         dataSets.add(lineDataSet)
         val lineData = LineData(dataSets)
         lineData.setDrawValues(false)
-        line_chart.data = lineData
-        line_chart.invalidate()
+
+        line_chart.run {
+            clear()
+            data = lineData
+            invalidate()
+        }
+
+        txt_total.text = totalSale.formatWithDot()
+        txt_nb_order.text = getString(R.string.view_chart_report_number_orders, Random().nextInt(100))
     }
 
     private fun showSections(sections: ArrayList<Section?>) {
-        sections[0]?.run {
+        sections[0]?.apply {
             ll_section_1.removeAllViews()
             txt_name_section_1.text = name
             for (report in reports) {
@@ -135,8 +153,10 @@ class BillReportChartFragment : BaseReportChartFragment() {
                 sectionView.txt_sale.text = report.total.toLong().formatWithDot()
                 ll_section_1.addView(sectionView)
             }
+            view_underline_section_1.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
+            txt_view_report_1.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
         }
-        sections[1]?.run {
+        sections[1]?.apply {
             ll_section_2.removeAllViews()
             txt_name_section_2.text = name
             for (report in reports) {
@@ -145,6 +165,8 @@ class BillReportChartFragment : BaseReportChartFragment() {
                 sectionView.txt_sale.text = report.total.toLong().formatWithDot()
                 ll_section_2.addView(sectionView)
             }
+            view_underline_section_2.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
+            txt_view_report_1.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
         }
     }
 }

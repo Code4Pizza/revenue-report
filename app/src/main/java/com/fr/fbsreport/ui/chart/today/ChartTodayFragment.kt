@@ -18,8 +18,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_chart_today.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
 import kotlin.coroutines.experimental.suspendCoroutine
 
 class ChartTodayFragment : BaseFragment() {
@@ -71,17 +69,17 @@ class ChartTodayFragment : BaseFragment() {
     }
 
     private fun requestData() {
-        launch(UI) {
-            try {
-                val response = fetchData()
-                getBaseActivity()?.hideLoading()
-                fillChart(response.data)
-                txt_total.text = total.formatWithDot()
-            } catch (e: Throwable) {
-                getBaseActivity()?.hideLoading()
-                context?.let { ErrorUtils.handleCommonError(it, e) }
-            }
-        }
+//        launch(UI) {
+//            try {
+//                val response = fetchData()
+//                getBaseActivity()?.hideLoading()
+//                fillChart(response.data)
+//                txt_total.text = total.formatWithDot()
+//            } catch (e: Throwable) {
+//                getBaseActivity()?.hideLoading()
+//                context?.let { ErrorUtils.handleCommonError(it, e) }
+//            }
+//        }
     }
 
     suspend fun fetchData(): ReportResponse<SaleReport> {

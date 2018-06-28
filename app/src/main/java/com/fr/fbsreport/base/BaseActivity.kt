@@ -93,8 +93,10 @@ abstract class BaseActivity : AppCompatActivity() {
         if (isFinishing) return
         runOnUiThread({
             hideKeyboard()
-            if (loadingDialog!!.isShowing) {
-                loadingDialog!!.dismiss()
+            if (loadingDialog != null) {
+                if (loadingDialog!!.isShowing) {
+                    loadingDialog!!.dismiss()
+                }
             }
         })
     }

@@ -2,7 +2,6 @@ package com.fr.fbsreport
 
 import android.support.multidex.MultiDexApplication
 import com.crashlytics.android.Crashlytics
-import com.facebook.drawee.backends.pipeline.Fresco
 import com.fr.fbsreport.di.AppComponent
 import com.fr.fbsreport.di.AppModule
 import com.fr.fbsreport.di.DaggerAppComponent
@@ -18,7 +17,6 @@ class App : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         component = DaggerAppComponent.builder().appModule(AppModule(this)).build()
-        Fresco.initialize(this)
         Fabric.with(this, Crashlytics())
     }
 }

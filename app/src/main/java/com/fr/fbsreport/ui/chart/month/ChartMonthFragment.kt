@@ -25,8 +25,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_chart_month.*
 import kotlinx.android.synthetic.main.item_view_chart_category_item.view.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
 import kotlin.coroutines.experimental.suspendCoroutine
 
 class ChartMonthFragment : BaseFragment() {
@@ -91,70 +89,70 @@ class ChartMonthFragment : BaseFragment() {
     }
 
     private fun requestData() {
-        launch(UI) {
-            try {
-                val response = fetchDelete()
-                fillChart(response.data)
-                txt_total.text = total.formatWithDot()
-
-                for (i in 0..4) {
-                    context?.let {
-                        val viewDelete = it.inflate(R.layout.item_view_chart_category_item)
-                        viewDelete.txt_name.text = response.data[i].getFormatDate()
-                        viewDelete.txt_total.text = response.data[i].total.formatWithDot()
-                        if (i == 4) {
-                            viewDelete.view_underline.visibility = View.GONE
-                        }
-                        ll_delete.addView(viewDelete)
-                    }
-                }
-
-                val billResponse = fetchBill()
-                for (i in 0..4) {
-                    context?.let {
-                        val viewDelete = it.inflate(R.layout.item_view_chart_category_item)
-                        viewDelete.txt_name.text = billResponse.data[i].getFormatDate()
-                        viewDelete.txt_total.text = billResponse.data[i].subTotal.formatWithDot()
-                        if (i == 4) {
-                            viewDelete.view_underline.visibility = View.GONE
-                        }
-                        ll_bill.addView(viewDelete)
-                    }
-                }
-
-                val itemResponse = fetchItem()
-                for (i in 0..4) {
-                    context?.let {
-                        val viewDelete = it.inflate(R.layout.item_view_chart_category_item)
-                        viewDelete.txt_name.text = itemResponse.data[i].getFormatDate()
-                        viewDelete.txt_total.text = itemResponse.data[i].total.formatWithDot()
-                        if (i == 4) {
-                            viewDelete.view_underline.visibility = View.GONE
-                        }
-                        ll_item.addView(viewDelete)
-                    }
-                }
-
-                val saleResponse = fetchSale()
-                for (i in 0..4) {
-                    context?.let {
-                        val viewDelete = it.inflate(R.layout.item_view_chart_category_item)
-                        viewDelete.txt_name.text = saleResponse.data[i].getFormatDate()
-                        viewDelete.txt_total.text = saleResponse.data[i].total.formatWithDot()
-                        if (i == 4) {
-                            viewDelete.view_underline.visibility = View.GONE
-                        }
-                        ll_sale.addView(viewDelete)
-                    }
-                }
-
-
-                getBaseActivity()?.hideLoading()
-            } catch (e: Throwable) {
-                getBaseActivity()?.hideLoading()
-                context?.let { ErrorUtils.handleCommonError(it, e) }
-            }
-        }
+//        launch(UI) {
+//            try {
+//                val response = fetchDelete()
+//                fillChart(response.data)
+//                txt_total.text = total.formatWithDot()
+//
+//                for (i in 0..4) {
+//                    context?.let {
+//                        val viewDelete = it.inflate(R.layout.item_view_chart_category_item)
+//                        viewDelete.txt_name.text = response.data[i].getFormatDate()
+//                        viewDelete.txt_total.text = response.data[i].total.formatWithDot()
+//                        if (i == 4) {
+//                            viewDelete.view_underline.visibility = View.GONE
+//                        }
+//                        ll_delete.addView(viewDelete)
+//                    }
+//                }
+//
+//                val billResponse = fetchBill()
+//                for (i in 0..4) {
+//                    context?.let {
+//                        val viewDelete = it.inflate(R.layout.item_view_chart_category_item)
+//                        viewDelete.txt_name.text = billResponse.data[i].getFormatDate()
+//                        viewDelete.txt_total.text = billResponse.data[i].subTotal.formatWithDot()
+//                        if (i == 4) {
+//                            viewDelete.view_underline.visibility = View.GONE
+//                        }
+//                        ll_bill.addView(viewDelete)
+//                    }
+//                }
+//
+//                val itemResponse = fetchItem()
+//                for (i in 0..4) {
+//                    context?.let {
+//                        val viewDelete = it.inflate(R.layout.item_view_chart_category_item)
+//                        viewDelete.txt_name.text = itemResponse.data[i].getFormatDate()
+//                        viewDelete.txt_total.text = itemResponse.data[i].total.formatWithDot()
+//                        if (i == 4) {
+//                            viewDelete.view_underline.visibility = View.GONE
+//                        }
+//                        ll_item.addView(viewDelete)
+//                    }
+//                }
+//
+//                val saleResponse = fetchSale()
+//                for (i in 0..4) {
+//                    context?.let {
+//                        val viewDelete = it.inflate(R.layout.item_view_chart_category_item)
+//                        viewDelete.txt_name.text = saleResponse.data[i].getFormatDate()
+//                        viewDelete.txt_total.text = saleResponse.data[i].total.formatWithDot()
+//                        if (i == 4) {
+//                            viewDelete.view_underline.visibility = View.GONE
+//                        }
+//                        ll_sale.addView(viewDelete)
+//                    }
+//                }
+//
+//
+//                getBaseActivity()?.hideLoading()
+//            } catch (e: Throwable) {
+//                getBaseActivity()?.hideLoading()
+//                context?.let { ErrorUtils.handleCommonError(it, e) }
+//            }
+//        }
     }
 
     suspend fun fetchDelete(): ReportResponse<DeleteReport> {

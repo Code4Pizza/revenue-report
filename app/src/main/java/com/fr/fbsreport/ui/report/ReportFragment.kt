@@ -6,7 +6,6 @@ import com.fr.fbsreport.base.BaseFragment
 import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.base.INDEX_REPORT
 import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.ui.report.bill.BillReportChartFragment
 import com.fr.fbsreport.ui.report.delete.DeleteReportFragment
 import com.fr.fbsreport.ui.report.item.ItemReportFragment
 import com.fr.fbsreport.ui.report.sale.SaleReportFragment
@@ -34,7 +33,8 @@ class ReportFragment : BaseFragment() {
             getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, DeleteReportFragment.newInstance(branchCode))
         }
         item_bill.setOnClickListener {
-            getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportChartFragment.newInstance(branchCode))
+            getBaseActivity()?.showLoading()
+            getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BaseReportPagerFragment.newInstance(branchCode))
         }
         item_promotion.setOnClickListener {
             getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, SaleReportFragment.newInstance(branchCode))

@@ -2,6 +2,7 @@ package com.fr.fbsreport.network
 
 import com.fr.fbsreport.model.BaseReport
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class DataResponse<T>(var data: T)
 
@@ -26,7 +27,9 @@ data class Pagination(
         @SerializedName("total_pages")
         var totalPages: Int)
 
-data class Dashboard(var charts: ArrayList<String>, var sections: ArrayList<Section?>)
+data class Dashboard(var charts: ArrayList<Chart>, var sections: ArrayList<Section?>)
+
+data class Chart(var time: String, var total: String)
 
 data class Section(val name: String, var reports: ArrayList<ReportChart>)
 

@@ -121,6 +121,12 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/ll_column"
+        android:background="@color/appBgGray" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/bill_report_list"
         android:layout_width="match_parent"

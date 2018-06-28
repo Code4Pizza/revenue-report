@@ -8,5 +8,5 @@
 
     <dimen name="filter_dialog_width">200dp</dimen>
 
-    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
 </resources>

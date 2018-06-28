@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/spacing_small"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@android:color/white"
     app:cardElevation="@dimen/card_elevation">
 
@@ -29,17 +32,19 @@
                 tools:text="Doanh số theo bàn" />
 
             <TextView
+                android:id="@+id/txt_view_report_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/sf_semibold"
                 android:gravity="end"
-                android:text="Doanh thu"
-                android:textColor="@color/gray"
+                android:text="Xem báo cáo"
+                android:textColor="@color/orange"
                 android:textSize="15sp" />
         </LinearLayout>
 
         <View
+            android:id="@+id/view_underline_section_2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="@dimen/spacing_small"
