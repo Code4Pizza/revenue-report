@@ -42,4 +42,8 @@ class InfiniteScrollListener(private val func: () -> Unit, private val layoutMan
         this.loading = loading
     }
 
+    fun isLoading(): Boolean {
+        return loading
+    }
+
 }

@@ -39,25 +39,33 @@ class DeleteReportFragment : BaseReportFragment<DeleteReport>() {
             }
         })
         reportList.adapter = reportAdapter
-        requestReports(true)
+        requestReports()
     }
 
-    override fun requestReports(forceRefresh: Boolean) {
+    override fun requestReports() {
+        getBaseActivity()?.showLoading()
         requestApi(appRepository.getDeleteReport(branchCode, filter, limit, page)
-                .doOnSubscribe {
-                    if (forceRefresh) {
-                        getBaseActivity()?.showLoading()
-                        reportAdapter.clear()
-                    }
-                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    page++
+                .subscribe({ data ->
                     getBaseActivity()?.hideLoading()
-                    reportAdapter.addReports(response.data)
+                    page++
+                    reportAdapter.setReports(data)
                 }, { err ->
                     getBaseActivity()?.hideLoading()
+                    infiniteScrollListener.setLoading(false)
+                    context?.let { ErrorUtils.handleCommonError(it, err) }
+                }))
+    }
+
+    override fun requestMoreReports() {
+        requestApi(appRepository.getDeleteReport(branchCode, filter, limit, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ data ->
+                    page++
+                    reportAdapter.addReports(data)
+                }, { err ->
                     infiniteScrollListener.setLoading(false)
                     context?.let { ErrorUtils.handleCommonError(it, err) }
                 }))

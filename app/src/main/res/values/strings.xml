@@ -76,7 +76,7 @@
     <string name="bill_section_view_report">Xem báo cáo</string>
 
     <!--Delete report-->
-    <string name="delete_report_column_orders">Hóa đơn</string>
+    <string name="delete_report_column_orders">Số Hóa đơn</string>
     <string name="delete_report_column_total">Tổng tiền</string>
     <string name="delete_report_column_reason">Lý do hủy</string>
 
@@ -98,8 +98,12 @@
     <string name="item_report_detail_item_tax">VAT</string>
     <string name="item_report_detail_item_total">Tổng cộng</string>
 
-    <!--Sale report-->
-    <string name="sale_report_item_title_discount">Giảm giá</string>
-    <string name="sale_report_item_title_total">Thành tiền</string>
+    <!--Discount report-->
+    <string name="discount_report_column_orders">Số Hóa đơn</string>
+    <string name="discount_report_column_discount">Giảm giá</string>
+    <string name="discount_report_column_reason">Lý do giảm giá</string>
+
+    <string name="discount_report_item_title_discount">Giảm giá</string>
+    <string name="discount_report_item_title_total">Thành tiền</string>
 
 </resources>

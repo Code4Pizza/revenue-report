@@ -29,7 +29,7 @@ class BillReportDelegateAdapter : ViewTypeDelegateAdapter {
             parent.inflate(R.layout.item_view_bill_report)) {
 
         fun bind(billReport: BillReport) {
-            itemView.txt_sale_num.text = if (billReport.saleNum.isEmpty()) "Unknown" else billReport.saleNum
+            itemView.txt_sale_num.text = billReport.saleNum
             itemView.txt_sale_date.text = billReport.saleDate.displayDate()
             itemView.txt_table.text = billReport.tableId.toString()
             itemView.txt_total.text = billReport.subTotal.formatWithDot()

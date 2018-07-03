@@ -1,4 +1,4 @@
-package com.fr.fbsreport.ui.login.forgotpassword
+package com.fr.fbsreport.ui.forgotpassword
 
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseActivity

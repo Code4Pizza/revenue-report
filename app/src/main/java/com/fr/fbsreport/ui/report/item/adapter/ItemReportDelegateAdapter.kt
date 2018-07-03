@@ -29,10 +29,10 @@ class ItemReportDelegateAdapter : ViewTypeDelegateAdapter {
             parent.inflate(R.layout.item_view_item_report)) {
 
         fun bind(itemReport: ItemReport) {
-            itemView.txt_sale_num.text = if (itemReport.saleNum.isEmpty()) "Unknown" else itemReport.saleNum
+            itemView.txt_sale_num.text = itemReport.saleNum
             itemView.txt_sale_date.text = itemReport.saleDate.displayDate()
             itemView.txt_discount.text = itemReport.discount.formatWithDot()
-            itemView.txt_items.text = itemReport.items.size.toString()
+          //  itemView.txt_items.text = itemReport.items.size.toString()
             itemView.txt_total.text = itemReport.total.formatWithDot()
         }
     }

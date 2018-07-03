@@ -1,23 +1,21 @@
-package com.fr.fbsreport.ui.report.item
+package com.fr.fbsreport.ui.report.discount
 
 import android.os.Bundle
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportAdapter
 import com.fr.fbsreport.base.BaseReportFragment
 import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
-import com.fr.fbsreport.base.INDEX_REPORT
-import com.fr.fbsreport.model.BaseReport
-import com.fr.fbsreport.model.ItemReport
+import com.fr.fbsreport.model.DiscountReport
 import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.ui.report.item.adapter.ItemReportDelegateAdapter
+import com.fr.fbsreport.ui.report.discount.adapter.DiscountReportDelegateAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ItemReportFragment : BaseReportFragment<ItemReport>() {
+class DiscountReportFragment : BaseReportFragment<DiscountReport>() {
 
     companion object {
         @JvmStatic
-        fun newInstance(branchCode: String) = ItemReportFragment().apply {
+        fun newInstance(branchCode: String) = DiscountReportFragment().apply {
             val bundle = Bundle()
             bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             arguments = bundle
@@ -25,28 +23,23 @@ class ItemReportFragment : BaseReportFragment<ItemReport>() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_item_report
+        return R.layout.fragment_discount_report
     }
 
     override fun getTitleIdToolbar(): Int? {
-        return R.string.report_by_item
+        return R.string.report_discount
     }
 
     override fun initReportList() {
         super.initReportList()
-        reportAdapter = BaseReportAdapter(ItemReportDelegateAdapter())
-        reportAdapter.setOnReportClickListener(object : BaseReportAdapter.OnReportClickListener {
-            override fun onReportClick(report: BaseReport) {
-                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, DetailItemReportFragment.newInstance(report as ItemReport))
-            }
-        })
+        reportAdapter = BaseReportAdapter(DiscountReportDelegateAdapter())
         reportList.adapter = reportAdapter
         requestReports()
     }
 
     override fun requestReports() {
         getBaseActivity()?.showLoading()
-        requestApi(appRepository.getItemReport(branchCode, filter, limit, page)
+        requestApi(appRepository.getDiscountReport(branchCode, filter, limit, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ data ->
@@ -61,7 +54,7 @@ class ItemReportFragment : BaseReportFragment<ItemReport>() {
     }
 
     override fun requestMoreReports() {
-        requestApi(appRepository.getItemReport(branchCode, filter, limit, page)
+        requestApi(appRepository.getDiscountReport(branchCode, filter, limit, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ data ->

@@ -7,7 +7,7 @@ import com.fr.fbsreport.base.BaseActivity
 import com.fr.fbsreport.network.ApiException
 import com.fr.fbsreport.network.ErrorUtils
 import com.fr.fbsreport.ui.branch.BranchActivity
-import com.fr.fbsreport.ui.login.forgotpassword.ForgotPasswordActivity
+import com.fr.fbsreport.ui.forgotpassword.ForgotPasswordActivity
 import com.fr.fbsreport.utils.EditTextUtils
 import com.fr.fbsreport.widget.AppToolbar
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.fr.fbsreport.R
 import com.fr.fbsreport.extension.androidLazy
+import com.fr.fbsreport.utils.CommonUtils
 
 abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
 
@@ -44,9 +45,14 @@ abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
             val linearLayout = LinearLayoutManager(context)
             layoutManager = linearLayout
             clearOnScrollListeners()
-            infiniteScrollListener = InfiniteScrollListener({ requestReports(false) }, linearLayout)
+            infiniteScrollListener = InfiniteScrollListener({ loadMore() }, linearLayout)
             addOnScrollListener(infiniteScrollListener)
         }
+    }
+
+    private fun loadMore() {
+        if (infiniteScrollListener.isLoading() or !CommonUtils.checkConnection(app)) return
+        requestMoreReports()
     }
 
 //    private fun initFilterView() {
@@ -81,5 +87,7 @@ abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
 //        requestReports(true)
 //    }
 
-    protected abstract fun requestReports(forceRefresh: Boolean)
+    protected abstract fun requestReports()
+
+    protected abstract fun requestMoreReports()
 }

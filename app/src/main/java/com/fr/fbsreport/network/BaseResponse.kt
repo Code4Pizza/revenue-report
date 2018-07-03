@@ -7,8 +7,8 @@ import java.util.*
 data class DataResponse<T>(var data: T)
 
 data class ReportResponse<T : BaseReport>(
-        var data: ArrayList<T>,
-        var meta: Meta
+        var data: List<T>,
+        var meta: Meta?
 )
 
 data class Meta(

@@ -46,10 +46,6 @@ class BranchActivity : BaseActivity() {
         requestApi(appRepository.getBranch()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {
-                    if (!swipe_refresh.isRefreshing) showLoading()
-                }
-                .doFinally { swipe_refresh.isRefreshing = false }
                 .subscribe({ branch ->
                     hideLoading()
                     branchAdapter.setItems(branch.data)
@@ -57,5 +53,10 @@ class BranchActivity : BaseActivity() {
                     hideLoading()
                     ErrorUtils.handleCommonError(this, err)
                 }))
+    }
+
+    override fun hideLoading() {
+        super.hideLoading()
+        swipe_refresh.isRefreshing = false
     }
 }

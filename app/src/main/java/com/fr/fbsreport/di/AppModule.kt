@@ -2,14 +2,13 @@
 
 package com.fr.fbsreport.di
 
+import android.arch.persistence.room.Room
 import com.fr.fbsreport.App
 import com.fr.fbsreport.BuildConfig
 import com.fr.fbsreport.network.AppService
 import com.fr.fbsreport.network.AuthInterceptor
 import com.fr.fbsreport.network.RxErrorHandling
-import com.fr.fbsreport.source.AppRemoteSource
-import com.fr.fbsreport.source.AppRepository
-import com.fr.fbsreport.source.UserPreference
+import com.fr.fbsreport.source.*
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -76,7 +75,17 @@ class AppModule(val app: App) {
 
     @Provides
     @Singleton
+    fun provideDatabase(app: App) = Room.databaseBuilder(app, AppDatabase::class.java, "fbs-db")
+            .fallbackToDestructiveMigration()
+            .build()
+
+    @Provides
+    @Singleton
+    fun provideAppLocalSource(appDatabase: AppDatabase): AppLocalSource = AppLocalSource(appDatabase)
+
+    @Provides
+    @Singleton
     @Named("app_repository")
-    fun provideRepository(appRemoteSource: AppRemoteSource): AppRepository = AppRepository(appRemoteSource)
+    fun provideRepository(appRemoteSource: AppRemoteSource, appLocalSource: AppLocalSource): AppRepository = AppRepository(appRemoteSource, appLocalSource)
 
 }

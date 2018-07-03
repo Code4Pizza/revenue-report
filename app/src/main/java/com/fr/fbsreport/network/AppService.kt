@@ -1,6 +1,7 @@
 package com.fr.fbsreport.network
 
 import com.fr.fbsreport.model.*
+import io.reactivex.Maybe
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -20,31 +21,31 @@ interface AppService {
     fun editUserInfo(): Single<User>
 
     @GET("/branch")
-    fun getBranch(): Single<DataResponse<List<Branch>>>
+    fun getBranch(): Maybe<DataResponse<List<Branch>>>
 
     @GET("/report?type=delete")
     fun getDeleteReport(@Query("branch") branchCode: String,
                         @Query("filter") filter: String?,
                         @Query("limit") limit: Int?,
-                        @Query("page") page: Int): Single<ReportResponse<DeleteReport>>
+                        @Query("page") page: Int): Maybe<ReportResponse<DeleteReport>>
 
     @GET("/report?type=bill")
     fun getBillReport(@Query("branch") branchCode: String,
                       @Query("filter") filter: String?,
                       @Query("limit") limit: Int?,
-                      @Query("page") page: Int): Single<ReportResponse<BillReport>>
+                      @Query("page") page: Int): Maybe<ReportResponse<BillReport>>
 
     @GET("/report?type=sale")
-    fun getSaleReport(@Query("branch") branchCode: String,
-                      @Query("filter") filter: String?,
-                      @Query("limit") limit: Int?,
-                      @Query("page") page: Int): Single<ReportResponse<SaleReport>>
+    fun getDiscountReport(@Query("branch") branchCode: String,
+                          @Query("filter") filter: String?,
+                          @Query("limit") limit: Int?,
+                          @Query("page") page: Int): Maybe<ReportResponse<DiscountReport>>
 
     @GET("/report?type=item")
     fun getItemReport(@Query("branch") branchCode: String,
                       @Query("filter") filter: String?,
                       @Query("limit") limit: Int?,
-                      @Query("page") page: Int): Single<ReportResponse<ItemReport>>
+                      @Query("page") page: Int): Maybe<ReportResponse<ItemReport>>
 
     @GET("/report/dashboard")
     fun getDashboard(@Query("branch") branchCode: String,

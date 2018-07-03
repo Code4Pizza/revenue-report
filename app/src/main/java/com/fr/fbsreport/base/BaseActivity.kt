@@ -89,7 +89,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun hideLoading() {
+    open fun hideLoading() {
         if (isFinishing) return
         runOnUiThread {
             hideKeyboard()

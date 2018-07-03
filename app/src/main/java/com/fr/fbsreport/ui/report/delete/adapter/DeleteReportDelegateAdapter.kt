@@ -29,7 +29,7 @@ class DeleteReportDelegateAdapter : ViewTypeDelegateAdapter {
             parent.inflate(R.layout.item_view_delete_report)) {
 
         fun bind(rejectReport: DeleteReport) {
-            itemView.txt_sale_num.text = if (rejectReport.saleNum.isEmpty()) "Unknown" else rejectReport.saleNum
+            itemView.txt_sale_num.text = rejectReport.saleNum
             itemView.txt_sale_date.text = rejectReport.saleDate.displayDate()
             itemView.txt_total.text = rejectReport.total.formatWithDot()
             itemView.txt_reason.text = rejectReport.discountReason

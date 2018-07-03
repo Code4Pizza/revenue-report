@@ -6,12 +6,12 @@ import com.fr.fbsreport.model.*
 import com.fr.fbsreport.network.AppService
 import com.fr.fbsreport.network.Dashboard
 import com.fr.fbsreport.network.DataResponse
-import com.fr.fbsreport.network.ReportResponse
+import io.reactivex.Maybe
 import io.reactivex.Single
 
-class AppRemoteSource(private val appService: AppService) : AppDataSource {
+class AppRemoteSource(private val appService: AppService) {
 
-    override fun register(username: String, email: String, password: String): Single<User> {
+    fun register(username: String, email: String, password: String): Single<User> {
         val fields = HashMap<String, String>()
         fields[FIELD_USERNAME] = username
         fields[FIELD_EMAIL] = email
@@ -20,7 +20,7 @@ class AppRemoteSource(private val appService: AppService) : AppDataSource {
         return appService.register(fields)
     }
 
-    override fun login(email: String, password: String): Single<TokenModel> {
+    fun login(email: String, password: String): Single<TokenModel> {
         val fields = HashMap<String, String>()
         fields[FIELD_GRANT_TYPE] = "password"
         fields[FIELD_USERNAME] = email
@@ -31,35 +31,39 @@ class AppRemoteSource(private val appService: AppService) : AppDataSource {
         return appService.login(fields)
     }
 
-    override fun getUserInfo(): Single<User> {
+    fun getUserInfo(): Single<User> {
         return appService.getUserInfo()
     }
 
-    override fun editUserInfo(): Single<User> {
+    fun editUserInfo(): Single<User> {
         return appService.editUserInfo()
     }
 
-    override fun getBranch(): Single<DataResponse<List<Branch>>> {
+    fun getBranch(): Maybe<DataResponse<List<Branch>>> {
         return appService.getBranch()
     }
 
-    override fun getDeleteReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<ReportResponse<DeleteReport>> {
+    fun getDeleteReport(branchCode: String, filter: String?, limit: Int?, page: Int): Maybe<List<DeleteReport>> {
         return appService.getDeleteReport(branchCode, filter, limit, page)
+                .map { it.data }
     }
 
-    override fun getBillReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<ReportResponse<BillReport>> {
+    fun getBillReport(branchCode: String, filter: String?, limit: Int?, page: Int): Maybe<List<BillReport>> {
         return appService.getBillReport(branchCode, filter, limit, page)
+                .map { it.data }
     }
 
-    override fun getSaleReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<ReportResponse<SaleReport>> {
-        return appService.getSaleReport(branchCode, filter, limit, page)
+    fun getDiscountReport(branchCode: String, filter: String?, limit: Int?, page: Int): Maybe<List<DiscountReport>> {
+        return appService.getDiscountReport(branchCode, filter, limit, page)
+                .map { it.data }
     }
 
-    override fun getItemReport(branchCode: String, filter: String?, limit: Int?, page: Int): Single<ReportResponse<ItemReport>> {
+    fun getItemReport(branchCode: String, filter: String?, limit: Int?, page: Int): Maybe<List<ItemReport>> {
         return appService.getItemReport(branchCode, filter, limit, page)
+                .map { it.data }
     }
 
-    override fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Single<DataResponse<Dashboard>> {
+    fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Single<DataResponse<Dashboard>> {
         return appService.getDashboard(branchCode, type, date, startDate, endDate)
     }
 }

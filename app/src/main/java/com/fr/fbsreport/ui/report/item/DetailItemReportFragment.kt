@@ -56,9 +56,9 @@ class DetailItemReportFragment : BaseFragment() {
         txt_discount.text = itemReport.discount.formatWithDot()
         view!!.findViewById<TextView>(R.id.txt_total).text = itemReport.total.formatWithDot()
         ll_items.removeAllViewsInLayout()
-        for (item in itemReport.items) {
-            addViewDish(item)
-        }
+//        for (item in itemReport.items) {
+//            addViewDish(item)
+//        }
     }
 
     private fun addViewDish(item: Item) {

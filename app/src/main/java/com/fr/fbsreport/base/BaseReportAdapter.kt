@@ -43,7 +43,13 @@ open class BaseReportAdapter<T : ViewType>(delegateAdapter: ViewTypeDelegateAdap
         notifyDataSetChanged()
     }
 
-    fun addReports(reports: ArrayList<T>) {
+    fun setReports(reports: List<T>) {
+        this.reports.clear()
+        this.reports.addAll(reports)
+        notifyDataSetChanged()
+    }
+
+    fun addReports(reports: List<T>) {
         val initPosition = this.reports.size + 1
         this.reports.addAll(reports)
         notifyItemRangeInserted(initPosition, this.reports.size)

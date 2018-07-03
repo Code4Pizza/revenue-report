@@ -21,6 +21,9 @@ abstract class BaseFragment : Fragment(), AppToolbar.OnClickToolbarListener {
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     @Inject
+    lateinit var app: App
+    
+    @Inject
     lateinit var userPreference: UserPreference
 
     @field:[Inject Named("app_repository")]
