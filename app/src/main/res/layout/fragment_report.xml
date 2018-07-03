@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".ui.report.ReportFragment">
+    tools:context=".ui.report.ReportFragment"
+    tools:ignore="Overdraw">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,12 +14,12 @@
         android:orientation="vertical">
 
         <com.fr.fbsreport.widget.ItemViewReport
-            android:id="@+id/item_reject"
+            android:id="@+id/item_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:ivr_image_icon="@drawable/icon_reject"
             app:ivr_marginBorder="@dimen/spacing_normal"
-            app:ivr_text_title="@string/home_report_order_delete" />
+            app:ivr_text_title="@string/report_delete" />
 
         <com.fr.fbsreport.widget.ItemViewReport
             android:id="@+id/item_bill"
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             app:ivr_image_icon="@drawable/icon_list"
             app:ivr_marginBorder="@dimen/spacing_normal"
-            app:ivr_text_title="@string/home_report_by_bill" />
+            app:ivr_text_title="@string/report_by_bill" />
 
         <com.fr.fbsreport.widget.ItemViewReport
             android:id="@+id/item_promotion"
@@ -34,14 +35,14 @@
             android:layout_height="wrap_content"
             app:ivr_image_icon="@drawable/icon_star"
             app:ivr_marginBorder="@dimen/spacing_normal"
-            app:ivr_text_title="@string/home_report_promotion" />
+            app:ivr_text_title="@string/report_discount" />
 
         <com.fr.fbsreport.widget.ItemViewReport
             android:id="@+id/item_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:ivr_image_icon="@drawable/icon_flag"
-            app:ivr_text_title="@string/home_report_by_product" />
+            app:ivr_text_title="@string/report_by_item" />
 
     </LinearLayout>
 

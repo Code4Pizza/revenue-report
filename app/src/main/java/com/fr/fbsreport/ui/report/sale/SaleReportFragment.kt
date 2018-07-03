@@ -27,7 +27,7 @@ class SaleReportFragment : BaseReportFragment<SaleReport>() {
     }
 
     override fun getTitleIdToolbar(): Int? {
-        return R.string.home_report_promotion
+        return R.string.report_discount
     }
 
     override fun initReportList() {

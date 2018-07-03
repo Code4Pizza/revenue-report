@@ -1,27 +1,20 @@
 package com.fr.fbsreport.base
 
-import android.os.Bundle
 import android.support.v4.app.FragmentTransaction
-import android.util.Log
 import com.fr.fbsreport.R
 import com.fr.fbsreport.utils.FragmentUtils
 import java.util.*
 import kotlin.collections.HashMap
 
 abstract class BaseBottomTabActivity : BaseActivity() {
-    var fragmentMap: HashMap<Int, Stack<BaseFragment>> = HashMap()
+    private var fragmentMap: HashMap<Int, Stack<BaseFragment>> = HashMap()
     var currentTab: Int = -1
-    var previousTab: Int = -1
+    private var previousTab: Int = -1
 
     init {
         fragmentMap[INDEX_ANALYTICS] = Stack()
         fragmentMap[INDEX_REPORT] = Stack()
         fragmentMap[INDEX_SETTING] = Stack()
-    }
-
-    fun refreshFragmentTab() {
-        Log.d(BaseBottomTabActivity::class.java.simpleName, "on refresh tab")
-        popAllFragmentExceptFirst()
     }
 
     fun addFragmentTab(index: Int, fragment: BaseFragment) {

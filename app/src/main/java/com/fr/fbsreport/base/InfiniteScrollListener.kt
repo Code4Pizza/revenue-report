@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 
 
-class InfiniteScrollListener(val func: () -> Unit, val layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
+class InfiniteScrollListener(private val func: () -> Unit, private val layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
 
     private var previousTotal = 0
     private var loading = true

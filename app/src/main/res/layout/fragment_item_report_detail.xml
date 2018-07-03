@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -10,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="@dimen/spacing_normal"
-        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small"
         android:paddingEnd="@dimen/spacing_normal"
-        android:paddingBottom="@dimen/spacing_small">
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_small">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,9 +28,9 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="1234ABCD12"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="1234ABCD12" />
 
             <TextView
                 android:id="@+id/txt_sale_date"
@@ -40,16 +41,16 @@
                 android:fontFamily="@font/sf_regular"
                 android:gravity="end"
                 android:maxLines="1"
-                android:text="20/05/2018"
                 android:textColor="@color/lightGray"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="20/05/2018" />
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sf_regular"
-            android:text="Các món ăn"
+            android:text="@string/item_report_detail_dishes"
             android:textColor="@color/gray"
             android:textSize="15sp" />
 
@@ -78,7 +79,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="Giảm giá"
+                android:text="@string/item_report_detail_discount"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
@@ -91,9 +92,9 @@
                 android:fontFamily="@font/sf_regular"
                 android:gravity="end"
                 android:maxLines="1"
-                android:text="1"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -108,7 +109,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="Thành tiền"
+                android:text="@string/item_report_detail_total"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
@@ -121,9 +122,9 @@
                 android:fontFamily="@font/sf_regular"
                 android:gravity="end"
                 android:maxLines="1"
-                android:text="1"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="1" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

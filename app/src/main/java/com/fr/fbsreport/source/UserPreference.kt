@@ -5,12 +5,14 @@ import com.fr.fbsreport.model.TokenModel
 import com.fr.fbsreport.model.User
 import com.fr.fbsreport.utils.PreferenceUtils
 import com.google.gson.Gson
-import javax.inject.Inject
 
+@SuppressWarnings("unused")
 class UserPreference(app: App) {
 
-    private val PREF_TOKEN_MODEL = "PREF_TOKEN_MODEL"
-    private val PREF_USER_INFO = "PREF_USER_INFO"
+    companion object {
+        const val PREF_TOKEN_MODEL = "PREF_TOKEN_MODEL"
+        const val PREF_USER_INFO = "PREF_USER_INFO"
+    }
 
     private var preferenceUtils: PreferenceUtils = PreferenceUtils(app)
 

@@ -2,12 +2,10 @@ package com.fr.fbsreport.base
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.fr.fbsreport.R
 import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.widget.FilterTimeDialog
 
 abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
 
@@ -17,9 +15,9 @@ abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
     protected var page = 1
 
     protected lateinit var reportList: RecyclerView
-    protected lateinit var txtFilter: TextView
-    protected lateinit var viewTotal: LinearLayout
-    protected lateinit var txtTotal: TextView
+    private lateinit var txtFilter: TextView
+    private lateinit var viewTotal: LinearLayout
+    private lateinit var txtTotal: TextView
 
     protected val branchCode: String by androidLazy {
         arguments?.getString(EXTRA_BRANCH_CODE) ?: ""
@@ -36,12 +34,11 @@ abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
     }
 
     override fun initViews() {
-        initFilterView()
         initReportList()
     }
 
     open fun initReportList() {
-        reportList = view!!.findViewById(R.id.bill_report_list)
+        reportList = view!!.findViewById(R.id.report_list)
         reportList.apply {
             setHasFixedSize(true)
             val linearLayout = LinearLayoutManager(context)
@@ -52,37 +49,37 @@ abstract class BaseReportFragment<T : ViewType> : BaseFragment() {
         }
     }
 
-    private fun initFilterView() {
-        txtFilter = view!!.findViewById(R.id.txt_filter)
-        txtFilter.setOnClickListener {
-            val filterDialog = FilterTimeDialog.newInstance(txtFilter.text.toString(), object : FilterTimeDialog.OnClickFilterDialogListener {
-                override fun onClickFilter(time: String) {
-                    when (time) {
-                        FILTER_TYPE_TODAY -> setupFilter(FILTER_TYPE_TODAY, null, FILTER_TYPE_TODAY, true)
-                        FILTER_TYPE_YESTERDAY -> setupFilter(FILTER_TYPE_YESTERDAY, null, FILTER_TYPE_YESTERDAY, true)
-                        FILTER_TYPE_WEEK -> setupFilter(FILTER_TYPE_WEEK, null, FILTER_TYPE_WEEK, true)
-                        FILTER_TYPE_MONTH -> setupFilter(FILTER_TYPE_MONTH, null, FILTER_TYPE_MONTH, true)
-                    }
-                }
-            })
-            getBaseActivity()?.showDialogFragment(filterDialog)
-        }
-
-        viewTotal = view!!.findViewById(R.id.ll_total)
-        viewTotal.visibility = View.GONE
-
-        txtTotal = view!!.findViewById(R.id.txt_total)
-    }
-
-    fun setupFilter(filter: String?, limit: Int?, textFilter: String, totalVisible: Boolean) {
-        this.filter = filter
-        this.limit = limit
-        this.page = 0
-        txtFilter.text = textFilter
-        txtTotal.text = ""
-        viewTotal.visibility = if (totalVisible) View.VISIBLE else View.GONE
-        requestReports(true)
-    }
+//    private fun initFilterView() {
+//        txtFilter = view!!.findViewById(R.id.txt_filter)
+//        txtFilter.setOnClickListener {
+//            val filterDialog = FilterTimeDialog.newInstance(txtFilter.text.toString(), object : FilterTimeDialog.OnClickFilterDialogListener {
+//                override fun onClickFilter(time: String) {
+//                    when (time) {
+//                        FILTER_TYPE_TODAY -> setupFilter(FILTER_TYPE_TODAY, null, FILTER_TYPE_TODAY, true)
+//                        FILTER_TYPE_YESTERDAY -> setupFilter(FILTER_TYPE_YESTERDAY, null, FILTER_TYPE_YESTERDAY, true)
+//                        FILTER_TYPE_WEEK -> setupFilter(FILTER_TYPE_WEEK, null, FILTER_TYPE_WEEK, true)
+//                        FILTER_TYPE_MONTH -> setupFilter(FILTER_TYPE_MONTH, null, FILTER_TYPE_MONTH, true)
+//                    }
+//                }
+//            })
+//            getBaseActivity()?.showDialogFragment(filterDialog)
+//        }
+//
+//        viewTotal = view!!.findViewById(R.id.ll_total)
+//        viewTotal.visibility = View.GONE
+//
+//        txtTotal = view!!.findViewById(R.id.txt_total)
+//    }
+//
+//    fun setupFilter(filter: String?, limit: Int?, textFilter: String, totalVisible: Boolean) {
+//        this.filter = filter
+//        this.limit = limit
+//        this.page = 0
+//        txtFilter.text = textFilter
+//        txtTotal.text = ""
+//        viewTotal.visibility = if (totalVisible) View.VISIBLE else View.GONE
+//        requestReports(true)
+//    }
 
     protected abstract fun requestReports(forceRefresh: Boolean)
 }

@@ -23,10 +23,10 @@ class AppDialog : BaseDialog() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        txt_confirm.setOnClickListener({
+        txt_confirm.setOnClickListener {
             Toast.makeText(context, "Click Confirm", Toast.LENGTH_SHORT).show()
             dismiss()
-        })
+        }
     }
 
 }

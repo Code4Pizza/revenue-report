@@ -78,7 +78,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun showLoading() {
         if (isFinishing) return
-        runOnUiThread({
+        runOnUiThread {
             hideKeyboard()
             if (loadingDialog == null) {
                 initDialog()
@@ -86,19 +86,19 @@ abstract class BaseActivity : AppCompatActivity() {
             if (!loadingDialog!!.isShowing) {
                 loadingDialog!!.show()
             }
-        })
+        }
     }
 
     fun hideLoading() {
         if (isFinishing) return
-        runOnUiThread({
+        runOnUiThread {
             hideKeyboard()
             if (loadingDialog != null) {
                 if (loadingDialog!!.isShowing) {
                     loadingDialog!!.dismiss()
                 }
             }
-        })
+        }
     }
 
     fun hideKeyboard() {

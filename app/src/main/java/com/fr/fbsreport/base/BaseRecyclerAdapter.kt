@@ -35,31 +35,6 @@ abstract class BaseRecyclerAdapter<I, VH> : RecyclerView.Adapter<VH>() where VH 
         notifyDataSetChanged()
     }
 
-    fun addItemsAtFront(items: List<I>) {
-        this.items.addAll(0, items)
-        notifyDataSetChanged()
-    }
-
-    fun addItems(items: List<I>) {
-        this.items.addAll(items)
-        notifyDataSetChanged()
-    }
-
-    fun addItem(item: I) {
-        this.items.add(item)
-        notifyDataSetChanged()
-    }
-
-    fun addItem(item: I, position: Int) {
-        this.items.add(position, item)
-        notifyDataSetChanged()
-    }
-
-    fun deleteItem(item: I) {
-        this.items.remove(item)
-        notifyDataSetChanged()
-    }
-
     fun getItems(): List<I> {
         return this.items
     }

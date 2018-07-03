@@ -6,6 +6,8 @@ import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportAdapter
 import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.ViewTypeDelegateAdapter
+import com.fr.fbsreport.extension.displayDate
+import com.fr.fbsreport.extension.formatWithDot
 import com.fr.fbsreport.extension.inflate
 import com.fr.fbsreport.model.DeleteReport
 import kotlinx.android.synthetic.main.item_view_delete_report.view.*
@@ -28,8 +30,8 @@ class DeleteReportDelegateAdapter : ViewTypeDelegateAdapter {
 
         fun bind(rejectReport: DeleteReport) {
             itemView.txt_sale_num.text = if (rejectReport.saleNum.isEmpty()) "Unknown" else rejectReport.saleNum
-            itemView.txt_sale_date.text = rejectReport.getFormatDate()
-            itemView.txt_total.text = rejectReport.getFormatTotal()
+            itemView.txt_sale_date.text = rejectReport.saleDate.displayDate()
+            itemView.txt_total.text = rejectReport.total.formatWithDot()
             itemView.txt_reason.text = rejectReport.discountReason
         }
     }

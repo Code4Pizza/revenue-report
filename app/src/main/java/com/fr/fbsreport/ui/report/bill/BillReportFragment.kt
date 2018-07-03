@@ -29,7 +29,7 @@ class BillReportFragment : BaseReportFragment<BillReport>() {
     }
 
     override fun getTitleIdToolbar(): Int? {
-        return R.string.home_report_by_bill
+        return R.string.report_by_bill
     }
 
     override fun initReportList() {

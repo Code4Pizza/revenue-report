@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBgGray"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
@@ -21,7 +20,7 @@
             android:fontFamily="@font/sf_regular"
             android:gravity="center"
             android:padding="@dimen/spacing_small"
-            android:text="Ngày bắt đầu"
+            android:text="@string/custom_report_start_date"
             android:textColor="@android:color/white" />
 
         <View
@@ -38,14 +37,15 @@
             android:fontFamily="@font/sf_regular"
             android:gravity="center"
             android:padding="@dimen/spacing_small"
-            android:text="Ngày kết thúc"
+            android:text="@string/custom_report_end_date"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/appBgGray">
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/view_data"
@@ -54,7 +54,6 @@
             android:visibility="gone">
 
             <LinearLayout
-                android:id="@+id/ll_report_chart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -81,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/sf_regular"
-            android:text="Không có dữ liệu :("
+            android:text="@string/text_no_data"
             android:textColor="@color/orange"
             android:visibility="gone" />
     </FrameLayout>

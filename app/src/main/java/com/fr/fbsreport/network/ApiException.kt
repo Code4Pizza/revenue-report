@@ -1,9 +1,7 @@
 package com.fr.fbsreport.network
 
-import android.text.TextUtils
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import org.json.JSONObject
 import retrofit2.Response
 import java.io.IOException
 
@@ -26,7 +24,7 @@ class ApiException : RuntimeException {
 
     class ErrorModel(var message: String, @SerializedName("status_code") var statusCode: Int)
 
-    var error: ErrorModel? = null
+    private var error: ErrorModel? = null
     var type: Type? = null
 
     constructor(message: String, response: Response<*>) : super(message) {
@@ -38,12 +36,13 @@ class ApiException : RuntimeException {
                 // ResponseBody require explicit close to prevent leak
                 responseBody.close()
             }
-            if (!TextUtils.isEmpty(bodyString)) {
+            if (!bodyString.isNullOrEmpty()) {
                 val error = Gson().fromJson<ErrorModel>(bodyString, ErrorModel::class.java)
                 if (error != null) {
                     this.error = error
                     this.type = when (error.statusCode) {
-                        in 400..499 -> Type.INVALID_REQUEST
+                        401 -> Type.OAUTH_ERROR
+                        in 401..499 -> Type.INVALID_REQUEST
                         in 500..599 -> Type.INTERNAL_SERVER_ERROR
                         else -> Type.UNEXPECTED_ERROR
                     }

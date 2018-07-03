@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="Overdraw">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,9 +28,9 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="1234ABCD12"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="1234ABCD12" />
 
             <TextView
                 android:id="@+id/txt_sale_date"
@@ -39,9 +41,9 @@
                 android:fontFamily="@font/sf_regular"
                 android:gravity="end"
                 android:maxLines="1"
-                android:text="20/05/2018"
                 android:textColor="@color/lightGray"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="20/05/2018" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,7 +58,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="Giảm giá"
+                android:text="@string/sale_report_item_title_discount"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
@@ -69,9 +71,9 @@
                 android:fontFamily="@font/sf_regular"
                 android:gravity="end"
                 android:maxLines="1"
-                android:text="1"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="1.500d" />
         </LinearLayout>
 
         <LinearLayout
@@ -86,7 +88,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="Thành tiền"
+                android:text="@string/sale_report_item_title_total"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
@@ -99,9 +101,9 @@
                 android:fontFamily="@font/sf_regular"
                 android:gravity="end"
                 android:maxLines="1"
-                android:text="1"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="155.000d" />
         </LinearLayout>
     </LinearLayout>
 

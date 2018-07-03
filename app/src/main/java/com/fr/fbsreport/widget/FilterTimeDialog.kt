@@ -26,10 +26,6 @@ class FilterTimeDialog : BaseDialog() {
         fun onClickFilter(time: String)
     }
 
-    fun setOnClickFilterDialogListener(listener: OnClickFilterDialogListener) {
-        this.listener = listener
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.view_filter_dialog, container, false)
     }
@@ -78,7 +74,7 @@ class FilterTimeDialog : BaseDialog() {
     override fun onResume() {
         super.onResume()
         val params = dialog.window?.attributes
-        params?.width = resources.getDimensionPixelSize(R.dimen.filter_dialog_width);
+        params?.width = resources.getDimensionPixelSize(R.dimen.filter_dialog_width)
         params?.height = ViewGroup.LayoutParams.WRAP_CONTENT
         dialog.window?.attributes = params as android.view.WindowManager.LayoutParams
     }

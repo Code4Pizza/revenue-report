@@ -1,4 +1,4 @@
-package com.fr.fbsreport.ui.report
+package com.fr.fbsreport.ui.report.bill
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,17 +7,17 @@ import android.support.v4.app.FragmentPagerAdapter
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.*
 import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.ui.report.bill.BillReportChartFragment
+import com.fr.fbsreport.ui.report.BaseReportCustomFragment
 import kotlinx.android.synthetic.main.fragment_base_report_pager.*
 
-class BaseReportPagerFragment : BaseFragment() {
+class BillReportPagerFragment : BaseFragment() {
 
     val branchCode: String by androidLazy { arguments?.getString(EXTRA_BRANCH_CODE) ?: "" }
     private lateinit var pagerAdapter: ReportPagerAdapter
 
     companion object {
         @JvmStatic
-        fun newInstance(branchCode: String) = BaseReportPagerFragment().apply {
+        fun newInstance(branchCode: String) = BillReportPagerFragment().apply {
             val bundle = Bundle()
             bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             arguments = bundle
@@ -64,5 +64,4 @@ class BaseReportPagerFragment : BaseFragment() {
             }
         }
     }
-
 }

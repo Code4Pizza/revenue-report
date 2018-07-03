@@ -50,7 +50,6 @@ open class BaseReportAdapter<T : ViewType>(delegateAdapter: ViewTypeDelegateAdap
     }
 
     fun getReports(): List<T> =
-            reports
-                    .filter { it.getViewType() == VIEW_TYPE_ITEM }
+            reports.filter { it.getViewType() == VIEW_TYPE_ITEM }
                     .map { it }
 }

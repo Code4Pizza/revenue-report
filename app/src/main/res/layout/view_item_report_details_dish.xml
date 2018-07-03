@@ -1,163 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingStart="@dimen/spacing_small"
-    android:paddingTop="@dimen/spacing_small"
-    android:paddingEnd="@dimen/spacing_small">
+    android:paddingEnd="@dimen/spacing_tiny"
+    android:paddingStart="@dimen/spacing_tiny"
+    android:paddingTop="@dimen/spacing_tiny">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/sf_regular"
-            android:text="Bán hàng"
+            android:text="@string/item_report_detail_item_dish"
             android:textColor="@color/gray"
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/txt_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/sf_regular"
-            android:gravity="center"
-            android:text="Tổng hóa đơn"
-            android:textColor="@color/gray"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:fontFamily="@font/sf_regular"
             android:gravity="end"
-            android:text="Doanh thu"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:text="Sinh tố - Nước ép #J" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/sf_regular"
-            android:text="Ca 1"
+            android:text="@string/item_report_detail_item_code"
             android:textColor="@color/gray"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/txt_shift_1_orders"
+            android:id="@+id/txt_item_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/sf_regular"
-            android:gravity="center"
-            android:text="10"
-            android:textColor="@color/gray"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/txt_shift_1_sales"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:fontFamily="@font/sf_regular"
             android:gravity="end"
-            android:text="20.000.000d"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:text="DR_0000023" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/sf_regular"
-            android:text="Ca 2"
+            android:text="@string/item_report_detail_item_unit"
             android:textColor="@color/gray"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/txt_shift_2_orders"
+            android:id="@+id/txt_unit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/sf_regular"
-            android:gravity="center"
-            android:text="20"
-            android:textColor="@color/gray"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/txt_shift_2_sales"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:fontFamily="@font/sf_regular"
             android:gravity="end"
-            android:text="20.000.000d"
+            android:textColor="@color/gray"
+            android:textSize="15sp"
+            tools:text="cốc" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/sf_regular"
+            android:text="@string/item_report_detail_item_quantity"
             android:textColor="@color/gray"
             android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txt_quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="@font/sf_regular"
+            android:gravity="end"
+            android:textColor="@color/gray"
+            android:textSize="15sp"
+            tools:text="cốc" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/sf_regular"
+            android:text="@string/item_report_detail_item_price"
+            android:textColor="@color/gray"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txt_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="@font/sf_regular"
+            android:gravity="end"
+            android:textColor="@color/gray"
+            android:textSize="15sp"
+            tools:text="cốc" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/sf_regular"
-            android:text="Ca 3"
+            android:text="@string/item_report_detail_item_tax"
             android:textColor="@color/gray"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/txt_shift_3_orders"
+            android:id="@+id/txt_vat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/sf_regular"
-            android:gravity="center"
-            android:text="15"
-            android:textColor="@color/gray"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/txt_shift_3_sales"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:fontFamily="@font/sf_regular"
             android:gravity="end"
-            android:text="30.000.000d"
+            android:textColor="@color/gray"
+            android:textSize="15sp"
+            tools:text="3500" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/sf_regular"
+            android:text="@string/item_report_detail_item_total"
             android:textColor="@color/gray"
             android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txt_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="@font/sf_regular"
+            android:gravity="end"
+            android:textColor="@color/gray"
+            android:textSize="15sp"
+            tools:text="700007" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/view_underline"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/borderGray" />
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:background="@color/appBgGray" />
 
 </LinearLayout>

@@ -1,41 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="axis_date">
-        <item>"8"</item>
-        <item>"9"</item>
-        <item>"10"</item>
-        <item>"11"</item>
-        <item>"12"</item>
-        <item>"13"</item>
-        <item>"14"</item>
-        <item>"15"</item>
-        <item>"16"</item>
-        <item>"17"</item>
-        <item>"18"</item>
-        <item>"19"</item>
-        <item>"20"</item>
-        <item>"21"</item>
-        <item>"22"</item>
-        <item>"23"</item>
-    </string-array>
 
-    <string-array name="axis_week">
-        <item>"T2"</item>
-        <item>"T3"</item>
-        <item>"T4"</item>
-        <item>"T5"</item>
-        <item>"T6"</item>
-        <item>"T7"</item>
-        <item>"CN"</item>
-    </string-array>
-
-    <string-array name="axis_month">
-        <item>""</item>
-        <item>"5"</item>
-        <item>"10"</item>
-        <item>"15"</item>
-        <item>"20"</item>
-        <item>"25"</item>
-        <item>"30"</item>
-    </string-array>
 </resources>

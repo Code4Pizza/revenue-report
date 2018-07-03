@@ -1,7 +1,6 @@
 package com.fr.fbsreport.ui.login
 
 import android.content.Intent
-import android.text.TextUtils
 import android.widget.Toast
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseActivity
@@ -28,7 +27,6 @@ class LoginActivity : BaseActivity() {
             }
         })
         btn_login.setOnClickListener {
-            // startActivity(Intent(this@LoginActivity, BranchActivity::class.java))
             validateInput()
         }
         txt_forgot_password.setOnClickListener {
@@ -40,7 +38,7 @@ class LoginActivity : BaseActivity() {
         val email = edt_email.text.toString()
         val password = edt_password.text.toString()
 
-        if (TextUtils.isEmpty(email)) {
+        if (email.isBlank()) {
             Toast.makeText(this@LoginActivity, "Fill email", Toast.LENGTH_SHORT).show()
             return
         }
@@ -48,7 +46,7 @@ class LoginActivity : BaseActivity() {
             Toast.makeText(this@LoginActivity, "Email invalid", Toast.LENGTH_SHORT).show()
             return
         }
-        if (TextUtils.isEmpty(password)) {
+        if (password.isBlank()) {
             Toast.makeText(this@LoginActivity, "Fill password", Toast.LENGTH_SHORT).show()
             return
         }

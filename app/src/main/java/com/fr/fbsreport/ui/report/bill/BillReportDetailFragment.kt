@@ -4,8 +4,9 @@ import android.os.Bundle
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
 import com.fr.fbsreport.base.EXTRA_BILL_REPORT
+import com.fr.fbsreport.extension.displayDate
+import com.fr.fbsreport.extension.formatWithDot
 import com.fr.fbsreport.model.BillReport
-import com.fr.fbsreport.utils.formatWithDot
 import kotlinx.android.synthetic.main.fragment_bill_report_detail.*
 
 class BillReportDetailFragment : BaseFragment() {
@@ -24,7 +25,7 @@ class BillReportDetailFragment : BaseFragment() {
     }
 
     override fun getTitleIdToolbar(): Int? {
-        return R.string.bill_report_detail_title
+        return R.string.bill_report_detail_toolbar_title
     }
 
     override fun getTextIdToolbarLeft(): Int? {
@@ -40,7 +41,7 @@ class BillReportDetailFragment : BaseFragment() {
         arguments?.let {
             val billReport = it.getSerializable(EXTRA_BILL_REPORT) as BillReport
             txt_sale_num.text = if (billReport.saleNum.isEmpty()) "Unknown" else billReport.saleNum
-            txt_sale_date.text = billReport.getFormatDate()
+            txt_sale_date.text = billReport.saleDate.displayDate()
             txt_table.text = billReport.tableId.toString()
             txt_discount.text = billReport.discount.formatWithDot()
             txt_tax.text = billReport.tax.formatWithDot()

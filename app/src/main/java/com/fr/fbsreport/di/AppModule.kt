@@ -63,7 +63,7 @@ class AppModule(val app: App) {
     @Provides
     @Singleton
     fun provideService(okHttpClient: OkHttpClient): AppService = Retrofit.Builder()
-            .baseUrl("http://api.reporter.demo.ngocnh.info")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxErrorHandling.create())
             .client(okHttpClient)

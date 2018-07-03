@@ -38,7 +38,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/sf_semibold"
                 android:gravity="end"
-                android:text="Xem báo cáo"
+                android:text="@string/bill_section_view_report"
                 android:textColor="@color/orange"
                 android:textSize="15sp" />
         </LinearLayout>

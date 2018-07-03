@@ -17,16 +17,16 @@ class AppBottomBar @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_app_bottom_bar, this, true)
-        ll_analytics.setOnClickListener({ setClicked(INDEX_ANALYTICS) })
-        ll_report.setOnClickListener({ setClicked(INDEX_REPORT) })
-        ll_setting.setOnClickListener({ setClicked(INDEX_SETTING) })
+        ll_analytics.setOnClickListener { setClicked(INDEX_ANALYTICS) }
+        ll_report.setOnClickListener { setClicked(INDEX_REPORT) }
+        ll_setting.setOnClickListener { setClicked(INDEX_SETTING) }
     }
 
     interface OnClickBottomBarListener {
         fun onItemBottomClick(position: Int)
     }
 
-    fun setOnClickBottombarListener(listener: OnClickBottomBarListener) {
+    fun setOnClickBottomBarListener(listener: OnClickBottomBarListener) {
         this.listener = listener
     }
 

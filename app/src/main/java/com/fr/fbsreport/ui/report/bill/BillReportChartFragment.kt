@@ -7,13 +7,13 @@ import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.*
 import com.fr.fbsreport.extension.color
+import com.fr.fbsreport.extension.formatWithDot
 import com.fr.fbsreport.extension.getDayOfMonth
 import com.fr.fbsreport.extension.getDayOfWeek
 import com.fr.fbsreport.network.Chart
 import com.fr.fbsreport.network.ErrorUtils
 import com.fr.fbsreport.network.Section
 import com.fr.fbsreport.ui.report.BaseReportChartFragment
-import com.fr.fbsreport.utils.formatWithDot
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -21,7 +21,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_base_report_chart.*
 import kotlinx.android.synthetic.main.item_view_section.view.*
@@ -67,7 +66,7 @@ class BillReportChartFragment : BaseReportChartFragment() {
         line_chart.apply {
             legend.isEnabled = false
             description.text = ""
-            setNoDataText("Không có dữ liệu :(")
+            setNoDataText(getString(R.string.text_no_data))
             setNoDataTextTypeface(ResourcesCompat.getFont(context, R.font.sf_regular))
             setNoDataTextColor(context.color(R.color.orange))
 
@@ -79,7 +78,7 @@ class BillReportChartFragment : BaseReportChartFragment() {
             axisRight.isEnabled = false
 
             axisLeft.axisMinimum = 0f
-            axisLeft.valueFormatter = IAxisValueFormatter { value, axis ->
+            axisLeft.valueFormatter = IAxisValueFormatter { value, _ ->
                 when {
                     value > 1000000 -> String.format("%s tr", (value / 1000000).toInt().toString())
                     value > 100000 -> String.format("%s tr", (value / 100).toInt().toString())
@@ -211,7 +210,7 @@ class BillReportChartFragment : BaseReportChartFragment() {
                 ll_section_2.addView(sectionView)
             }
             view_underline_section_2.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_1.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
+            txt_view_report_2.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
         }
     }
 }

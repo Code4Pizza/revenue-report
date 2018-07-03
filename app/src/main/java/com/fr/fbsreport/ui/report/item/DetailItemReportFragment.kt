@@ -5,20 +5,21 @@ import android.widget.TextView
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
 import com.fr.fbsreport.base.EXTRA_ITEM_REPORT
+import com.fr.fbsreport.extension.displayDate
+import com.fr.fbsreport.extension.formatWithDot
 import com.fr.fbsreport.extension.inflate
 import com.fr.fbsreport.model.Item
 import com.fr.fbsreport.model.ItemReport
-import com.fr.fbsreport.utils.formatWithDot
-import kotlinx.android.synthetic.main.fragment_detail_item.*
-import kotlinx.android.synthetic.main.view_item_category.view.*
+import kotlinx.android.synthetic.main.fragment_item_report_detail.*
+import kotlinx.android.synthetic.main.view_item_report_details_dish.view.*
 
-class DetailItemFragment : BaseFragment() {
+class DetailItemReportFragment : BaseFragment() {
 
     private lateinit var itemReport: ItemReport
 
     companion object {
         @JvmStatic
-        fun newInstance(itemReport: ItemReport) = DetailItemFragment().apply {
+        fun newInstance(itemReport: ItemReport) = DetailItemReportFragment().apply {
             val bundle = Bundle()
             bundle.putSerializable(EXTRA_ITEM_REPORT, itemReport)
             arguments = bundle
@@ -26,11 +27,15 @@ class DetailItemFragment : BaseFragment() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_detail_item
+        return R.layout.fragment_item_report_detail
     }
 
     override fun getTitleIdToolbar(): Int? {
-        return R.string.home_title_report
+        return R.string.item_report_detail_toolbar_title
+    }
+
+    override fun getTextIdToolbarLeft(): Int? {
+        return R.string.action_back
     }
 
     override fun onItemLeft() {
@@ -47,7 +52,7 @@ class DetailItemFragment : BaseFragment() {
 
     override fun initViews() {
         txt_sale_num.text = if (itemReport.saleNum.isEmpty()) "Unknown" else itemReport.saleNum
-        txt_sale_date.text = itemReport.getFormatDate()
+        txt_sale_date.text = itemReport.saleDate.displayDate()
         txt_discount.text = itemReport.discount.formatWithDot()
         view!!.findViewById<TextView>(R.id.txt_total).text = itemReport.total.formatWithDot()
         ll_items.removeAllViewsInLayout()
@@ -58,7 +63,7 @@ class DetailItemFragment : BaseFragment() {
 
     private fun addViewDish(item: Item) {
         context?.let {
-            val itemCategory = it.inflate(R.layout.view_item_category)
+            val itemCategory = it.inflate(R.layout.view_item_report_details_dish)
             itemCategory.txt_category.text = item.category
             itemCategory.txt_item_code.text = item.itemCode
             itemCategory.txt_unit.text = item.unit

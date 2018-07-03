@@ -7,9 +7,7 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 
-class AuthInterceptor(val userPreference: UserPreference) : Interceptor {
-
-    private val refreshToken: String? = userPreference.getTokenModel()?.refreshToken
+class AuthInterceptor(private val userPreference: UserPreference) : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -19,15 +17,7 @@ class AuthInterceptor(val userPreference: UserPreference) : Interceptor {
         val accessToken = userPreference.getTokenModel()?.accessToken
         setAuthHeader(builder, accessToken)
 
-        val response = chain.proceed(builder.build())
-
-//            if (isTokenExpiredError(response)) {
-//                synchronized(this) {
-//                    //TODO call refresh token   
-//                }
-//                return chain.proceed(builder.build())
-//            }
-        return response
+        return chain.proceed(builder.build())
     }
 
     private fun setAuthHeader(builder: Request.Builder, token: String?) {

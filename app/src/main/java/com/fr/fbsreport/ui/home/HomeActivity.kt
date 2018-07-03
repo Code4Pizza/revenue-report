@@ -34,7 +34,7 @@ class HomeActivity : BaseBottomTabActivity() {
     }
 
     private fun initBottomBar() {
-        bottom_bar.setOnClickBottombarListener(object : AppBottomBar.OnClickBottomBarListener {
+        bottom_bar.setOnClickBottomBarListener(object : AppBottomBar.OnClickBottomBarListener {
             override fun onItemBottomClick(position: Int) {
                 currentTab = position
                 when (currentTab) {

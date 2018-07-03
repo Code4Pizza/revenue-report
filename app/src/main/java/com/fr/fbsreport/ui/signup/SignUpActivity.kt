@@ -54,16 +54,12 @@ class SignUpActivity : BaseActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
-                .doFinally({ hideLoading() })
-                .subscribe({ user ->
-                    run {
-                        Toast.makeText(this@SignUpActivity, "Success", Toast.LENGTH_SHORT).show()
-                        finish()
-                    }
+                .doFinally { hideLoading() }
+                .subscribe({
+                    Toast.makeText(this@SignUpActivity, "Success", Toast.LENGTH_SHORT).show()
+                    finish()
                 }, { error ->
-                    run {
-                        Toast.makeText(this@SignUpActivity, error.message, Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(this@SignUpActivity, error.message, Toast.LENGTH_SHORT).show()
                 }))
     }
 }

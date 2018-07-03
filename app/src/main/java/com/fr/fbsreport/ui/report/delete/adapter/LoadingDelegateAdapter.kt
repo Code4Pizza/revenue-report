@@ -13,7 +13,6 @@ class LoadingDelegateAdapter : ViewTypeDelegateAdapter {
     override fun onCreateViewHolder(parent: ViewGroup) = LoadingViewHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType, listener: BaseReportAdapter.OnReportClickListener?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     class LoadingViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(

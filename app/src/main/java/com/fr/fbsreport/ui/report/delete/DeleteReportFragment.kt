@@ -28,7 +28,7 @@ class DeleteReportFragment : BaseReportFragment<DeleteReport>() {
     }
 
     override fun getTitleIdToolbar(): Int? {
-        return R.string.home_report_order_delete
+        return R.string.report_delete
     }
 
     override fun initReportList() {

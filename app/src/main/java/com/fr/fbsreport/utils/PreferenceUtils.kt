@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.fr.fbsreport.App
 
+@SuppressWarnings("unused")
 class PreferenceUtils(app: App) {
 
     private var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(app)

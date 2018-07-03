@@ -2,18 +2,18 @@ package com.fr.fbsreport.ui.report.item.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import android.widget.TextView
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportAdapter
 import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.ViewTypeDelegateAdapter
+import com.fr.fbsreport.extension.displayDate
+import com.fr.fbsreport.extension.formatWithDot
 import com.fr.fbsreport.extension.inflate
 import com.fr.fbsreport.model.ItemReport
-import com.fr.fbsreport.utils.formatWithDot
 import kotlinx.android.synthetic.main.item_view_item_report.view.*
 
 class ItemReportDelegateAdapter : ViewTypeDelegateAdapter {
-    
+
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         return ItemReportViewHolder(parent)
     }
@@ -30,10 +30,10 @@ class ItemReportDelegateAdapter : ViewTypeDelegateAdapter {
 
         fun bind(itemReport: ItemReport) {
             itemView.txt_sale_num.text = if (itemReport.saleNum.isEmpty()) "Unknown" else itemReport.saleNum
-            itemView.txt_sale_date.text = itemReport.getFormatDate()
+            itemView.txt_sale_date.text = itemReport.saleDate.displayDate()
             itemView.txt_discount.text = itemReport.discount.formatWithDot()
             itemView.txt_items.text = itemReport.items.size.toString()
-            itemView.findViewById<TextView>(R.id.txt_total).text = itemReport.total.formatWithDot()
+            itemView.txt_total.text = itemReport.total.formatWithDot()
         }
     }
 }

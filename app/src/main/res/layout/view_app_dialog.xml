@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -9,29 +10,27 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:layout_marginEnd="@dimen/spacing_small"
         android:fontFamily="@font/sf_semibold"
         android:gravity="center"
-        android:text="Success"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        tools:text="Success" />
 
     <TextView
-        android:id="@+id/txt_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_tiny"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:layout_marginBottom="12dp"
         android:fontFamily="@font/sf_regular"
         android:gravity="center"
-        android:text="Password reset instruction have been sent to htquandg@gmail.com"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        tools:text="Password reset instruction have been sent to htquandg@gmail.com" />
 
     <View
         android:layout_width="match_parent"
@@ -42,16 +41,16 @@
         android:id="@+id/txt_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:layout_marginBottom="12dp"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/sf_semibold"
         android:foreground="?android:attr/selectableItemBackground"
         android:gravity="center"
-        android:text="OK"
+        android:text="@string/action_confirm"
         android:textColor="@color/blue"
         android:textSize="17sp" />
 

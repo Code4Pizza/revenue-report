@@ -28,7 +28,7 @@ class RxErrorHandling : CallAdapter.Factory() {
         }
 
         @SuppressLint("CheckResult")
-        class RxCallAdapterWrapper<R>(var wrapped: CallAdapter<R, *>) : CallAdapter<R, Any> {
+        class RxCallAdapterWrapper<R>(private var wrapped: CallAdapter<R, *>) : CallAdapter<R, Any> {
 
             override fun adapt(call: Call<R>): Any {
                 val callResult = wrapped.adapt(call)

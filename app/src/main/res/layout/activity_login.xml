@@ -29,9 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_small"
-        android:text="me@ngocnh.info"
         android:hint="@string/hint_email_address"
         android:inputType="textEmailAddress"
+        android:text="me@ngocnh.info"
         android:textSize="15sp"
         tools:ignore="Autofill" />
 
@@ -49,11 +49,11 @@
         android:id="@+id/edt_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="123456"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_small"
         android:hint="@string/hint_password"
         android:inputType="textPassword"
+        android:text="123456"
         android:textSize="15sp"
         tools:ignore="Autofill" />
 

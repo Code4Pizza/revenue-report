@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -8,10 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:paddingStart="@dimen/spacing_normal"
-        android:paddingTop="@dimen/spacing_normal"
+        android:paddingBottom="@dimen/spacing_small"
         android:paddingEnd="@dimen/spacing_normal"
-        android:paddingBottom="@dimen/spacing_small">
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_normal">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -23,25 +24,23 @@
                 android:id="@+id/txt_sale_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="1234ABCD12"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="1234ABCD12" />
 
             <TextView
                 android:id="@+id/txt_sale_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="20/05/2018"
                 android:textColor="@color/lightGray"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="20/05/2018" />
 
         </LinearLayout>
 
@@ -54,9 +53,9 @@
             android:ellipsize="end"
             android:fontFamily="@font/sf_regular"
             android:maxLines="1"
-            android:text="10.000.000đ"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:text="10.000.000đ" />
 
         <TextView
             android:id="@+id/txt_reason"
@@ -66,9 +65,9 @@
             android:fontFamily="@font/sf_regular"
             android:gravity="end"
             android:maxLines="2"
-            android:text="Đổi hàng"
             android:textColor="@color/gray"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:text="Đổi hàng" />
 
     </LinearLayout>
 
@@ -80,4 +79,3 @@
         android:background="@color/brightGray" />
 
 </LinearLayout>
-

@@ -29,7 +29,7 @@ class ItemReportFragment : BaseReportFragment<ItemReport>() {
     }
 
     override fun getTitleIdToolbar(): Int? {
-        return R.string.home_report_by_product
+        return R.string.report_by_item
     }
 
     override fun initReportList() {
@@ -37,7 +37,7 @@ class ItemReportFragment : BaseReportFragment<ItemReport>() {
         reportAdapter = BaseReportAdapter(ItemReportDelegateAdapter())
         reportAdapter.setOnReportClickListener(object : BaseReportAdapter.OnReportClickListener {
             override fun onReportClick(report: BaseReport) {
-                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, DetailItemFragment.newInstance(report as ItemReport))
+                getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, DetailItemReportFragment.newInstance(report as ItemReport))
             }
         })
         reportList.adapter = reportAdapter

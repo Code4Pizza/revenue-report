@@ -2,9 +2,6 @@ package com.fr.fbsreport.model
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * Created by Eric on 6/19/2018.
- */
 data class Item(var category: String,
                 @SerializedName("item_code")
                 var itemCode: String,

@@ -15,7 +15,6 @@ import com.fr.fbsreport.network.Chart
 import com.fr.fbsreport.network.ErrorUtils
 import com.fr.fbsreport.network.Section
 import com.fr.fbsreport.ui.report.bill.BillReportFragment
-import com.fr.fbsreport.utils.formatWithDot
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -54,7 +53,7 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
 
     override fun initViews() {
         txt_start_date.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(context, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val datePickerDialog = DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 txt_start_date.text = String.format("%s/%s/%s", dayOfMonth.toString(), (monthOfYear + 1).toString(), year.toString())
                 startDate = String.format("%s-%s-%s", year.toString(), (monthOfYear + 1).toString(), dayOfMonth.toString())
                 if (endDate != null) requestData()
@@ -62,7 +61,7 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
             datePickerDialog.show()
         }
         txt_end_date.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(context, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val datePickerDialog = DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 txt_end_date.text = String.format("%s/%s/%s", dayOfMonth.toString(), (monthOfYear + 1).toString(), year.toString())
                 endDate = String.format("%s-%s-%s", year.toString(), (monthOfYear + 1).toString(), dayOfMonth.toString())
                 if (startDate != null) requestData()
@@ -76,7 +75,7 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
         line_chart.apply {
             legend.isEnabled = false
             description.text = ""
-            setNoDataText("Không có dữ liệu :(")
+            setNoDataText(getString(R.string.text_no_data))
             setNoDataTextTypeface(ResourcesCompat.getFont(context, R.font.sf_regular))
             setNoDataTextColor(context.color(R.color.orange))
 
@@ -88,7 +87,7 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
             axisRight.isEnabled = false
 
             axisLeft.axisMinimum = 0f
-            axisLeft.valueFormatter = IAxisValueFormatter { value, axis ->
+            axisLeft.valueFormatter = IAxisValueFormatter { value, _ ->
                 when {
                     value > 1000000 -> String.format("%s tr", (value / 1000000).toInt().toString())
                     value > 100000 -> String.format("%s tr", (value / 100).toInt().toString())
@@ -211,7 +210,7 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
                 ll_section_2.addView(sectionView)
             }
             view_underline_section_2.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_1.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
+            txt_view_report_2.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
         }
     }
 }

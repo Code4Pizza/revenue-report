@@ -6,9 +6,10 @@ import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseReportAdapter
 import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.ViewTypeDelegateAdapter
+import com.fr.fbsreport.extension.displayDate
+import com.fr.fbsreport.extension.formatWithDot
 import com.fr.fbsreport.extension.inflate
 import com.fr.fbsreport.model.BillReport
-import com.fr.fbsreport.utils.formatWithDot
 import kotlinx.android.synthetic.main.item_view_bill_report.view.*
 
 class BillReportDelegateAdapter : ViewTypeDelegateAdapter {
@@ -29,7 +30,7 @@ class BillReportDelegateAdapter : ViewTypeDelegateAdapter {
 
         fun bind(billReport: BillReport) {
             itemView.txt_sale_num.text = if (billReport.saleNum.isEmpty()) "Unknown" else billReport.saleNum
-            itemView.txt_sale_date.text = billReport.getFormatDate()
+            itemView.txt_sale_date.text = billReport.saleDate.displayDate()
             itemView.txt_table.text = billReport.tableId.toString()
             itemView.txt_total.text = billReport.subTotal.formatWithDot()
         }
