@@ -1,4 +1,4 @@
-package com.fr.fbsreport.network
+package com.fr.fbsreport.source.network
 
 import android.annotation.SuppressLint
 import io.reactivex.*

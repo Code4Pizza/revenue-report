@@ -3,13 +3,13 @@ package com.fr.fbsreport.ui.report
 import android.os.Bundle
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
-import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
-import com.fr.fbsreport.base.INDEX_REPORT
+import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
+import com.fr.fbsreport.extension.INDEX_REPORT
 import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.ui.report.bill.BillReportPagerFragment
 import com.fr.fbsreport.ui.report.delete.DeleteReportFragment
-import com.fr.fbsreport.ui.report.item.ItemReportFragment
 import com.fr.fbsreport.ui.report.discount.DiscountReportFragment
+import com.fr.fbsreport.ui.report.item.ItemReportFragment
 import kotlinx.android.synthetic.main.fragment_report.*
 
 class ReportFragment : BaseFragment() {
@@ -34,7 +34,6 @@ class ReportFragment : BaseFragment() {
             getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, DeleteReportFragment.newInstance(branchCode))
         }
         item_bill.setOnClickListener {
-            getBaseActivity()?.showLoading()
             getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportPagerFragment.newInstance(branchCode))
         }
         item_promotion.setOnClickListener {

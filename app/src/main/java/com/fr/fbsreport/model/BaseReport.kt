@@ -1,7 +1,7 @@
 package com.fr.fbsreport.model
 
 import android.arch.persistence.room.ColumnInfo
-import com.fr.fbsreport.base.VIEW_TYPE_ITEM
+import com.fr.fbsreport.extension.VIEW_TYPE_ITEM
 import com.fr.fbsreport.base.ViewType
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

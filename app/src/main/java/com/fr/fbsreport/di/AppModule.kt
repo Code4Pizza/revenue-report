@@ -5,10 +5,14 @@ package com.fr.fbsreport.di
 import android.arch.persistence.room.Room
 import com.fr.fbsreport.App
 import com.fr.fbsreport.BuildConfig
-import com.fr.fbsreport.network.AppService
-import com.fr.fbsreport.network.AuthInterceptor
-import com.fr.fbsreport.network.RxErrorHandling
-import com.fr.fbsreport.source.*
+import com.fr.fbsreport.source.AppLocalSource
+import com.fr.fbsreport.source.AppRemoteSource
+import com.fr.fbsreport.source.AppRepository
+import com.fr.fbsreport.source.local.AppDatabase
+import com.fr.fbsreport.source.local.UserPreference
+import com.fr.fbsreport.source.network.AppService
+import com.fr.fbsreport.source.network.AuthInterceptor
+import com.fr.fbsreport.source.network.RxErrorHandling
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -19,7 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
-
 
 @Module
 class AppModule(val app: App) {

@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import com.fr.fbsreport.App
 import com.fr.fbsreport.R
 import com.fr.fbsreport.source.AppRepository
-import com.fr.fbsreport.source.UserPreference
+import com.fr.fbsreport.source.local.UserPreference
 import com.fr.fbsreport.utils.EditTextUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

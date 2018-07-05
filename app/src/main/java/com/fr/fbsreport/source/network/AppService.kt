@@ -1,7 +1,7 @@
-package com.fr.fbsreport.network
+package com.fr.fbsreport.source.network
 
 import com.fr.fbsreport.model.*
-import io.reactivex.Maybe
+import io.reactivex.Flowable
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -21,36 +21,36 @@ interface AppService {
     fun editUserInfo(): Single<User>
 
     @GET("/branch")
-    fun getBranch(): Maybe<DataResponse<List<Branch>>>
+    fun getBranch(): Flowable<DataResponse<List<Branch>>>
 
     @GET("/report?type=delete")
     fun getDeleteReport(@Query("branch") branchCode: String,
                         @Query("filter") filter: String?,
                         @Query("limit") limit: Int?,
-                        @Query("page") page: Int): Maybe<ReportResponse<DeleteReport>>
+                        @Query("page") page: Int): Flowable<ReportResponse<DeleteReport>>
 
     @GET("/report?type=bill")
     fun getBillReport(@Query("branch") branchCode: String,
                       @Query("filter") filter: String?,
                       @Query("limit") limit: Int?,
-                      @Query("page") page: Int): Maybe<ReportResponse<BillReport>>
+                      @Query("page") page: Int): Flowable<ReportResponse<BillReport>>
 
     @GET("/report?type=sale")
     fun getDiscountReport(@Query("branch") branchCode: String,
                           @Query("filter") filter: String?,
                           @Query("limit") limit: Int?,
-                          @Query("page") page: Int): Maybe<ReportResponse<DiscountReport>>
+                          @Query("page") page: Int): Flowable<ReportResponse<DiscountReport>>
 
     @GET("/report?type=item")
     fun getItemReport(@Query("branch") branchCode: String,
                       @Query("filter") filter: String?,
                       @Query("limit") limit: Int?,
-                      @Query("page") page: Int): Maybe<ReportResponse<ItemReport>>
+                      @Query("page") page: Int): Flowable<ReportResponse<ItemReport>>
 
     @GET("/report/dashboard")
     fun getDashboard(@Query("branch") branchCode: String,
                      @Query("type") type: String,
                      @Query("date") date: String?,
                      @Query("start_date") startDate: String?,
-                     @Query("end_date") endDate: String?): Single<DataResponse<Dashboard>>
+                     @Query("end_date") endDate: String?): Flowable<DataResponse<Dashboard>>
 }

@@ -1,8 +1,7 @@
 package com.fr.fbsreport
 
+import io.reactivex.Observable
 import org.junit.Test
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -13,11 +12,26 @@ class ExampleUnitTest {
 
     @Test
     fun addition_isCorrect() {
-        val time = "2018-07-01"
-        val format1 = SimpleDateFormat("yyyy-MM-dd")
-        val dt1 = format1.parse(time)
-        val c = Calendar.getInstance()
-        c.time = dt1
-        println(c.get(Calendar.DAY_OF_WEEK))
+        val list = ArrayList<String>()
+
+
+        Observable.create<Int> {
+            it.onNext(1)
+            Thread.sleep(400)
+            it.onNext(2)
+            Thread.sleep(100)
+            it.onNext(3)
+            Thread.sleep(200)
+            it.onNext(4)
+        }
+                .subscribe({
+                    println("Subscriber thread " + Thread.currentThread().name)
+                    println(it)
+                    println("On next")
+                }, {
+                    println("Something wrong")
+                }, {
+                    println("On completed")
+                })
     }
 }

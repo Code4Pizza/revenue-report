@@ -2,6 +2,9 @@ package com.fr.fbsreport.base
 
 import android.support.v4.app.FragmentTransaction
 import com.fr.fbsreport.R
+import com.fr.fbsreport.extension.INDEX_ANALYTICS
+import com.fr.fbsreport.extension.INDEX_REPORT
+import com.fr.fbsreport.extension.INDEX_SETTING
 import com.fr.fbsreport.utils.FragmentUtils
 import java.util.*
 import kotlin.collections.HashMap

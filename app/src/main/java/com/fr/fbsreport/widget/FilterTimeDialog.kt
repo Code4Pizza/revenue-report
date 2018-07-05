@@ -6,7 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.*
+import com.fr.fbsreport.base.BaseDialog
+import com.fr.fbsreport.extension.FILTER_TYPE_MONTH
+import com.fr.fbsreport.extension.FILTER_TYPE_TODAY
+import com.fr.fbsreport.extension.FILTER_TYPE_WEEK
+import com.fr.fbsreport.extension.FILTER_TYPE_YESTERDAY
 import kotlinx.android.synthetic.main.view_filter_dialog.*
 
 class FilterTimeDialog : BaseDialog() {

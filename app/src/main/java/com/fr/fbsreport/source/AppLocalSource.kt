@@ -1,49 +1,57 @@
 package com.fr.fbsreport.source
 
 import com.fr.fbsreport.model.*
-import com.fr.fbsreport.network.DataResponse
-import io.reactivex.Maybe
+import com.fr.fbsreport.source.local.AppDatabase
+import io.reactivex.Flowable
 
-/**
- * Created by framgia on 03/07/2018.
- */
 class AppLocalSource(private val appDatabase: AppDatabase) {
 
-    fun getBranch(): Maybe<DataResponse<List<Branch>>> {
-        return appDatabase.appDao().getBranches()
-                .map { DataResponse(it) }
+    fun getBranch(): Flowable<List<Branch>> {
+        return appDatabase.appDao()
+                .getBranches()
+                .filter { it.isNotEmpty() }
+                .toFlowable()
     }
 
     fun updateBranches(branch: List<Branch>) {
         appDatabase.appDao().updateBranches(branch)
     }
 
-    fun getDeleteReport(): Maybe<List<DeleteReport>> {
-        return appDatabase.appDao().getDeleteReports()
+    fun getDeleteReport(): Flowable<List<DeleteReport>> {
+        return appDatabase.appDao()
+                .getDeleteReports()
+                .filter { it.isNotEmpty() }
+                .toFlowable()
     }
 
     fun updateDeleteReports(reports: List<DeleteReport>) {
         appDatabase.appDao().updateDeleteReports(reports)
     }
 
-    fun getBillReport(): Maybe<List<BillReport>> {
+    fun getBillReport(): Flowable<List<BillReport>> {
         return appDatabase.appDao().getBillReports()
+                .filter { it.isNotEmpty() }
+                .toFlowable()
     }
 
     fun updateBillReports(reports: List<BillReport>) {
         appDatabase.appDao().updateBillReports(reports)
     }
 
-    fun getDiscountReport(): Maybe<List<DiscountReport>> {
+    fun getDiscountReport(): Flowable<List<DiscountReport>> {
         return appDatabase.appDao().getDiscountReports()
+                .filter { it.isNotEmpty() }
+                .toFlowable()
     }
 
     fun updateDiscountReports(reports: List<DiscountReport>) {
         appDatabase.appDao().updateDiscountReports(reports)
     }
 
-    fun getItemReport(): Maybe<List<ItemReport>> {
+    fun getItemReport(): Flowable<List<ItemReport>> {
         return appDatabase.appDao().getItemReports()
+                .filter { it.isNotEmpty() }
+                .toFlowable()
     }
 
     fun updateItemReports(reports: List<ItemReport>) {

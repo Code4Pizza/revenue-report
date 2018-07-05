@@ -3,7 +3,7 @@ package com.fr.fbsreport.ui.report.bill
 import android.os.Bundle
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
-import com.fr.fbsreport.base.EXTRA_BILL_REPORT
+import com.fr.fbsreport.extension.EXTRA_BILL_REPORT
 import com.fr.fbsreport.extension.displayDate
 import com.fr.fbsreport.extension.formatWithDot
 import com.fr.fbsreport.model.BillReport

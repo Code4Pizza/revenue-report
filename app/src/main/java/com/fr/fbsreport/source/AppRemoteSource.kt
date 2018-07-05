@@ -1,12 +1,11 @@
 package com.fr.fbsreport.source
 
 import com.fr.fbsreport.BuildConfig
-import com.fr.fbsreport.base.*
+import com.fr.fbsreport.extension.*
 import com.fr.fbsreport.model.*
-import com.fr.fbsreport.network.AppService
-import com.fr.fbsreport.network.Dashboard
-import com.fr.fbsreport.network.DataResponse
-import io.reactivex.Maybe
+import com.fr.fbsreport.source.network.AppService
+import com.fr.fbsreport.source.network.Dashboard
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 class AppRemoteSource(private val appService: AppService) {
@@ -39,31 +38,33 @@ class AppRemoteSource(private val appService: AppService) {
         return appService.editUserInfo()
     }
 
-    fun getBranch(): Maybe<DataResponse<List<Branch>>> {
+    fun getBranch(): Flowable<List<Branch>> {
         return appService.getBranch()
+                .map { it.data }
     }
 
-    fun getDeleteReport(branchCode: String, filter: String?, limit: Int?, page: Int): Maybe<List<DeleteReport>> {
+    fun getDeleteReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<DeleteReport>> {
         return appService.getDeleteReport(branchCode, filter, limit, page)
                 .map { it.data }
     }
 
-    fun getBillReport(branchCode: String, filter: String?, limit: Int?, page: Int): Maybe<List<BillReport>> {
+    fun getBillReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<BillReport>> {
         return appService.getBillReport(branchCode, filter, limit, page)
                 .map { it.data }
     }
 
-    fun getDiscountReport(branchCode: String, filter: String?, limit: Int?, page: Int): Maybe<List<DiscountReport>> {
+    fun getDiscountReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<DiscountReport>> {
         return appService.getDiscountReport(branchCode, filter, limit, page)
                 .map { it.data }
     }
 
-    fun getItemReport(branchCode: String, filter: String?, limit: Int?, page: Int): Maybe<List<ItemReport>> {
+    fun getItemReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<ItemReport>> {
         return appService.getItemReport(branchCode, filter, limit, page)
                 .map { it.data }
     }
 
-    fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Single<DataResponse<Dashboard>> {
+    fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Flowable<Dashboard> {
         return appService.getDashboard(branchCode, type, date, startDate, endDate)
+                .map { it.data }
     }
 }

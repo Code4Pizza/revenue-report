@@ -1,9 +1,8 @@
-package com.fr.fbsreport.ui.report.delete.adapter
+package com.fr.fbsreport.ui.report
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.BaseReportAdapter
 import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.ViewTypeDelegateAdapter
 import com.fr.fbsreport.extension.inflate

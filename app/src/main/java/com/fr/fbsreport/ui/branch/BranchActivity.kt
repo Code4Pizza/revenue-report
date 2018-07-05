@@ -6,11 +6,12 @@ import com.fr.fbsreport.base.BaseActivity
 import com.fr.fbsreport.base.BaseRecyclerAdapter
 import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.Branch
-import com.fr.fbsreport.network.ErrorUtils
+import com.fr.fbsreport.source.network.ErrorUtils
 import com.fr.fbsreport.ui.home.HomeActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_branch.*
+import java.util.concurrent.TimeUnit
 
 class BranchActivity : BaseActivity() {
 
@@ -45,18 +46,33 @@ class BranchActivity : BaseActivity() {
     private fun requestBranches() {
         requestApi(appRepository.getBranch()
                 .subscribeOn(Schedulers.io())
+                .materialize()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ branch ->
+                .map {
+                    println("Operator " + Thread.currentThread().name)
+                    it.error?.let {
+                        ErrorUtils.handleCommonError(this, it)
+                    }
+                    it
+                }
+                .filter { !it.isOnError }
+                .dematerialize<List<Branch>>()
+                .debounce(2000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    if (!swipe_refresh.isRefreshing) showLoading()
+                }
+                .doOnTerminate {
                     hideLoading()
-                    branchAdapter.setItems(branch.data)
-                }, { err ->
-                    hideLoading()
-                    ErrorUtils.handleCommonError(this, err)
-                }))
-    }
-
-    override fun hideLoading() {
-        super.hideLoading()
-        swipe_refresh.isRefreshing = false
+                    swipe_refresh.isRefreshing = false
+                }
+                .doOnNext {
+                    println("Concat next")
+                    branchAdapter.setItems(it)
+                }
+                .doOnComplete {
+                    println("Concat complete")
+                }
+                .subscribe())
     }
 }

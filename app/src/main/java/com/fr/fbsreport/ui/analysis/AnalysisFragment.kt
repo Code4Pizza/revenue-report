@@ -1,15 +1,15 @@
-package com.fr.fbsreport.ui.analytic
+package com.fr.fbsreport.ui.analysis
 
 import android.os.Bundle
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
-import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
+import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
 
-class AnalyticFragment : BaseFragment() {
+class AnalysisFragment : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(branchCode: String) = AnalyticFragment().apply {
+        fun newInstance(branchCode: String) = AnalysisFragment().apply {
             val bundle = Bundle()
             bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             arguments = bundle
@@ -17,13 +17,9 @@ class AnalyticFragment : BaseFragment() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_setting
+        return R.layout.fragment_analysis
     }
 
     override fun initViews() {
-        initAnalyticPager()
-    }
-
-    private fun initAnalyticPager() {
     }
 }

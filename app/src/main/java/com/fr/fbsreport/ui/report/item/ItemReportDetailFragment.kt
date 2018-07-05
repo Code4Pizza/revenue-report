@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.TextView
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
-import com.fr.fbsreport.base.EXTRA_ITEM_REPORT
+import com.fr.fbsreport.extension.EXTRA_ITEM_REPORT
 import com.fr.fbsreport.extension.displayDate
 import com.fr.fbsreport.extension.formatWithDot
 import com.fr.fbsreport.extension.inflate
@@ -13,13 +13,13 @@ import com.fr.fbsreport.model.ItemReport
 import kotlinx.android.synthetic.main.fragment_item_report_detail.*
 import kotlinx.android.synthetic.main.view_item_report_details_dish.view.*
 
-class DetailItemReportFragment : BaseFragment() {
+class ItemReportDetailFragment : BaseFragment() {
 
     private lateinit var itemReport: ItemReport
 
     companion object {
         @JvmStatic
-        fun newInstance(itemReport: ItemReport) = DetailItemReportFragment().apply {
+        fun newInstance(itemReport: ItemReport) = ItemReportDetailFragment().apply {
             val bundle = Bundle()
             bundle.putSerializable(EXTRA_ITEM_REPORT, itemReport)
             arguments = bundle

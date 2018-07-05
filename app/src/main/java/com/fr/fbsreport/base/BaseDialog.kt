@@ -26,7 +26,7 @@ abstract class BaseDialog : DialogFragment() {
         dialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    fun getBaseActivity(): BaseActivity? {
+    private fun getBaseActivity(): BaseActivity? {
         if (activity is BaseActivity) {
             return activity as BaseActivity
         }

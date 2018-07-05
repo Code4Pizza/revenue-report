@@ -1,15 +1,15 @@
-package com.fr.fbsreport.ui.report.item.adapter
+package com.fr.fbsreport.ui.report.item
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.BaseReportAdapter
 import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.ViewTypeDelegateAdapter
 import com.fr.fbsreport.extension.displayDate
 import com.fr.fbsreport.extension.formatWithDot
 import com.fr.fbsreport.extension.inflate
 import com.fr.fbsreport.model.ItemReport
+import com.fr.fbsreport.ui.report.BaseReportAdapter
 import kotlinx.android.synthetic.main.item_view_item_report.view.*
 
 class ItemReportDelegateAdapter : ViewTypeDelegateAdapter {

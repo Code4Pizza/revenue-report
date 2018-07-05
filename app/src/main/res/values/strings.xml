@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">FbsReport</string>
 
-    <string name="coming_soon">COMING SOON</string>
+    <string name="tab_setting">CÀI ĐẶT</string>
+    <string name="tab_analysis">PHÂN TÍCH</string>
 
     <string name="action_back">Quay lại</string>
     <string name="action_cancel">Hủy</string>
@@ -62,6 +63,7 @@
     <string name="bill_report_column_tables">Bàn</string>
     <string name="bill_report_column_sales">Doanh thu</string>
 
+    <string name="bill_report_pager_toolbar_title">Báo cáo bill</string>
     <string name="bill_report_detail_toolbar_title">Chi tiết báo cáo bill</string>
     <string name="bill_report_detail_order">Số hóa đơn</string>
     <string name="bill_report_detail_date">Ngày lập</string>

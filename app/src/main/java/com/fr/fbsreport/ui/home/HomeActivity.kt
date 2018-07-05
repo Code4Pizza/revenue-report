@@ -5,8 +5,8 @@ import android.content.Intent
 import android.view.View
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.*
-import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.ui.analytic.AnalyticFragment
+import com.fr.fbsreport.extension.*
+import com.fr.fbsreport.ui.analysis.AnalysisFragment
 import com.fr.fbsreport.ui.report.ReportFragment
 import com.fr.fbsreport.ui.setting.SettingFragment
 import com.fr.fbsreport.widget.AppBottomBar
@@ -39,7 +39,7 @@ class HomeActivity : BaseBottomTabActivity() {
                 currentTab = position
                 when (currentTab) {
                     INDEX_ANALYTICS -> {
-                        addFragmentTab(INDEX_ANALYTICS, AnalyticFragment.newInstance(branchCode))
+                        addFragmentTab(INDEX_ANALYTICS, AnalysisFragment.newInstance(branchCode))
                     }
                     INDEX_REPORT -> {
                         addFragmentTab(INDEX_REPORT, ReportFragment.newInstance(branchCode))

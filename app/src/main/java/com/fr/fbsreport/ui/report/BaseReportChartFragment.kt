@@ -1,8 +1,8 @@
 package com.fr.fbsreport.ui.report
 
 import com.fr.fbsreport.base.*
-import com.fr.fbsreport.extension.androidLazy
-import com.fr.fbsreport.network.Chart
+import com.fr.fbsreport.extension.*
+import com.fr.fbsreport.source.network.Chart
 import java.util.*
 import kotlin.collections.LinkedHashMap
 import kotlin.collections.set

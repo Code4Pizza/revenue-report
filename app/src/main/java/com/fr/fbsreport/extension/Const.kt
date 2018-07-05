@@ -1,4 +1,4 @@
-package com.fr.fbsreport.base
+package com.fr.fbsreport.extension
 
 const val INDEX_ANALYTICS: Int = 0
 const val INDEX_REPORT: Int = 1

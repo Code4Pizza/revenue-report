@@ -6,14 +6,14 @@ import android.support.v4.content.res.ResourcesCompat
 import android.view.LayoutInflater
 import android.view.View
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
-import com.fr.fbsreport.base.EXTRA_FILTER_DATE
-import com.fr.fbsreport.base.FILTER_TYPE_CUSTOM
-import com.fr.fbsreport.base.INDEX_REPORT
+import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
+import com.fr.fbsreport.extension.EXTRA_FILTER_DATE
+import com.fr.fbsreport.extension.FILTER_TYPE_CUSTOM
+import com.fr.fbsreport.extension.INDEX_REPORT
 import com.fr.fbsreport.extension.*
-import com.fr.fbsreport.network.Chart
-import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.network.Section
+import com.fr.fbsreport.source.network.Chart
+import com.fr.fbsreport.source.network.ErrorUtils
+import com.fr.fbsreport.source.network.Section
 import com.fr.fbsreport.ui.report.bill.BillReportFragment
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -115,16 +115,15 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
                 .doOnSubscribe {
                     showLoadingRequest()
                 }
-                .subscribe({ response ->
+                .doAfterTerminate {
                     getBaseActivity()?.hideLoading()
+                }
+                .subscribe({ data ->
                     hideLoadingSuccess()
-                    fillChart(response.data.charts)
-                    showSections(response.data.sections)
+                    fillChart(data.charts)
+                    showSections(data.sections)
                 }, { err ->
                     hideLoadingFailed()
-                    progress_bar.visibility = View.GONE
-                    txt_no_data.visibility = View.VISIBLE
-                    getBaseActivity()?.hideLoading()
                     context?.let { ErrorUtils.handleCommonError(it, err) }
                 }))
     }

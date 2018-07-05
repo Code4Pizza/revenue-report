@@ -3,8 +3,8 @@ package com.fr.fbsreport.model
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import com.fr.fbsreport.base.VIEW_TYPE_ITEM
 import com.fr.fbsreport.base.ViewType
+import com.fr.fbsreport.extension.VIEW_TYPE_ITEM
 
 @Entity(tableName = "tbl_branch")
 data class Branch(@PrimaryKey val id: Int,

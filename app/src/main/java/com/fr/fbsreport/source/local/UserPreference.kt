@@ -1,4 +1,4 @@
-package com.fr.fbsreport.source
+package com.fr.fbsreport.source.local
 
 import com.fr.fbsreport.App
 import com.fr.fbsreport.model.TokenModel

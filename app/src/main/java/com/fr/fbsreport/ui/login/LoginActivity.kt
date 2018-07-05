@@ -4,8 +4,8 @@ import android.content.Intent
 import android.widget.Toast
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseActivity
-import com.fr.fbsreport.network.ApiException
-import com.fr.fbsreport.network.ErrorUtils
+import com.fr.fbsreport.source.network.ApiException
+import com.fr.fbsreport.source.network.ErrorUtils
 import com.fr.fbsreport.ui.branch.BranchActivity
 import com.fr.fbsreport.ui.forgotpassword.ForgotPasswordActivity
 import com.fr.fbsreport.utils.EditTextUtils

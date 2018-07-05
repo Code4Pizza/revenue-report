@@ -1,4 +1,4 @@
-package com.fr.fbsreport.network
+package com.fr.fbsreport.source.network
 
 import com.fr.fbsreport.model.BaseReport
 import com.google.gson.annotations.SerializedName

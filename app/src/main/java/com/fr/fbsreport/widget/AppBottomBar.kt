@@ -6,9 +6,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.INDEX_ANALYTICS
-import com.fr.fbsreport.base.INDEX_REPORT
-import com.fr.fbsreport.base.INDEX_SETTING
+import com.fr.fbsreport.extension.INDEX_ANALYTICS
+import com.fr.fbsreport.extension.INDEX_REPORT
+import com.fr.fbsreport.extension.INDEX_SETTING
 import kotlinx.android.synthetic.main.view_app_bottom_bar.view.*
 
 class AppBottomBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {

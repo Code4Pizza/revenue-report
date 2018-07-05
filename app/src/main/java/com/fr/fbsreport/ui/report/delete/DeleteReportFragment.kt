@@ -2,17 +2,17 @@ package com.fr.fbsreport.ui.report.delete
 
 import android.os.Bundle
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.BaseReportAdapter
-import com.fr.fbsreport.base.BaseReportFragment
-import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
-import com.fr.fbsreport.model.BaseReport
+import com.fr.fbsreport.ui.report.BaseReportTypeFragment
+import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.model.DeleteReport
-import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.ui.report.delete.adapter.DeleteReportDelegateAdapter
+import com.fr.fbsreport.source.network.ErrorUtils
+import com.fr.fbsreport.ui.report.BaseReportAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_delete_report.*
+import java.util.concurrent.TimeUnit
 
-class DeleteReportFragment : BaseReportFragment<DeleteReport>() {
+class DeleteReportFragment : BaseReportTypeFragment() {
 
     companion object {
         @JvmStatic
@@ -31,43 +31,68 @@ class DeleteReportFragment : BaseReportFragment<DeleteReport>() {
         return R.string.report_delete
     }
 
+    override fun initViews() {
+        super.initViews()
+        initSwipeRefresh()
+    }
+
+    private fun initSwipeRefresh() {
+        swipe_refresh.setOnRefreshListener {
+            page = 1
+            requestReports()
+        }
+    }
+
     override fun initReportList() {
         super.initReportList()
-        reportAdapter = BaseReportAdapter(DeleteReportDelegateAdapter())
-        reportAdapter.setOnReportClickListener(object : BaseReportAdapter.OnReportClickListener {
-            override fun onReportClick(report: BaseReport) {
-            }
-        })
-        reportList.adapter = reportAdapter
+        adapter = BaseReportAdapter(DeleteReportDelegateAdapter())
+        reportList.adapter = adapter
         requestReports()
     }
 
     override fun requestReports() {
-        getBaseActivity()?.showLoading()
         requestApi(appRepository.getDeleteReport(branchCode, filter, limit, page)
                 .subscribeOn(Schedulers.io())
+                .materialize()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ data ->
-                    getBaseActivity()?.hideLoading()
+                .map {
+                    it.error?.let { ErrorUtils.handleCommonError(context, it) }
+                    it
+                }
+                .filter { !it.isOnError }
+                .dematerialize<List<DeleteReport>>()
+                .debounce(2000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    if (!swipe_refresh.isRefreshing) showLoading()
+                }
+                .doOnTerminate {
+                    hideLoading()
+                    swipe_refresh.isRefreshing = false
+                }
+                .doOnNext {
                     page++
-                    reportAdapter.setReports(data)
-                }, { err ->
-                    getBaseActivity()?.hideLoading()
-                    infiniteScrollListener.setLoading(false)
-                    context?.let { ErrorUtils.handleCommonError(it, err) }
-                }))
+                    adapter.setReports(it)
+                }
+                .subscribe())
     }
 
     override fun requestMoreReports() {
         requestApi(appRepository.getDeleteReport(branchCode, filter, limit, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ data ->
+                .doOnSubscribe {
+                    reportList.post { adapter.addLoading() }
+                }
+                .doFinally {
+                    isLoading = false
+                }
+                .subscribe({
                     page++
-                    reportAdapter.addReports(data)
-                }, { err ->
-                    infiniteScrollListener.setLoading(false)
-                    context?.let { ErrorUtils.handleCommonError(it, err) }
+                    adapter.addReports(it)
+                }, {
+                    adapter.hideLoading()
+                    ErrorUtils.handleCommonError(context, it)
                 }))
     }
 }

@@ -18,26 +18,27 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/spacing_small">
+            android:layout_height="48dp"
+            android:paddingEnd="@dimen/spacing_small"
+            android:paddingStart="@dimen/spacing_small">
 
             <TextView
                 android:id="@+id/txt_name_section_2"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/sf_semibold"
+                android:gravity="center_vertical"
                 android:textColor="@color/mediumBlack"
                 android:textSize="15sp"
                 tools:text="Doanh số theo bàn" />
 
             <TextView
                 android:id="@+id/txt_view_report_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:fontFamily="@font/sf_semibold"
-                android:gravity="end"
+                android:gravity="center_vertical"
                 android:text="@string/bill_section_view_report"
                 android:textColor="@color/orange"
                 android:textSize="15sp" />

@@ -5,14 +5,10 @@ import android.support.v4.content.res.ResourcesCompat
 import android.view.LayoutInflater
 import android.view.View
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.*
-import com.fr.fbsreport.extension.color
-import com.fr.fbsreport.extension.formatWithDot
-import com.fr.fbsreport.extension.getDayOfMonth
-import com.fr.fbsreport.extension.getDayOfWeek
-import com.fr.fbsreport.network.Chart
-import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.network.Section
+import com.fr.fbsreport.extension.*
+import com.fr.fbsreport.source.network.Chart
+import com.fr.fbsreport.source.network.ErrorUtils
+import com.fr.fbsreport.source.network.Section
 import com.fr.fbsreport.ui.report.BaseReportChartFragment
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -80,8 +76,8 @@ class BillReportChartFragment : BaseReportChartFragment() {
             axisLeft.axisMinimum = 0f
             axisLeft.valueFormatter = IAxisValueFormatter { value, _ ->
                 when {
-                    value > 1000000 -> String.format("%s tr", (value / 1000000).toInt().toString())
-                    value > 100000 -> String.format("%s tr", (value / 100).toInt().toString())
+                    value > 1000000 -> String.format("%str", (value / 1000000).toInt().toString())
+                    value > 1000 -> String.format("%sk", (value / 100).toInt().toString())
                     else -> value.toInt().toString()
                 }
             }
@@ -114,16 +110,17 @@ class BillReportChartFragment : BaseReportChartFragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
-                    view_data.visibility = View.GONE
-                }.doFinally {
+                    if (!swipe_refresh.isRefreshing) view_data.visibility = View.GONE
+                }
+                .doAfterTerminate {
+                    getBaseActivity()?.hideLoading()
                     swipe_refresh.isRefreshing = false
-                }.subscribe({ response ->
-                    getBaseActivity()?.hideLoading()
+                }
+                .subscribe({ data ->
                     view_data.visibility = View.VISIBLE
-                    fillChart(response.data.charts)
-                    showSections(response.data.sections)
+                    fillChart(data.charts)
+                    showSections(data.sections)
                 }, { err ->
-                    getBaseActivity()?.hideLoading()
                     context?.let { ErrorUtils.handleCommonError(it, err) }
                 }))
     }
@@ -184,7 +181,7 @@ class BillReportChartFragment : BaseReportChartFragment() {
         }
 
         txt_total.text = totalSale.formatWithDot()
-        txt_nb_order.text = getString(R.string.view_chart_report_number_orders, Random().nextInt(100))
+        txt_nb_order.text = getString(R.string.view_chart_report_number_orders, Random().nextInt(30))
     }
 
     private fun showSections(sections: ArrayList<Section?>) {

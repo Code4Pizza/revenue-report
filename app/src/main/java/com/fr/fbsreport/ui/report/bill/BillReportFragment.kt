@@ -2,18 +2,19 @@ package com.fr.fbsreport.ui.report.bill
 
 import android.os.Bundle
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.BaseReportAdapter
-import com.fr.fbsreport.base.BaseReportFragment
-import com.fr.fbsreport.base.EXTRA_BRANCH_CODE
-import com.fr.fbsreport.base.INDEX_REPORT
+import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
+import com.fr.fbsreport.extension.INDEX_REPORT
 import com.fr.fbsreport.model.BaseReport
 import com.fr.fbsreport.model.BillReport
-import com.fr.fbsreport.network.ErrorUtils
-import com.fr.fbsreport.ui.report.bill.adapter.BillReportDelegateAdapter
+import com.fr.fbsreport.source.network.ErrorUtils
+import com.fr.fbsreport.ui.report.BaseReportAdapter
+import com.fr.fbsreport.ui.report.BaseReportTypeFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_bill_report.*
+import java.util.concurrent.TimeUnit
 
-class BillReportFragment : BaseReportFragment<BillReport>() {
+class BillReportFragment : BaseReportTypeFragment() {
 
     companion object {
         @JvmStatic
@@ -32,46 +33,74 @@ class BillReportFragment : BaseReportFragment<BillReport>() {
         return R.string.report_by_bill
     }
 
+
+    override fun initViews() {
+        super.initViews()
+        initSwipeRefresh()
+    }
+
+    private fun initSwipeRefresh() {
+        swipe_refresh.setOnRefreshListener {
+            page = 1
+            requestReports()
+        }
+    }
+
     override fun initReportList() {
         super.initReportList()
-        reportAdapter = BaseReportAdapter(BillReportDelegateAdapter())
-        reportAdapter.setOnReportClickListener(object : BaseReportAdapter.OnReportClickListener {
+        adapter = BaseReportAdapter(BillReportDelegateAdapter())
+        adapter.setOnReportClickListener(object : BaseReportAdapter.OnReportClickListener {
             override fun onReportClick(report: BaseReport) {
                 getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportDetailFragment.newInstance(report as BillReport))
             }
         })
-        reportList.adapter = reportAdapter
+        reportList.adapter = adapter
         requestReports()
     }
 
     override fun requestReports() {
-        getBaseActivity()?.showLoading()
         requestApi(appRepository.getBillReport(branchCode, filter, limit, page)
                 .subscribeOn(Schedulers.io())
+                .materialize()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ data ->
+                .map {
+                    it.error?.let { ErrorUtils.handleCommonError(context, it) }
+                    it
+                }
+                .filter { !it.isOnError }
+                .dematerialize<List<BillReport>>()
+                .debounce(2000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    if (!swipe_refresh.isRefreshing) showLoading()
+                }
+                .doOnTerminate {
+                    hideLoading()
+                    swipe_refresh.isRefreshing = false
+                }
+                .doOnNext {
                     page++
-                    getBaseActivity()?.hideLoading()
-                    reportAdapter.setReports(data)
-                }, { err ->
-                    getBaseActivity()?.hideLoading()
-                    infiniteScrollListener.setLoading(false)
-                    context?.let { ErrorUtils.handleCommonError(it, err) }
-                }))
+                    adapter.setReports(it)
+                }
+                .subscribe())
     }
 
     override fun requestMoreReports() {
         requestApi(appRepository.getBillReport(branchCode, filter, limit, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ data ->
+                .doOnSubscribe {
+                    reportList.post { adapter.addLoading() }
+                }
+                .doFinally {
+                    isLoading = false
+                }
+                .subscribe({
                     page++
-                    getBaseActivity()?.hideLoading()
-                    reportAdapter.addReports(data)
-                }, { err ->
-                    getBaseActivity()?.hideLoading()
-                    infiniteScrollListener.setLoading(false)
-                    context?.let { ErrorUtils.handleCommonError(it, err) }
+                    adapter.addReports(it)
+                }, {
+                    adapter.hideLoading()
+                    ErrorUtils.handleCommonError(context, it)
                 }))
     }
 }

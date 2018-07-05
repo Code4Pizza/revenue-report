@@ -1,7 +1,7 @@
-package com.fr.fbsreport.network
+package com.fr.fbsreport.source.network
 
 import android.text.TextUtils
-import com.fr.fbsreport.source.UserPreference
+import com.fr.fbsreport.source.local.UserPreference
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.fr.fbsreport.App
 import com.fr.fbsreport.source.AppRepository
-import com.fr.fbsreport.source.UserPreference
+import com.fr.fbsreport.source.local.UserPreference
 import com.fr.fbsreport.widget.AppToolbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.*
-import com.fr.fbsreport.extension.androidLazy
+import com.fr.fbsreport.extension.*
 import com.fr.fbsreport.ui.report.BaseReportCustomFragment
 import kotlinx.android.synthetic.main.fragment_base_report_pager.*
 
@@ -28,11 +28,25 @@ class BillReportPagerFragment : BaseFragment() {
         return R.layout.fragment_base_report_pager
     }
 
+    override fun getTitleIdToolbar(): Int? {
+        return R.string.bill_report_pager_toolbar_title
+    }
+
+    override fun getTextIdToolbarLeft(): Int? {
+        return R.string.action_back
+    }
+
+    override fun onItemLeft() {
+        super.onItemLeft()
+        getBaseBottomTabActivity()?.onBackPressed()
+    }
+
     override fun initViews() {
         pagerAdapter = ReportPagerAdapter(branchCode, childFragmentManager)
         view_pager.adapter = pagerAdapter
         view_pager.offscreenPageLimit = 4
         tab_layout.setupWithViewPager(view_pager)
+        showLoading()
         view_pager.setCurrentItem(1, true)
     }
 

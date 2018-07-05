@@ -2,16 +2,14 @@ package com.fr.fbsreport.source
 
 import com.fr.fbsreport.App
 import com.fr.fbsreport.model.*
-import com.fr.fbsreport.network.Dashboard
-import com.fr.fbsreport.network.DataResponse
-import com.fr.fbsreport.utils.CommonUtils
+import com.fr.fbsreport.source.network.Dashboard
 import io.reactivex.Flowable
-import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class AppRepository(private val appRemoteSource: AppRemoteSource, private val appLocalSource: AppLocalSource) : AppDataSource {
+class AppRepository(private val appRemoteSource: AppRemoteSource, private val appLocalSource: AppLocalSource) {
 
     @Inject
     lateinit var app: App
@@ -20,93 +18,139 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
         App.component.inject(this)
     }
 
-    override fun register(username: String, email: String, password: String): Single<User> {
+    fun register(username: String, email: String, password: String): Single<User> {
         return appRemoteSource.register(username, email, password)
     }
 
-    override fun login(email: String, password: String): Single<TokenModel> {
+    fun login(email: String, password: String): Single<TokenModel> {
         return appRemoteSource.login(email, password)
     }
 
-    override fun getUserInfo(): Single<User> {
+    fun getUserInfo(): Single<User> {
         return appRemoteSource.getUserInfo()
     }
 
-    override fun editUserInfo(): Single<User> {
+    fun editUserInfo(): Single<User> {
         return appRemoteSource.editUserInfo()
     }
 
-    override fun getBranch(): Flowable<DataResponse<List<Branch>>> {
+    fun getBranch(): Flowable<List<Branch>> {
         val localSource = appLocalSource.getBranch()
-                .subscribeOn(Schedulers.io())
+                .doOnNext {
+                    println("Local next " + Thread.currentThread().name)
+                }
+                .doOnComplete {
+                    println("Local completed " + Thread.currentThread().name)
+                }
 
         val remoteSource = appRemoteSource.getBranch()
-                .doOnSuccess({
-                    appLocalSource.updateBranches(it.data)
+                .doOnNext({
+                    println("Remote next " + Thread.currentThread().name)
+                    Observable
+                            .fromCallable {
+                                appLocalSource.updateBranches(it)
+                            }
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.io())
+                            .subscribe()
                 })
-                .subscribeOn(Schedulers.io())
+                .doOnError { println("Remote error " + Thread.currentThread().name) }
+                .doOnComplete { println("Remote completed " + Thread.currentThread().name) }
 
-        return Maybe.concat(localSource, remoteSource)
+        return Flowable.concatArrayEager(localSource, remoteSource)
     }
 
-    override fun getDeleteReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<DeleteReport>> {
+    fun getDeleteReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<DeleteReport>> {
         val localSource = appLocalSource.getDeleteReport()
-                .subscribeOn(Schedulers.io())
+                .doOnNext {
+                    println("Local next " + Thread.currentThread().name)
+                }
+                .doOnComplete {
+                    println("Local completed " + Thread.currentThread().name)
+                }
 
         val remoteSource = appRemoteSource.getDeleteReport(branchCode, filter, limit, page)
-                .doOnSuccess({
+                .doOnNext({
+                    println("Remote next " + Thread.currentThread().name)
                     // Only save local first page
-                    if (page == 1) appLocalSource.updateDeleteReports(it)
+                    if (page == 1) {
+                        Observable
+                                .fromCallable {
+                                    appLocalSource.updateDeleteReports(it)
+                                }
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.io())
+                                .subscribe()
+                    }
                 })
-                .subscribeOn(Schedulers.io())
+                .doOnError { println("Remote error " + Thread.currentThread().name) }
+                .doOnComplete { println("Remote completed " + Thread.currentThread().name) }
 
-        return if (CommonUtils.checkConnection(app)) remoteSource.toFlowable()
-        else localSource.toFlowable()
+        if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
+        return remoteSource
     }
 
-    override fun getBillReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<BillReport>> {
+    fun getBillReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<BillReport>> {
         val localSource = appLocalSource.getBillReport()
-                .subscribeOn(Schedulers.io())
 
         val remoteSource = appRemoteSource.getBillReport(branchCode, filter, limit, page)
-                .doOnSuccess({
-                    if (page == 1) appLocalSource.updateBillReports(it)
+                .doOnNext({
+                    if (page == 1) {
+                        Observable
+                                .fromCallable {
+                                    appLocalSource.updateBillReports(it)
+                                }
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.io())
+                                .subscribe()
+                    }
                 })
-                .subscribeOn(Schedulers.io())
 
-        return if (CommonUtils.checkConnection(app)) remoteSource.toFlowable()
-        else localSource.toFlowable()
+        if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
+        return remoteSource
     }
 
-    override fun getDiscountReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<DiscountReport>> {
+    fun getDiscountReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<DiscountReport>> {
         val localSource = appLocalSource.getDiscountReport()
-                .subscribeOn(Schedulers.io())
 
         val remoteSource = appRemoteSource.getDiscountReport(branchCode, filter, limit, page)
-                .doOnSuccess({
-                    if (page == 1) appLocalSource.updateDiscountReports(it)
+                .doOnNext({
+                    if (page == 1) {
+                        Observable
+                                .fromCallable {
+                                    appLocalSource.updateDiscountReports(it)
+                                }
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.io())
+                                .subscribe()
+                    }
                 })
-                .subscribeOn(Schedulers.io())
 
-        return if (CommonUtils.checkConnection(app)) remoteSource.toFlowable()
-        else localSource.toFlowable()
+        if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
+        return remoteSource
     }
 
-    override fun getItemReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<ItemReport>> {
+    fun getItemReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<ItemReport>> {
         val localSource = appLocalSource.getItemReport()
-                .subscribeOn(Schedulers.io())
 
         val remoteSource = appRemoteSource.getItemReport(branchCode, filter, limit, page)
-                .doOnSuccess({
-                    if (page == 1) appLocalSource.updateItemReports(it)
+                .doOnNext({
+                    if (page == 1) {
+                        Observable
+                                .fromCallable {
+                                    appLocalSource.updateItemReports(it)
+                                }
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.io())
+                                .subscribe()
+                    }
                 })
-                .subscribeOn(Schedulers.io())
 
-        return if (CommonUtils.checkConnection(app)) remoteSource.toFlowable()
-        else localSource.toFlowable()
+        if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
+        return remoteSource
     }
 
-    override fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Single<DataResponse<Dashboard>> {
+    fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Flowable<Dashboard> {
         return appRemoteSource.getDashboard(branchCode, type, date, startDate, endDate)
     }
 }

@@ -1,19 +1,16 @@
-package com.fr.fbsreport.source
+package com.fr.fbsreport.source.local
 
 import android.arch.persistence.room.*
 import com.fr.fbsreport.model.*
 import io.reactivex.Maybe
 
-/**
- * Created by framgia on 03/07/2018.
- */
 @Dao
 interface AppDAO {
 
     @Query("select * from tbl_branch")
     fun getBranches(): Maybe<List<Branch>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     fun insertAllBranches(branches: List<Branch>)
 
     @Query("delete from tbl_branch")

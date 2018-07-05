@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_overview"
-        android:paddingStart="@dimen/spacing_small"
-        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small"
         android:paddingEnd="@dimen/spacing_small"
-        android:paddingBottom="@dimen/spacing_small">
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingTop="@dimen/spacing_small">
 
         <TextView
             android:layout_width="0dp"
@@ -55,10 +55,17 @@
         android:layout_below="@id/ll_column"
         android:background="@color/appBgGray" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/report_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/ll_column" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_column">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/report_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
