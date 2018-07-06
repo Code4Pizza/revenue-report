@@ -81,4 +81,19 @@ interface AppDAO {
         deleteAllItemReports()
         insertItemReports(reports)
     }
+
+    @Query("select * from tbl_revenue_report")
+    fun getRevenueReports(): Maybe<List<RevenueReport>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertRevenueReports(reports: List<RevenueReport>)
+
+    @Query("delete from tbl_revenue_report")
+    fun deleteAllRevenueReports()
+
+    @Transaction
+    fun updateRevenueReports(reports: List<RevenueReport>) {
+        deleteAllRevenueReports()
+        insertRevenueReports(reports)
+    }
 }

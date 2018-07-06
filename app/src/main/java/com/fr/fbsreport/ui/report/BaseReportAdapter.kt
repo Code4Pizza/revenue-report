@@ -7,7 +7,6 @@ import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.base.ViewTypeDelegateAdapter
 import com.fr.fbsreport.extension.VIEW_TYPE_ITEM
 import com.fr.fbsreport.extension.VIEW_TYPE_LOADING
-import com.fr.fbsreport.model.BaseReport
 
 class BaseReportAdapter(delegateAdapter: ViewTypeDelegateAdapter) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -19,7 +18,7 @@ class BaseReportAdapter(delegateAdapter: ViewTypeDelegateAdapter) : RecyclerView
     }
 
     interface OnReportClickListener {
-        fun onReportClick(report: BaseReport)
+        fun onReportClick(report: ViewType)
     }
     
     init {

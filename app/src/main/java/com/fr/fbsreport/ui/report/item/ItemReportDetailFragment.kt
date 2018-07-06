@@ -1,17 +1,12 @@
 package com.fr.fbsreport.ui.report.item
 
 import android.os.Bundle
-import android.widget.TextView
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
 import com.fr.fbsreport.extension.EXTRA_ITEM_REPORT
-import com.fr.fbsreport.extension.displayDate
 import com.fr.fbsreport.extension.formatWithDot
-import com.fr.fbsreport.extension.inflate
-import com.fr.fbsreport.model.Item
 import com.fr.fbsreport.model.ItemReport
 import kotlinx.android.synthetic.main.fragment_item_report_detail.*
-import kotlinx.android.synthetic.main.view_item_report_details_dish.view.*
 
 class ItemReportDetailFragment : BaseFragment() {
 
@@ -51,27 +46,13 @@ class ItemReportDetailFragment : BaseFragment() {
     }
 
     override fun initViews() {
-        txt_sale_num.text = if (itemReport.saleNum.isEmpty()) "Unknown" else itemReport.saleNum
-        txt_sale_date.text = itemReport.saleDate.displayDate()
+        txt_code.text = itemReport.code
+        txt_name.text = itemReport.name
+        txt_category.text = itemReport.category
+        txt_quantity.text = itemReport.quantity.toString()
+        txt_price.text = itemReport.price.formatWithDot()
         txt_discount.text = itemReport.discount.formatWithDot()
-        view!!.findViewById<TextView>(R.id.txt_total).text = itemReport.total.formatWithDot()
-        ll_items.removeAllViewsInLayout()
-//        for (item in itemReport.items) {
-//            addViewDish(item)
-//        }
-    }
-
-    private fun addViewDish(item: Item) {
-        context?.let {
-            val itemCategory = it.inflate(R.layout.view_item_report_details_dish)
-            itemCategory.txt_category.text = item.category
-            itemCategory.txt_item_code.text = item.itemCode
-            itemCategory.txt_unit.text = item.unit
-            itemCategory.txt_quantity.text = item.quantity.toString()
-            itemCategory.txt_price.text = item.price.formatWithDot()
-            itemCategory.txt_vat.text = item.tax.formatWithDot()
-            itemCategory.findViewById<TextView>(R.id.txt_total).text = item.total.formatWithDot()
-            ll_items.addView(itemCategory)
-        }
+        txt_tax.text = itemReport.tax.formatWithDot()
+        txt_total.text = itemReport.total.formatWithDot()
     }
 }

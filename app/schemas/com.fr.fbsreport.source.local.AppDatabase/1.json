@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "752c4da66d2ba80b8c45b4fb3d746105",
+    "identityHash": "9cb045951bff337bd178b1442e22647d",
     "entities": [
       {
         "tableName": "tbl_branch",
@@ -242,11 +242,41 @@
       },
       {
         "tableName": "tbl_item_report",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `discount` INTEGER NOT NULL, `items_total` INTEGER NOT NULL, `sale_date` TEXT NOT NULL, `sale_num` TEXT NOT NULL, `total` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `code` TEXT NOT NULL, `name` TEXT NOT NULL, `category` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `price` INTEGER NOT NULL, `discount` INTEGER NOT NULL, `tax` INTEGER NOT NULL, `total` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "code",
+            "columnName": "code",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "price",
+            "columnName": "price",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -257,21 +287,9 @@
             "notNull": true
           },
           {
-            "fieldPath": "itemsTotal",
-            "columnName": "items_total",
+            "fieldPath": "tax",
+            "columnName": "tax",
             "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "saleDate",
-            "columnName": "sale_date",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "saleNum",
-            "columnName": "sale_num",
-            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -289,11 +307,79 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "tbl_revenue_report",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sale_date` TEXT NOT NULL, `shift` TEXT NOT NULL, `shift_start` TEXT NOT NULL, `shift_end` TEXT NOT NULL, `count_pax` INTEGER NOT NULL, `total_sales` INTEGER NOT NULL, `drawer_total` INTEGER NOT NULL, `over_short_amount` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "saleDate",
+            "columnName": "sale_date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shift",
+            "columnName": "shift",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shiftStart",
+            "columnName": "shift_start",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shiftEnd",
+            "columnName": "shift_end",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "countPax",
+            "columnName": "count_pax",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalSales",
+            "columnName": "total_sales",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "drawerTotal",
+            "columnName": "drawer_total",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "overShortAmount",
+            "columnName": "over_short_amount",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"752c4da66d2ba80b8c45b4fb3d746105\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9cb045951bff337bd178b1442e22647d\")"
     ]
   }
 }

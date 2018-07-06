@@ -3,13 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@android:color/white"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:gravity="center"
-    android:paddingStart="@dimen/spacing_small"
-    android:paddingEnd="@dimen/spacing_small">
+    android:layout_marginEnd="@dimen/spacing_small"
+    android:layout_marginStart="@dimen/spacing_small"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/txt_name"
@@ -25,7 +21,20 @@
         tools:text="Ca 1" />
 
     <TextView
-        android:id="@+id/txt_total"
+        android:id="@+id/txt_quantity"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_regular"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/gray"
+        android:textSize="15sp"
+        tools:text="Ca 1" />
+
+    <TextView
+        android:id="@+id/txt_sale"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

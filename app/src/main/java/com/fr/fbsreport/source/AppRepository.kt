@@ -44,7 +44,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                 }
 
         val remoteSource = appRemoteSource.getBranch()
-                .doOnNext({
+                .doOnNext {
                     println("Remote next " + Thread.currentThread().name)
                     Observable
                             .fromCallable {
@@ -53,7 +53,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                             .subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.io())
                             .subscribe()
-                })
+                }
                 .doOnError { println("Remote error " + Thread.currentThread().name) }
                 .doOnComplete { println("Remote completed " + Thread.currentThread().name) }
 
@@ -70,7 +70,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                 }
 
         val remoteSource = appRemoteSource.getDeleteReport(branchCode, filter, limit, page)
-                .doOnNext({
+                .doOnNext {
                     println("Remote next " + Thread.currentThread().name)
                     // Only save local first page
                     if (page == 1) {
@@ -82,7 +82,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                                 .observeOn(Schedulers.io())
                                 .subscribe()
                     }
-                })
+                }
                 .doOnError { println("Remote error " + Thread.currentThread().name) }
                 .doOnComplete { println("Remote completed " + Thread.currentThread().name) }
 
@@ -94,7 +94,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
         val localSource = appLocalSource.getBillReport()
 
         val remoteSource = appRemoteSource.getBillReport(branchCode, filter, limit, page)
-                .doOnNext({
+                .doOnNext {
                     if (page == 1) {
                         Observable
                                 .fromCallable {
@@ -104,7 +104,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                                 .observeOn(Schedulers.io())
                                 .subscribe()
                     }
-                })
+                }
 
         if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
         return remoteSource
@@ -114,7 +114,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
         val localSource = appLocalSource.getDiscountReport()
 
         val remoteSource = appRemoteSource.getDiscountReport(branchCode, filter, limit, page)
-                .doOnNext({
+                .doOnNext {
                     if (page == 1) {
                         Observable
                                 .fromCallable {
@@ -124,7 +124,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                                 .observeOn(Schedulers.io())
                                 .subscribe()
                     }
-                })
+                }
 
         if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
         return remoteSource
@@ -134,7 +134,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
         val localSource = appLocalSource.getItemReport()
 
         val remoteSource = appRemoteSource.getItemReport(branchCode, filter, limit, page)
-                .doOnNext({
+                .doOnNext {
                     if (page == 1) {
                         Observable
                                 .fromCallable {
@@ -144,12 +144,32 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                                 .observeOn(Schedulers.io())
                                 .subscribe()
                     }
-                })
+                }
 
         if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
         return remoteSource
     }
 
+    fun getRevenueReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<RevenueReportCombine>> {
+//        val localSource = appLocalSource.getRevenueReport()
+
+        val remoteSource = appRemoteSource.getRevenueReport(branchCode, filter, limit, page)
+//                .doOnNext {
+//                    if (page == 1) {
+//                        Observable
+//                                .fromCallable {
+//                                    appLocalSource.updateRevenueReports(it)
+//                                }
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(Schedulers.io())
+//                                .subscribe()
+//                    }
+//                }
+
+       // if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
+        return remoteSource
+    }
+    
     fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Flowable<Dashboard> {
         return appRemoteSource.getDashboard(branchCode, type, date, startDate, endDate)
     }

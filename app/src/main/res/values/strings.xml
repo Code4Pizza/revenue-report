@@ -54,6 +54,7 @@
     <string name="report_by_bill">Báo cáo theo bill</string>
     <string name="report_discount">Báo cáo giảm giá</string>
     <string name="report_by_item">Báo cáo theo mặt hàng</string>
+    <string name="report_revenue">Báo cáo doanh thu</string>
 
     <!-- Bill Report -->
     <string name="view_chart_report_total_money">Tổng tiền</string>
@@ -83,6 +84,8 @@
     <string name="delete_report_column_reason">Lý do hủy</string>
 
     <!--Item report-->
+    <string name="item_report_pager_toolbar_title">Báo cáo theo mặt hàng</string>
+
     <string name="item_report_item_title_dishes">Món ăn</string>
     <string name="item_report_item_title_discount">Giảm giá</string>
     <string name="item_report_item_title_total">Thành tiền</string>
@@ -92,10 +95,12 @@
     <string name="item_report_detail_discount">Giảm giá</string>
     <string name="item_report_detail_total">Thành tiền</string>
 
-    <string name="item_report_detail_item_dish">Danh mục</string>
     <string name="item_report_detail_item_code">Mã món ăn</string>
+    <string name="item_report_detail_item_name">Tên</string>
+    <string name="item_report_detail_item_category">Danh mục</string>
     <string name="item_report_detail_item_unit">Đơn vị</string>
     <string name="item_report_detail_item_quantity">Số lượng</string>
+    <string name="item_report_detail_item_discount">Giảm giá</string>
     <string name="item_report_detail_item_price">Giá</string>
     <string name="item_report_detail_item_tax">VAT</string>
     <string name="item_report_detail_item_total">Tổng cộng</string>
@@ -108,4 +113,12 @@
     <string name="discount_report_item_title_discount">Giảm giá</string>
     <string name="discount_report_item_title_total">Thành tiền</string>
 
+    <!--Revenue report-->
+    <string name="revenue_report_toolbar_title">Báo cáo theo doanh thu</string>
+    <string name="revenue_report_column_date">Ngày</string>
+    <string name="revenue_report_column_shift_1">Ca sáng</string>
+    <string name="revenue_report_column_shift_2">Ca chiều</string>
+
+    <string name="revenue_report_detail_toolbar_title">Chi tiết</string>
+    
 </resources>

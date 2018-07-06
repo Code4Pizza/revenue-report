@@ -94,7 +94,7 @@ fun String.displayDate(): String {
         val date = SimpleDateFormat("yyyy-mm-dd", Locale.getDefault()).parse(this)
         SimpleDateFormat("dd/mm/yyyy", Locale.getDefault()).format(date)
     } catch (e: Exception) {
-        throw Throwable("Time format invalid")
+        ""
     }
 }
 

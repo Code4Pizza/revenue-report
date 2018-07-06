@@ -1,4 +1,4 @@
-package com.fr.fbsreport.ui.report
+package com.fr.fbsreport.ui.report.item
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -6,15 +6,11 @@ import android.support.v4.content.res.ResourcesCompat
 import android.view.LayoutInflater
 import android.view.View
 import com.fr.fbsreport.R
-import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
-import com.fr.fbsreport.extension.EXTRA_FILTER_DATE
-import com.fr.fbsreport.extension.FILTER_TYPE_CUSTOM
-import com.fr.fbsreport.extension.INDEX_REPORT
 import com.fr.fbsreport.extension.*
-import com.fr.fbsreport.source.network.Chart
+import com.fr.fbsreport.source.network.Dashboard
 import com.fr.fbsreport.source.network.ErrorUtils
 import com.fr.fbsreport.source.network.Section
-import com.fr.fbsreport.ui.report.bill.BillReportFragment
+import com.fr.fbsreport.ui.report.BaseReportChartFragment
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -24,22 +20,20 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_base_report_custom.*
-import kotlinx.android.synthetic.main.item_view_section.view.*
+import kotlinx.android.synthetic.main.item_view_section_item.view.*
 import kotlinx.android.synthetic.main.view_bill_section_1.*
 import kotlinx.android.synthetic.main.view_bill_section_2.*
 import kotlinx.android.synthetic.main.view_report_chart.*
-import java.util.*
 import java.util.concurrent.TimeUnit
 
-
-class BaseReportCustomFragment : BaseReportChartFragment() {
+class ItemReportCustomFragment : BaseReportChartFragment() {
 
     private var startDate: String? = null
     private var endDate: String? = null
 
     companion object {
         @JvmStatic
-        fun newInstance(branchCode: String, date: String) = BaseReportCustomFragment().apply {
+        fun newInstance(branchCode: String, date: String) = ItemReportCustomFragment().apply {
             val bundle = Bundle()
             bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             bundle.putString(EXTRA_FILTER_DATE, date)
@@ -54,18 +48,24 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
     override fun initViews() {
         txt_start_date.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                startDay = dayOfMonth
+                startMonth = monthOfYear
+                startYear = year
                 txt_start_date.text = String.format("%s/%s/%s", dayOfMonth.toString(), (monthOfYear + 1).toString(), year.toString())
                 startDate = String.format("%s-%s-%s", year.toString(), (monthOfYear + 1).toString(), dayOfMonth.toString())
                 if (endDate != null) requestData()
-            }, currentYear(), currentMonth(), currentDate())
+            }, startYear ?: currentYear(), startMonth ?: currentMonth(), startDay ?: currentDate())
             datePickerDialog.show()
         }
         txt_end_date.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                endDay = dayOfMonth
+                endMonth = monthOfYear
+                endYear = year
                 txt_end_date.text = String.format("%s/%s/%s", dayOfMonth.toString(), (monthOfYear + 1).toString(), year.toString())
                 endDate = String.format("%s-%s-%s", year.toString(), (monthOfYear + 1).toString(), dayOfMonth.toString())
                 if (startDate != null) requestData()
-            }, currentYear(), currentMonth(), currentDate())
+            }, endYear ?: currentYear(), endMonth ?: currentMonth(), endDay ?: currentDate())
             datePickerDialog.show()
         }
         initChart()
@@ -109,7 +109,7 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
     }
 
     override fun requestData() {
-        requestApi(appRepository.getDashboard(branchCode, "bill", FILTER_TYPE_CUSTOM, startDate, endDate)
+        requestApi(appRepository.getDashboard(branchCode, "item", FILTER_TYPE_CUSTOM, startDate, endDate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
@@ -120,7 +120,7 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
                 }
                 .subscribe({ data ->
                     hideLoadingSuccess()
-                    fillChart(data.charts)
+                    fillChart(data)
                     showSections(data.sections)
                 }, { err ->
                     hideLoadingFailed()
@@ -146,20 +146,17 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
         txt_no_data.visibility = View.VISIBLE
     }
 
-    override fun fillChart(charts: ArrayList<Chart>) {
-        var totalSale: Long = 0
-
+    override fun fillChart(data: Dashboard) {
         chartHashMap.clear()
         val daysBetweenDates = TimeUnit.DAYS.convert(endDate.toDate() - startDate.toDate(), TimeUnit.MILLISECONDS)
         for (i in 0 until daysBetweenDates.toInt()) {
             chartHashMap[i] = 0f
         }
-        for (i in 0 until charts.size) {
-            chartHashMap[i] = charts[i].total.toFloat()
+        for (i in 0 until data.charts.size) {
+            chartHashMap[i] = data.charts[i].total.toFloat()
         }
         val values = ArrayList<Entry>()
         for (entry in chartHashMap.entries) {
-            totalSale += entry.value.toLong()
             values.add(Entry(entry.key.toFloat(), entry.value))
         }
 
@@ -178,12 +175,12 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
 
         line_chart.run {
             clear()
-            if (totalSale != 0L) data = lineData
+            if (data.totalMoney != 0L) this.data = lineData
             invalidate()
         }
 
-        txt_total.text = totalSale.formatWithDot()
-        txt_nb_order.text = getString(R.string.view_chart_report_number_orders, Random().nextInt(100))
+        txt_total.text = data.totalMoney.formatWithDot()
+        txt_nb_order.text = getString(R.string.view_chart_report_number_orders, data.totalBill)
     }
 
     private fun showSections(sections: ArrayList<Section?>) {
@@ -191,25 +188,15 @@ class BaseReportCustomFragment : BaseReportChartFragment() {
             ll_section_1.removeAllViews()
             txt_name_section_1.text = name
             for (report in reports) {
-                val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section, ll_section_1, false)
-                sectionView.txt_name.text = report.title
+                val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section_item, ll_section_1, false)
+                sectionView.txt_name.text = report.name
+                sectionView.txt_quantity.text = report.quantity
                 sectionView.txt_sale.text = report.total.toLong().formatWithDot()
                 ll_section_1.addView(sectionView)
             }
             view_underline_section_1.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_1.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
+            txt_view_report_1.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, ItemReportFragment.newInstance(branchCode)) }
         }
-        sections[1]?.apply {
-            ll_section_2.removeAllViews()
-            txt_name_section_2.text = name
-            for (report in reports) {
-                val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section, ll_section_2, false)
-                sectionView.txt_name.text = report.title
-                sectionView.txt_sale.text = report.total.toLong().formatWithDot()
-                ll_section_2.addView(sectionView)
-            }
-            view_underline_section_2.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_2.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
-        }
+        view_bill_section_2.visibility = View.GONE
     }
 }

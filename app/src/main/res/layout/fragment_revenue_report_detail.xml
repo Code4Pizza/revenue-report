@@ -29,12 +29,56 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="@string/item_report_detail_item_code"
+                android:text="Ngày"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/txt_code"
+                android:id="@+id/txt_sale_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_regular"
+                android:gravity="end"
+                android:maxLines="1"
+                android:textColor="@color/gray"
+                android:textSize="15sp"
+                tools:text="1" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_regular"
+            android:maxLines="1"
+            android:text="Ca sáng"
+            android:textColor="@color/gray"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_regular"
+                android:maxLines="1"
+                android:text="Thời gian bắt đầu"
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/txt_shift_1_start"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -60,12 +104,12 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="@string/item_report_detail_item_name"
+                android:text="Thời gian kết thúc"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/txt_name"
+                android:id="@+id/txt_shift_1_end"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -91,12 +135,12 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="@string/item_report_detail_item_category"
+                android:text="Số khách"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/txt_category"
+                android:id="@+id/txt_shift_1_pax"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -122,12 +166,56 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="@string/item_report_detail_item_quantity"
+                android:text="Thành tiền"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/txt_quantity"
+                android:id="@+id/txt_shift_1_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_regular"
+                android:gravity="end"
+                android:maxLines="1"
+                android:textColor="@color/gray"
+                android:textSize="15sp"
+                tools:text="1" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_regular"
+            android:maxLines="1"
+            android:text="Ca chiều"
+            android:textColor="@color/gray"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_regular"
+                android:maxLines="1"
+                android:text="Thời gian bắt đầu"
+                android:textColor="@color/gray"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/txt_shift_2_start"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -153,12 +241,12 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="@string/item_report_detail_item_price"
+                android:text="Thời gian kết thúc"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/txt_price"
+                android:id="@+id/txt_shift_2_end"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -184,12 +272,12 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="@string/item_report_detail_item_discount"
+                android:text="Số khách"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/txt_discount"
+                android:id="@+id/txt_shift_2_pax"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -215,12 +303,12 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/sf_regular"
                 android:maxLines="1"
-                android:text="@string/item_report_detail_item_tax"
+                android:text="Thành tiền"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/txt_tax"
+                android:id="@+id/txt_shift_2_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -233,6 +321,12 @@
                 tools:text="1" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:background="@color/appBgGray" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -244,11 +338,11 @@
                 android:layout_marginEnd="@dimen/spacing_normal"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:fontFamily="@font/sf_regular"
+                android:fontFamily="@font/sf_semibold"
                 android:maxLines="1"
-                android:text="@string/item_report_detail_item_total"
+                android:text="Tổng tiền"
                 android:textColor="@color/gray"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txt_total"
@@ -256,12 +350,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:fontFamily="@font/sf_regular"
+                android:fontFamily="@font/sf_semibold"
                 android:gravity="end"
                 android:maxLines="1"
                 android:textColor="@color/gray"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 tools:text="1" />
         </LinearLayout>
+
+
     </LinearLayout>
 </ScrollView>

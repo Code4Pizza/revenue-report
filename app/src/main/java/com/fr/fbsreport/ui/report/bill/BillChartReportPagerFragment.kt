@@ -5,44 +5,30 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.fr.fbsreport.R
-import com.fr.fbsreport.base.*
 import com.fr.fbsreport.extension.*
-import com.fr.fbsreport.ui.report.BaseReportCustomFragment
-import kotlinx.android.synthetic.main.fragment_base_report_pager.*
+import com.fr.fbsreport.ui.report.BaseChartReportPagerFragment
+import kotlinx.android.synthetic.main.fragment_base_chart_report_pager.*
 
-class BillReportPagerFragment : BaseFragment() {
-
-    val branchCode: String by androidLazy { arguments?.getString(EXTRA_BRANCH_CODE) ?: "" }
-    private lateinit var pagerAdapter: ReportPagerAdapter
+/**
+ * Created by framgia on 06/07/2018.
+ */
+class BillChartReportPagerFragment : BaseChartReportPagerFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(branchCode: String) = BillReportPagerFragment().apply {
+        fun newInstance(branchCode: String) = BillChartReportPagerFragment().apply {
             val bundle = Bundle()
             bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             arguments = bundle
         }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_base_report_pager
-    }
-
     override fun getTitleIdToolbar(): Int? {
         return R.string.bill_report_pager_toolbar_title
     }
 
-    override fun getTextIdToolbarLeft(): Int? {
-        return R.string.action_back
-    }
-
-    override fun onItemLeft() {
-        super.onItemLeft()
-        getBaseBottomTabActivity()?.onBackPressed()
-    }
-
     override fun initViews() {
-        pagerAdapter = ReportPagerAdapter(branchCode, childFragmentManager)
+        pagerAdapter = BillChartPagerAdapter(branchCode, childFragmentManager)
         view_pager.adapter = pagerAdapter
         view_pager.offscreenPageLimit = 4
         tab_layout.setupWithViewPager(view_pager)
@@ -50,7 +36,7 @@ class BillReportPagerFragment : BaseFragment() {
         view_pager.setCurrentItem(1, true)
     }
 
-    class ReportPagerAdapter(private val branchCode: String, fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    class BillChartPagerAdapter(private val branchCode: String, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment? {
             return when (position) {
@@ -58,7 +44,7 @@ class BillReportPagerFragment : BaseFragment() {
                 1 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_TODAY)
                 2 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_WEEK)
                 3 -> BillReportChartFragment.newInstance(branchCode, FILTER_TYPE_MONTH)
-                4 -> BaseReportCustomFragment.newInstance(branchCode, FILTER_TYPE_CUSTOM)
+                4 -> BillReportCustomFragment.newInstance(branchCode, FILTER_TYPE_CUSTOM)
                 else -> throw IllegalArgumentException("Not valid pager")
             }
         }

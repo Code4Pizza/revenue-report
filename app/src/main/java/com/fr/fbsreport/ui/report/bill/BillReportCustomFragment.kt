@@ -1,5 +1,6 @@
 package com.fr.fbsreport.ui.report.bill
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
 import android.view.LayoutInflater
@@ -18,17 +19,22 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_base_report_chart.*
+import kotlinx.android.synthetic.main.fragment_base_report_custom.*
 import kotlinx.android.synthetic.main.item_view_section_bill.view.*
 import kotlinx.android.synthetic.main.view_bill_section_1.*
 import kotlinx.android.synthetic.main.view_bill_section_2.*
 import kotlinx.android.synthetic.main.view_report_chart.*
+import java.util.*
+import java.util.concurrent.TimeUnit
 
-class BillReportChartFragment : BaseReportChartFragment() {
+class BillReportCustomFragment : BaseReportChartFragment() {
+
+    private var startDate: String? = null
+    private var endDate: String? = null
 
     companion object {
         @JvmStatic
-        fun newInstance(branchCode: String, date: String) = BillReportChartFragment().apply {
+        fun newInstance(branchCode: String, date: String) = BillReportCustomFragment().apply {
             val bundle = Bundle()
             bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             bundle.putString(EXTRA_FILTER_DATE, date)
@@ -36,11 +42,34 @@ class BillReportChartFragment : BaseReportChartFragment() {
         }
     }
 
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_base_report_custom
+    }
+
     override fun initViews() {
-        super.initViews()
-        swipe_refresh.setOnRefreshListener {
-            requestData()
+        txt_start_date.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                startDay = dayOfMonth
+                startMonth = monthOfYear
+                startYear = year
+                txt_start_date.text = String.format("%s/%s/%s", dayOfMonth.toString(), (monthOfYear + 1).toString(), year.toString())
+                startDate = String.format("%s-%s-%s", year.toString(), (monthOfYear + 1).toString(), dayOfMonth.toString())
+                if (endDate != null) requestData()
+            }, startYear ?: currentYear(), startMonth ?: currentMonth(), startDay ?: currentDate())
+            datePickerDialog.show()
         }
+        txt_end_date.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                endDay = dayOfMonth
+                endMonth = monthOfYear
+                endYear = year
+                txt_end_date.text = String.format("%s/%s/%s", dayOfMonth.toString(), (monthOfYear + 1).toString(), year.toString())
+                endDate = String.format("%s-%s-%s", year.toString(), (monthOfYear + 1).toString(), dayOfMonth.toString())
+                if (startDate != null) requestData()
+            }, endYear ?: currentYear(), endMonth ?: currentMonth(), endDay ?: currentDate())
+            datePickerDialog.show()
+        }
+        initChart()
     }
 
     override fun initChart() {
@@ -61,82 +90,71 @@ class BillReportChartFragment : BaseReportChartFragment() {
             axisLeft.axisMinimum = 0f
             axisLeft.valueFormatter = IAxisValueFormatter { value, _ ->
                 when {
-                    value > 1000000 -> String.format("%str", (value / 1000000).toInt().toString())
-                    value > 1000 -> String.format("%sk", (value / 100).toInt().toString())
+                    value > 1000000 -> String.format("%s tr", (value / 1000000).toInt().toString())
+                    value > 100000 -> String.format("%s tr", (value / 100).toInt().toString())
                     else -> value.toInt().toString()
                 }
             }
 
-            xAxis.setLabelCount(when (date) {
-                FILTER_TYPE_YESTERDAY, FILTER_TYPE_TODAY -> 9
-                FILTER_TYPE_WEEK -> 7
-                FILTER_TYPE_MONTH -> 12
-                else -> 2
-            }, true)
+            xAxis.setLabelCount(2, true)
             xAxis.setDrawGridLines(false)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.valueFormatter = IAxisValueFormatter { value, _ ->
-                when (date) {
-                    FILTER_TYPE_YESTERDAY, FILTER_TYPE_TODAY -> String.format("%sh", Math.round(value).toString()) // xVal is a string array
-                    FILTER_TYPE_WEEK -> {
-                        val dayOfWeek = Math.round(value)
-                        if (dayOfWeek == 8) "CN"
-                        else String.format("T%s", dayOfWeek.toString())
-                    }
-                    else -> Math.round(value).toString()
+                when (value.toInt()) {
+                    0 -> startDate.formatDate()
+                    chartHashMap.size - 1 -> endDate.formatDate()
+                    else -> ""
                 }
             }
         }
-        requestData()
     }
 
     override fun requestData() {
-        requestApi(appRepository.getDashboard(branchCode, "bill", date, null, null)
+        requestApi(appRepository.getDashboard(branchCode, "bill", FILTER_TYPE_CUSTOM, startDate, endDate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
-                    if (!swipe_refresh.isRefreshing) view_data.visibility = View.GONE
+                    showLoadingRequest()
                 }
                 .doAfterTerminate {
                     getBaseActivity()?.hideLoading()
-                    swipe_refresh.isRefreshing = false
                 }
                 .subscribe({ data ->
-                    view_data.visibility = View.VISIBLE
+                    hideLoadingSuccess()
                     fillChart(data)
                     showSections(data.sections)
                 }, { err ->
+                    hideLoadingFailed()
                     context?.let { ErrorUtils.handleCommonError(it, err) }
                 }))
     }
 
+    private fun showLoadingRequest() {
+        view_data.visibility = View.GONE
+        progress_bar.visibility = View.VISIBLE
+        txt_no_data.visibility = View.GONE
+    }
+
+    private fun hideLoadingSuccess() {
+        view_data.visibility = View.VISIBLE
+        progress_bar.visibility = View.GONE
+        txt_no_data.visibility = View.GONE
+    }
+
+    private fun hideLoadingFailed() {
+        view_data.visibility = View.GONE
+        progress_bar.visibility = View.GONE
+        txt_no_data.visibility = View.VISIBLE
+    }
+
     override fun fillChart(data: Dashboard) {
-        when (date) {
-            FILTER_TYPE_TODAY, FILTER_TYPE_YESTERDAY -> {
-                for (i in 0 until data.charts.size) {
-                    val chart = data.charts[i]
-                    chartHashMap[chart.time.toInt()] = chart.total.toFloat()
-                }
-            }
-            FILTER_TYPE_WEEK -> {
-                for (i in 0 until data.charts.size) {
-                    val chart = data.charts[i]
-                    val dayOfWeek = chart.time.getDayOfWeek()
-                    // if return Sunday, set value of index 8 in chart hash map
-                    if (dayOfWeek == 1) {
-                        chartHashMap[8] = chart.total.toFloat()
-                    } else {
-                        chartHashMap[dayOfWeek] = chart.total.toFloat()
-                    }
-                }
-            }
-            FILTER_TYPE_MONTH -> {
-                for (i in 0 until data.charts.size) {
-                    val chart = data.charts[i]
-                    val dayOfMonth = chart.time.getDayOfMonth()
-                    chartHashMap[dayOfMonth] = chart.total.toFloat()
-                }
-            }
+        chartHashMap.clear()
+        val daysBetweenDates = TimeUnit.DAYS.convert(endDate.toDate() - startDate.toDate(), TimeUnit.MILLISECONDS)
+        for (i in 0 until daysBetweenDates.toInt()) {
+            chartHashMap[i] = 0f
+        }
+        for (i in 0 until data.charts.size) {
+            chartHashMap[i] = data.charts[i].total.toFloat()
         }
         val values = ArrayList<Entry>()
         for (entry in chartHashMap.entries) {

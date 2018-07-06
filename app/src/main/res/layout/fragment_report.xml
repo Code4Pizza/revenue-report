@@ -44,6 +44,13 @@
             app:ivr_image_icon="@drawable/icon_flag"
             app:ivr_text_title="@string/report_by_item" />
 
+        <com.fr.fbsreport.widget.ItemViewReport
+            android:id="@+id/item_revenue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ivr_image_icon="@drawable/icon_flag"
+            app:ivr_text_title="@string/report_revenue" />
+        
     </LinearLayout>
 
 </ScrollView>

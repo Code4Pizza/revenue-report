@@ -57,4 +57,15 @@ class AppLocalSource(private val appDatabase: AppDatabase) {
     fun updateItemReports(reports: List<ItemReport>) {
         appDatabase.appDao().updateItemReports(reports)
     }
+
+
+    fun getRevenueReport(): Flowable<List<RevenueReport>> {
+        return appDatabase.appDao().getRevenueReports()
+                .filter { it.isNotEmpty() }
+                .toFlowable()
+    }
+
+    fun updateRevenueReports(reports: List<RevenueReport>) {
+        appDatabase.appDao().updateRevenueReports(reports)
+    }
 }

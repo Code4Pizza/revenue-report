@@ -47,6 +47,12 @@ interface AppService {
                       @Query("limit") limit: Int?,
                       @Query("page") page: Int): Flowable<ReportResponse<ItemReport>>
 
+    @GET("/report?type=cash_count")
+    fun getRevenueReport(@Query("branch") branchCode: String,
+                         @Query("filter") filter: String?,
+                         @Query("limit") limit: Int?,
+                         @Query("page") page: Int): Flowable<ReportResponse<RevenueReport>>
+
     @GET("/report/dashboard")
     fun getDashboard(@Query("branch") branchCode: String,
                      @Query("type") type: String,

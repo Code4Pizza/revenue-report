@@ -2,13 +2,13 @@ package com.fr.fbsreport.ui.report.item
 
 import android.os.Bundle
 import com.fr.fbsreport.R
-import com.fr.fbsreport.ui.report.BaseReportTypeFragment
+import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.extension.INDEX_REPORT
-import com.fr.fbsreport.model.BaseReport
 import com.fr.fbsreport.model.ItemReport
 import com.fr.fbsreport.source.network.ErrorUtils
 import com.fr.fbsreport.ui.report.BaseReportAdapter
+import com.fr.fbsreport.ui.report.BaseReportTypeFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_item_report.*
@@ -45,12 +45,11 @@ class ItemReportFragment : BaseReportTypeFragment() {
         }
     }
 
-
     override fun initReportList() {
         super.initReportList()
         adapter = BaseReportAdapter(ItemReportDelegateAdapter())
         adapter.setOnReportClickListener(object : BaseReportAdapter.OnReportClickListener {
-            override fun onReportClick(report: BaseReport) {
+            override fun onReportClick(report: ViewType) {
                 getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, ItemReportDetailFragment.newInstance(report as ItemReport))
             }
         })

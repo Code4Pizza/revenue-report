@@ -1,4 +1,4 @@
-package com.fr.fbsreport.ui.report.bill
+package com.fr.fbsreport.ui.report.item
 
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
@@ -19,16 +19,16 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_base_report_chart.*
-import kotlinx.android.synthetic.main.item_view_section_bill.view.*
+import kotlinx.android.synthetic.main.item_view_section_item.view.*
 import kotlinx.android.synthetic.main.view_bill_section_1.*
 import kotlinx.android.synthetic.main.view_bill_section_2.*
 import kotlinx.android.synthetic.main.view_report_chart.*
 
-class BillReportChartFragment : BaseReportChartFragment() {
+class ItemReportChartFragment : BaseReportChartFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(branchCode: String, date: String) = BillReportChartFragment().apply {
+        fun newInstance(branchCode: String, date: String) = ItemReportChartFragment().apply {
             val bundle = Bundle()
             bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             bundle.putString(EXTRA_FILTER_DATE, date)
@@ -91,7 +91,7 @@ class BillReportChartFragment : BaseReportChartFragment() {
     }
 
     override fun requestData() {
-        requestApi(appRepository.getDashboard(branchCode, "bill", date, null, null)
+        requestApi(appRepository.getDashboard(branchCode, "item", date, null, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
@@ -171,25 +171,15 @@ class BillReportChartFragment : BaseReportChartFragment() {
             ll_section_1.removeAllViews()
             txt_name_section_1.text = name
             for (report in reports) {
-                val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section_bill, ll_section_1, false)
-                sectionView.txt_name.text = report.title
+                val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section_item, ll_section_1, false)
+                sectionView.txt_name.text = report.name
+                sectionView.txt_quantity.text = report.quantity
                 sectionView.txt_sale.text = report.total.toLong().formatWithDot()
                 ll_section_1.addView(sectionView)
             }
             view_underline_section_1.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_1.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
+            txt_view_report_1.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, ItemReportFragment.newInstance(branchCode)) }
         }
-        sections[1]?.apply {
-            ll_section_2.removeAllViews()
-            txt_name_section_2.text = name
-            for (report in reports) {
-                val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section_bill, ll_section_2, false)
-                sectionView.txt_name.text = report.title
-                sectionView.txt_sale.text = report.total.toLong().formatWithDot()
-                ll_section_2.addView(sectionView)
-            }
-            view_underline_section_2.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_2.setOnClickListener { getBaseBottomTabActivity()?.addFragmentTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
-        }
+        view_bill_section_2.visibility = View.GONE
     }
 }

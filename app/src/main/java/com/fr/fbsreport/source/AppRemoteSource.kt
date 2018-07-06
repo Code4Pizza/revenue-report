@@ -63,6 +63,44 @@ class AppRemoteSource(private val appService: AppService) {
                 .map { it.data }
     }
 
+    fun getRevenueReport(branchCode: String, filter: String?, limit: Int?, page: Int): Flowable<List<RevenueReportCombine>> {
+        return appService.getRevenueReport(branchCode, filter, limit, page)
+                .map { it.data }
+                .map {
+                    val pairs = LinkedHashMap<String, ArrayList<RevenueReport>>()
+                    it.forEach {
+                        if (!pairs.containsKey(it.saleDate)) {
+                            pairs[it.saleDate] = ArrayList()
+                            pairs[it.saleDate]?.add(it)
+                        } else {
+                            pairs[it.saleDate]?.add(it)
+                        }
+                    }
+                    val revenueReports = ArrayList<RevenueReportCombine>()
+
+                    pairs.forEach {
+                        val rrc = RevenueReportCombine()
+                        rrc.saleDate = it.key
+                        rrc.shift1 = it.value[0].shift
+                        rrc.shift1Start = it.value[0].shiftStart
+                        rrc.shift1End = it.value[0].shiftEnd
+                        rrc.count1Pax = it.value[0].countPax
+                        rrc.total1Sales = it.value[0].totalSales
+                        rrc.drawer1Total = it.value[0].drawerTotal
+                        rrc.overShortAmount1 = it.value[0].overShortAmount
+                        rrc.shift2 = it.value[1].shift
+                        rrc.shift2Start = it.value[1].shiftStart
+                        rrc.shift2End = it.value[1].shiftEnd
+                        rrc.count2Pax = it.value[1].countPax
+                        rrc.total2Sales = it.value[1].totalSales
+                        rrc.drawer2Total = it.value[1].drawerTotal
+                        rrc.overShortAmount2 = it.value[1].overShortAmount
+                        revenueReports.add(rrc)
+                    }
+                    revenueReports
+                }
+    }
+
     fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Flowable<Dashboard> {
         return appService.getDashboard(branchCode, type, date, startDate, endDate)
                 .map { it.data }
