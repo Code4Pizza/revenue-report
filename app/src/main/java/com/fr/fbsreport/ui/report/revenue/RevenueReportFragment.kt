@@ -7,6 +7,7 @@ import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.extension.FILTER_TYPE_MONTH
 import com.fr.fbsreport.extension.INDEX_REPORT
 import com.fr.fbsreport.model.RevenueReportCombine
+import com.fr.fbsreport.source.network.ErrorUtils
 import com.fr.fbsreport.ui.report.BaseReportAdapter
 import com.fr.fbsreport.ui.report.BaseReportTypeFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -69,29 +70,14 @@ class RevenueReportFragment : BaseReportTypeFragment() {
                     hideLoading()
                     swipe_refresh.isRefreshing = false
                 }
-                .doOnNext {
+                .subscribe({
                     page++
                     adapter.setReports(it)
-                }
-                .subscribe())
+                }, {
+                    ErrorUtils.handleCommonError(context, it)
+                }))
     }
 
     override fun requestMoreReports() {
-//        requestApi(appRepository.getRevenueReport(branchCode, filter, limit, page)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSubscribe {
-//                    reportList.post { adapter.addLoading() }
-//                }
-//                .doFinally {
-//                    isLoading = false
-//                }
-//                .subscribe({
-//                    page++
-//                    adapter.addReports(it)
-//                }, {
-//                    adapter.hideLoading()
-//                    ErrorUtils.handleCommonError(context, it)
-//                }))
     }
 }

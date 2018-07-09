@@ -51,7 +51,7 @@
     <!-- Report -->
     <string name="report_toolbar_title">Báo cáo</string>
     <string name="report_delete">Báo cáo hủy đơn</string>
-    <string name="report_by_bill">Báo cáo theo bill</string>
+    <string name="report_by_bill">Báo cáo theo đơn</string>
     <string name="report_discount">Báo cáo giảm giá</string>
     <string name="report_by_item">Báo cáo theo mặt hàng</string>
     <string name="report_revenue">Báo cáo doanh thu</string>
@@ -64,8 +64,8 @@
     <string name="bill_report_column_tables">Bàn</string>
     <string name="bill_report_column_sales">Doanh thu</string>
 
-    <string name="bill_report_pager_toolbar_title">Báo cáo bill</string>
-    <string name="bill_report_detail_toolbar_title">Chi tiết báo cáo bill</string>
+    <string name="bill_report_pager_toolbar_title">Báo cáo theo đơn</string>
+    <string name="bill_report_detail_toolbar_title">Chi tiết đơn</string>
     <string name="bill_report_detail_order">Số hóa đơn</string>
     <string name="bill_report_detail_date">Ngày lập</string>
     <string name="bill_report_detail_table">Bàn</string>
@@ -79,9 +79,9 @@
     <string name="bill_section_view_report">Xem báo cáo</string>
 
     <!--Delete report-->
-    <string name="delete_report_column_orders">Số Hóa đơn</string>
+    <string name="delete_report_column_orders">Số hóa đơn</string>
     <string name="delete_report_column_total">Tổng tiền</string>
-    <string name="delete_report_column_reason">Lý do hủy</string>
+    <string name="delete_report_column_reason">Lý do</string>
 
     <!--Item report-->
     <string name="item_report_pager_toolbar_title">Báo cáo theo mặt hàng</string>
@@ -108,7 +108,7 @@
     <!--Discount report-->
     <string name="discount_report_column_orders">Số Hóa đơn</string>
     <string name="discount_report_column_discount">Giảm giá</string>
-    <string name="discount_report_column_reason">Lý do giảm giá</string>
+    <string name="discount_report_column_reason">Lý do</string>
 
     <string name="discount_report_item_title_discount">Giảm giá</string>
     <string name="discount_report_item_title_total">Thành tiền</string>

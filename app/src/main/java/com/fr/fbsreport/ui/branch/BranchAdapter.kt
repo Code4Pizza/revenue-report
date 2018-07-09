@@ -22,7 +22,6 @@ class BranchAdapter : BaseRecyclerAdapter<Branch, BranchAdapter.BranchViewHolder
     class BranchViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.item_view_branch)) {
 
         fun bind(branch: Branch) {
-            itemView.txt_code.text = branch.code
             itemView.txt_name.text = branch.name
             itemView.txt_address.text = branch.address
         }
