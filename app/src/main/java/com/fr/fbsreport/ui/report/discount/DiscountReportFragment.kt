@@ -2,11 +2,12 @@ package com.fr.fbsreport.ui.report.discount
 
 import android.os.Bundle
 import com.fr.fbsreport.R
-import com.fr.fbsreport.ui.report.BaseReportTypeFragment
 import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
+import com.fr.fbsreport.extension.toast
 import com.fr.fbsreport.model.DiscountReport
 import com.fr.fbsreport.source.network.ErrorUtils
 import com.fr.fbsreport.ui.report.BaseReportAdapter
+import com.fr.fbsreport.ui.report.BaseReportTypeFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_discount_report.*
@@ -71,8 +72,12 @@ class DiscountReportFragment : BaseReportTypeFragment() {
                     swipe_refresh.isRefreshing = false
                 }
                 .doOnNext {
-                    page++
-                    adapter.setReports(it)
+                    if (it.isEmpty()) {
+                        context?.toast(getString(R.string.text_no_data))
+                    } else {
+                        page++
+                        adapter.setReports(it)
+                    }
                 }
                 .subscribe())
     }

@@ -2,20 +2,22 @@ package com.fr.fbsreport.ui.report
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.TextView
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseFragment
-import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
-import com.fr.fbsreport.extension.androidLazy
+import com.fr.fbsreport.extension.*
 import com.fr.fbsreport.utils.CommonUtils
+import com.fr.fbsreport.widget.FilterTimeDialog
 
 abstract class BaseReportTypeFragment : BaseFragment() {
 
-    protected var filter: String? = null
+    protected var filter: String = FILTER_TYPE_TODAY
     protected var limit: Int? = 20
     protected var page = 1
     protected var isLoading = false
 
     protected lateinit var reportList: RecyclerView
+    protected lateinit var txtFilter: TextView
 
     protected val branchCode: String by androidLazy {
         arguments?.getString(EXTRA_BRANCH_CODE) ?: ""
@@ -32,6 +34,7 @@ abstract class BaseReportTypeFragment : BaseFragment() {
     }
 
     override fun initViews() {
+        initFilterView()
         initReportList()
     }
 
@@ -57,6 +60,31 @@ abstract class BaseReportTypeFragment : BaseFragment() {
                 }
             })
         }
+    }
+
+    private fun initFilterView() {
+        txtFilter = view!!.findViewById(R.id.txt_filter)
+        txtFilter.setOnClickListener {
+            val filterDialog = FilterTimeDialog.newInstance(filter, object : FilterTimeDialog.OnClickFilterDialogListener {
+                override fun onClickFilter(time: String) {
+                    when (time) {
+                        FILTER_TYPE_TODAY -> setupFilter(FILTER_TYPE_TODAY, null, "Hôm nay")
+                        FILTER_TYPE_YESTERDAY -> setupFilter(FILTER_TYPE_YESTERDAY, null, "Hôm qua")
+                        FILTER_TYPE_WEEK -> setupFilter(FILTER_TYPE_WEEK, null, "Tuần")
+                        FILTER_TYPE_MONTH -> setupFilter(FILTER_TYPE_MONTH, null, "Tháng")
+                    }
+                }
+            })
+            getBaseActivity()?.showDialogFragment(filterDialog)
+        }
+    }
+
+    fun setupFilter(filter: String, limit: Int?, textFilter: String) {
+        this.filter = filter
+        this.limit = limit
+        this.page = 0
+        txtFilter.text = textFilter
+        requestReports()
     }
 
     protected abstract fun requestReports()

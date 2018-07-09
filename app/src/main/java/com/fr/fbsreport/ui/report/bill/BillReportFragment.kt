@@ -5,6 +5,7 @@ import com.fr.fbsreport.R
 import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.extension.INDEX_REPORT
+import com.fr.fbsreport.extension.toast
 import com.fr.fbsreport.model.BillReport
 import com.fr.fbsreport.source.network.ErrorUtils
 import com.fr.fbsreport.ui.report.BaseReportAdapter
@@ -79,8 +80,12 @@ class BillReportFragment : BaseReportTypeFragment() {
                     swipe_refresh.isRefreshing = false
                 }
                 .doOnNext {
-                    page++
-                    adapter.setReports(it)
+                    if (it.isEmpty()) {
+                        context?.toast(getString(R.string.text_no_data))
+                    } else {
+                        page++
+                        adapter.setReports(it)
+                    }
                 }
                 .subscribe())
     }

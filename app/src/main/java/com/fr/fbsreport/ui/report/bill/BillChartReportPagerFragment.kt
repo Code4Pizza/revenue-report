@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.fr.fbsreport.R
 import com.fr.fbsreport.extension.*
 import com.fr.fbsreport.ui.report.BaseChartReportPagerFragment
 import kotlinx.android.synthetic.main.fragment_base_chart_report_pager.*
@@ -21,10 +20,6 @@ class BillChartReportPagerFragment : BaseChartReportPagerFragment() {
             bundle.putString(EXTRA_BRANCH_CODE, branchCode)
             arguments = bundle
         }
-    }
-
-    override fun getTitleIdToolbar(): Int? {
-        return R.string.bill_report_pager_toolbar_title
     }
 
     override fun initViews() {

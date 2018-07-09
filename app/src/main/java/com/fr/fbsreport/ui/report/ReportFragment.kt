@@ -25,7 +25,7 @@ class ReportFragment : BaseFragment() {
             arguments = bundle
         }
     }
-
+    
     override fun getLayoutId(): Int {
         return R.layout.fragment_report
     }

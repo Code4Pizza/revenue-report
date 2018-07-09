@@ -16,12 +16,12 @@ import kotlinx.android.synthetic.main.view_filter_dialog.*
 class FilterTimeDialog : BaseDialog() {
 
     private lateinit var listener: OnClickFilterDialogListener
-    private lateinit var time: String
+    private lateinit var filter: String
 
     companion object {
         @JvmStatic
-        fun newInstance(time: String, listener: OnClickFilterDialogListener) = FilterTimeDialog().apply {
-            this.time = time
+        fun newInstance(filter: String, listener: OnClickFilterDialogListener) = FilterTimeDialog().apply {
+            this.filter = filter
             this.listener = listener
         }
     }
@@ -38,7 +38,7 @@ class FilterTimeDialog : BaseDialog() {
         super.onViewCreated(view, savedInstanceState)
         context?.let {
             val colorBlack = ContextCompat.getColor(it, R.color.mediumBlack)
-            when (time) {
+            when (filter) {
                 FILTER_TYPE_TODAY -> {
                     txt_today.setTextColor(colorBlack)
                     txt_today.isEnabled = false

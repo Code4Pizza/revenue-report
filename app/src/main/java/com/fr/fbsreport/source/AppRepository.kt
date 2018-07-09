@@ -86,7 +86,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                 .doOnError { println("Remote error " + Thread.currentThread().name) }
                 .doOnComplete { println("Remote completed " + Thread.currentThread().name) }
 
-        if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
+        //     if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
         return remoteSource
     }
 
@@ -106,7 +106,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                     }
                 }
 
-        if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
+        //   if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
         return remoteSource
     }
 
@@ -126,7 +126,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                     }
                 }
 
-        if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
+        //   if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
         return remoteSource
     }
 
@@ -146,7 +146,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
                     }
                 }
 
-        if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
+        //  if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
         return remoteSource
     }
 
@@ -166,10 +166,10 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
 //                    }
 //                }
 
-       // if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
+        // if (page == 1) return Flowable.concatArrayEager(localSource, remoteSource)
         return remoteSource
     }
-    
+
     fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Flowable<Dashboard> {
         return appRemoteSource.getDashboard(branchCode, type, date, startDate, endDate)
     }

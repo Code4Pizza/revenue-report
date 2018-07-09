@@ -6,6 +6,7 @@ import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
 import com.fr.fbsreport.extension.FILTER_TYPE_MONTH
 import com.fr.fbsreport.extension.INDEX_REPORT
+import com.fr.fbsreport.extension.toast
 import com.fr.fbsreport.model.RevenueReportCombine
 import com.fr.fbsreport.source.network.ErrorUtils
 import com.fr.fbsreport.ui.report.BaseReportAdapter
@@ -71,8 +72,12 @@ class RevenueReportFragment : BaseReportTypeFragment() {
                     swipe_refresh.isRefreshing = false
                 }
                 .subscribe({
-                    page++
-                    adapter.setReports(it)
+                    if (it.isEmpty()) {
+                        context?.toast(getString(R.string.text_no_data))
+                    } else {
+                        page++
+                        adapter.setReports(it)
+                    }
                 }, {
                     ErrorUtils.handleCommonError(context, it)
                 }))
