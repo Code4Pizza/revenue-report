@@ -11,7 +11,7 @@ import kotlin.collections.set
 abstract class BaseReportChartFragment : BaseFragment() {
 
     val branchCode: String by androidLazy { arguments?.getString(EXTRA_BRANCH_CODE) ?: "" }
-    val date: String by androidLazy { arguments?.getString(EXTRA_FILTER_DATE) ?: "" }
+    val filter: String by androidLazy { arguments?.getString(EXTRA_FILTER_DATE) ?: "" }
     var startDay: Int? = null
     var startMonth: Int? = null
     var startYear: Int? = null
@@ -21,7 +21,7 @@ abstract class BaseReportChartFragment : BaseFragment() {
 
     val chartHashMap: LinkedHashMap<Int, Float> by androidLazy {
         val chartMap = LinkedHashMap<Int, Float>()
-        when (date) {
+        when (filter) {
             FILTER_TYPE_TODAY, FILTER_TYPE_YESTERDAY -> for (i in 8..24) {
                 chartMap[i] = 0f
             }

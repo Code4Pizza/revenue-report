@@ -88,13 +88,15 @@ class AppRemoteSource(private val appService: AppService) {
                         rrc.total1Sales = it.value[0].totalSales
                         rrc.drawer1Total = it.value[0].drawerTotal
                         rrc.overShortAmount1 = it.value[0].overShortAmount
-                        rrc.shift2 = it.value[1].shift
-                        rrc.shift2Start = it.value[1].shiftStart
-                        rrc.shift2End = it.value[1].shiftEnd
-                        rrc.count2Pax = it.value[1].countPax
-                        rrc.total2Sales = it.value[1].totalSales
-                        rrc.drawer2Total = it.value[1].drawerTotal
-                        rrc.overShortAmount2 = it.value[1].overShortAmount
+                        if (it.value.size == 2) {
+                            rrc.shift2 = it.value[1].shift
+                            rrc.shift2Start = it.value[1].shiftStart
+                            rrc.shift2End = it.value[1].shiftEnd
+                            rrc.count2Pax = it.value[1].countPax
+                            rrc.total2Sales = it.value[1].totalSales
+                            rrc.drawer2Total = it.value[1].drawerTotal
+                            rrc.overShortAmount2 = it.value[1].overShortAmount
+                        }
                         revenueReports.add(rrc)
                     }
                     revenueReports
@@ -102,7 +104,7 @@ class AppRemoteSource(private val appService: AppService) {
     }
 
     fun getDashboard(branchCode: String, type: String, date: String?, startDate: String?, endDate: String?): Flowable<Dashboard> {
-        return appService.getDashboard(branchCode, type, date, startDate, endDate)
+        return appService.getDashboard(branchCode, date, startDate, endDate)
                 .map { it.data }
     }
 }

@@ -51,7 +51,7 @@ class HomeActivity : BaseBottomTabActivity() {
                 }
             }
         })
-        bottom_bar.setClicked(INDEX_REPORT)
+        bottom_bar.setClicked(INDEX_ANALYTICS)
     }
 
     override fun updateToolbar(baseFragment: BaseFragment) {
@@ -80,5 +80,12 @@ class HomeActivity : BaseBottomTabActivity() {
 //            toolbar.txt_left.visibility = View.GONE
 //        }
         toolbar.setOnClickToolbarListener(baseFragment)
+    }
+
+    fun switchTab(index: Int, fragment: BaseFragment) {
+        bottom_bar.setClicked(index)
+        // Force click to remove all current tab in that index, back to first fragment
+        bottom_bar.setClicked(index)
+        addFragmentTab(index, fragment)
     }
 }

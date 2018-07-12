@@ -4,28 +4,28 @@ import com.fr.fbsreport.base.ViewType
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class DataResponse<T>(var data: T)
+data class DataResponse<T>(val data: T)
 
 data class ReportResponse<T : ViewType>(
-        var data: List<T>,
-        var meta: Meta?
+        val data: List<T>,
+        val meta: Meta?
 )
 
 data class Meta(
         @SerializedName("total_page")
-        var totalPage: Long,
-        var pagination: Pagination
+        val totalPage: Long,
+        val pagination: Pagination
 )
 
 data class Pagination(
-        var total: Long,
-        var count: Int,
+        val total: Long,
+        val count: Int,
         @SerializedName("per_page")
-        var perPage: Int,
+        val perPage: Int,
         @SerializedName("current_page")
-        var currentPage: Int,
+        val currentPage: Int,
         @SerializedName("total_pages")
-        var totalPages: Int)
+        val totalPages: Int)
 
 data class Dashboard(
         @SerializedName("total_money")
@@ -35,9 +35,9 @@ data class Dashboard(
         val charts: ArrayList<Chart>,
         val sections: ArrayList<Section?>)
 
-data class Chart(var time: String, var total: String)
+data class Chart(val time: String, val total: String)
 
-data class Section(val name: String, var reports: ArrayList<ReportChart>)
+data class Section(val name: String, val reports: ArrayList<ReportChart>, val type : String)
 
 data class ReportChart(
         // For bill

@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/view_bill_section_1"
+    android:id="@+id/view_bill_section_4"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/spacing_small"
@@ -20,11 +20,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:paddingStart="@dimen/spacing_small"
-            android:paddingEnd="@dimen/spacing_small">
+            android:paddingEnd="@dimen/spacing_small"
+            android:paddingStart="@dimen/spacing_small">
 
             <TextView
-                android:id="@+id/txt_name_section_1"
+                android:id="@+id/txt_name_section_4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -32,10 +32,10 @@
                 android:gravity="center_vertical"
                 android:textColor="@color/mediumBlack"
                 android:textSize="15sp"
-                tools:text="Doanh số theo ca" />
+                tools:text="Doanh số theo bàn" />
 
             <TextView
-                android:id="@+id/txt_view_report_1"
+                android:id="@+id/txt_view_report_4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/sf_semibold"
@@ -46,14 +46,14 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/view_underline_section_1"
+            android:id="@+id/view_underline_section_4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="@dimen/spacing_small"
             android:background="@color/borderGray" />
 
         <LinearLayout
-            android:id="@+id/ll_section_1"
+            android:id="@+id/ll_section_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />

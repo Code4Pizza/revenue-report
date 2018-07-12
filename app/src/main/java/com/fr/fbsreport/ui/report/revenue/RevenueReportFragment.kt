@@ -4,7 +4,6 @@ import android.os.Bundle
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.ViewType
 import com.fr.fbsreport.extension.EXTRA_BRANCH_CODE
-import com.fr.fbsreport.extension.FILTER_TYPE_MONTH
 import com.fr.fbsreport.extension.INDEX_REPORT
 import com.fr.fbsreport.extension.toast
 import com.fr.fbsreport.model.RevenueReportCombine
@@ -60,7 +59,6 @@ class RevenueReportFragment : BaseReportTypeFragment() {
     }
 
     override fun requestReports() {
-        filter = FILTER_TYPE_MONTH
         requestApi(appRepository.getRevenueReport(branchCode, filter, limit, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

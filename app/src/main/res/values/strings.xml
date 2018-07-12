@@ -8,6 +8,7 @@
     <string name="action_cancel">Hủy</string>
     <string name="action_done">Xong</string>
     <string name="action_login">Đăng nhập</string>
+    <string name="action_logout">Đăng xuất</string>
     <string name="action_confirm">OK</string>
 
     <string name="text_no_data">Không có dữ liệu :(</string>

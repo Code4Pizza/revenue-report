@@ -55,7 +55,6 @@ interface AppService {
 
     @GET("/report/dashboard")
     fun getDashboard(@Query("branch") branchCode: String,
-                     @Query("type") type: String,
                      @Query("date") date: String?,
                      @Query("start_date") startDate: String?,
                      @Query("end_date") endDate: String?): Flowable<DataResponse<Dashboard>>

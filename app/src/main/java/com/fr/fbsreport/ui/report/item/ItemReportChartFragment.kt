@@ -67,7 +67,7 @@ class ItemReportChartFragment : BaseReportChartFragment() {
                 }
             }
 
-            xAxis.setLabelCount(when (date) {
+            xAxis.setLabelCount(when (filter) {
                 FILTER_TYPE_YESTERDAY, FILTER_TYPE_TODAY -> 9
                 FILTER_TYPE_WEEK -> 7
                 FILTER_TYPE_MONTH -> 12
@@ -76,7 +76,7 @@ class ItemReportChartFragment : BaseReportChartFragment() {
             xAxis.setDrawGridLines(false)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.valueFormatter = IAxisValueFormatter { value, _ ->
-                when (date) {
+                when (filter) {
                     FILTER_TYPE_YESTERDAY, FILTER_TYPE_TODAY -> String.format("%sh", Math.round(value).toString()) // xVal is a string array
                     FILTER_TYPE_WEEK -> {
                         val dayOfWeek = Math.round(value)
@@ -91,7 +91,7 @@ class ItemReportChartFragment : BaseReportChartFragment() {
     }
 
     override fun requestData() {
-        requestApi(appRepository.getDashboard(branchCode, "item", date, null, null)
+        requestApi(appRepository.getDashboard(branchCode, "item", filter, null, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
@@ -111,7 +111,7 @@ class ItemReportChartFragment : BaseReportChartFragment() {
     }
 
     override fun fillChart(data: Dashboard) {
-        when (date) {
+        when (filter) {
             FILTER_TYPE_TODAY, FILTER_TYPE_YESTERDAY -> {
                 for (i in 0 until data.charts.size) {
                     val chart = data.charts[i]

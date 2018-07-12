@@ -1,5 +1,6 @@
 package com.fr.fbsreport.ui.branch
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.fr.fbsreport.R
 import com.fr.fbsreport.base.BaseActivity
@@ -8,12 +9,15 @@ import com.fr.fbsreport.extension.androidLazy
 import com.fr.fbsreport.model.Branch
 import com.fr.fbsreport.source.network.ErrorUtils
 import com.fr.fbsreport.ui.home.HomeActivity
+import com.fr.fbsreport.ui.main.MainActivity
+import com.fr.fbsreport.widget.AppDialog
+import com.fr.fbsreport.widget.AppToolbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_branch.*
 import java.util.concurrent.TimeUnit
 
-class BranchActivity : BaseActivity() {
+class BranchActivity : BaseActivity(), AppDialog.OnClickAppDialogListener {
 
     private val branchAdapter by androidLazy { BranchAdapter() }
 
@@ -22,9 +26,24 @@ class BranchActivity : BaseActivity() {
     }
 
     override fun initViews() {
+        initToolbar()
         initSwipeRefresh()
         initBranchList()
         requestBranches()
+    }
+
+    private fun initToolbar() {
+        toolbar.setOnClickToolbarListener(object : AppToolbar.OnClickToolbarListener {
+            override fun onItemLeft() {
+                showDialogFragment(AppDialog.newInstance("Đăng xuất", "Bạn có chắc muốn đăng xuất tài khoản này ?"))
+            }
+        })
+    }
+
+    override fun onClickConfirm() {
+        finishAffinity()
+        userPreference.signOut()
+        startActivity(Intent(this@BranchActivity, MainActivity::class.java))
     }
 
     private fun initSwipeRefresh() {

@@ -14,6 +14,9 @@ const val FIELD_CLIENT_SECRET = "client_secret"
 const val VIEW_TYPE_ITEM = 0
 const val VIEW_TYPE_LOADING = 1
 
+const val EXTRA_DIALOG_TITLE = "EXTRA_DIALOG_TITLE"
+const val EXTRA_DIALOG_MESSAGE = "EXTRA_DIALOG_MESSAGE"
+
 const val EXTRA_BRANCH_CODE = "EXTRA_BRANCH_CODE"
 const val EXTRA_FILTER_DATE = "EXTRA_FILTER_DATE"
 const val EXTRA_ITEM_REPORT = "EXTRA_ITEM_REPORT"
@@ -24,4 +27,3 @@ const val FILTER_TYPE_YESTERDAY = "yesterday"
 const val FILTER_TYPE_WEEK = "week"
 const val FILTER_TYPE_MONTH = "month"
 const val FILTER_TYPE_CUSTOM = "custom"
-

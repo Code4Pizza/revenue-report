@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/spacing_small"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    app:cardElevation="2dp">
+    android:foreground="?android:attr/selectableItemBackground">
 
     <RelativeLayout
+        android:id="@+id/item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_small">
@@ -39,7 +37,7 @@
             android:fontFamily="@font/sf_regular"
             android:maxLines="1"
             android:textColor="@color/lightGray"
-            android:textSize="15sp"
+            android:textSize="14sp"
             tools:text="39 Tran Van Cao Street, Ho Chi Minh City" />
 
         <ImageView
@@ -53,4 +51,12 @@
 
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+    <View
+        android:id="@+id/view_underline"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/item"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:background="@color/brightGray" />
+</RelativeLayout>
+

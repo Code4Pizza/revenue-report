@@ -18,6 +18,6 @@ class ForgotPasswordActivity : BaseActivity() {
                 finish()
             }
         })
-        btn_done.setOnClickListener { showDialogFragment(AppDialog.newInstance()) }
+        btn_done.setOnClickListener { showDialogFragment(AppDialog.newInstance("","")) }
     }
 }

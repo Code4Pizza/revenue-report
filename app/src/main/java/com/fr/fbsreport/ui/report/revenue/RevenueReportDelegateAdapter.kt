@@ -29,8 +29,8 @@ class RevenueReportDelegateAdapter : ViewTypeDelegateAdapter {
 
         fun bind(itemReport: RevenueReportCombine) {
             itemView.txt_sale_date.text = itemReport.saleDate
-            itemView.txt_shift_1_time.text = itemReport.shift1Start + "-" + itemReport.shift1End
-            itemView.txt_shift_2_time.text = itemReport.shift2Start + "-" + itemReport.shift2End
+            itemView.txt_shift_1_time.text = String.format("%s - %s", itemReport.shift1Start, itemReport.shift1End).trim()
+            itemView.txt_shift_2_time.text = String.format("%s - %s", itemReport.shift2Start, itemReport.shift2End).trim()
             itemView.txt_shift_1_sales.text = itemReport.total1Sales.formatWithDot()
             itemView.txt_shift_2_sales.text = itemReport.total2Sales.formatWithDot()
         }

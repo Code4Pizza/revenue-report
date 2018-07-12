@@ -8,9 +8,6 @@ import com.fr.fbsreport.extension.*
 import com.fr.fbsreport.ui.report.BaseChartReportPagerFragment
 import kotlinx.android.synthetic.main.fragment_base_chart_report_pager.*
 
-/**
- * Created by framgia on 06/07/2018.
- */
 class BillChartReportPagerFragment : BaseChartReportPagerFragment() {
 
     companion object {
@@ -27,7 +24,6 @@ class BillChartReportPagerFragment : BaseChartReportPagerFragment() {
         view_pager.adapter = pagerAdapter
         view_pager.offscreenPageLimit = 4
         tab_layout.setupWithViewPager(view_pager)
-        showLoading()
         view_pager.setCurrentItem(1, true)
     }
 

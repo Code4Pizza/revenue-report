@@ -25,7 +25,7 @@ class AppRepository(private val appRemoteSource: AppRemoteSource, private val ap
     fun login(email: String, password: String): Single<TokenModel> {
         return appRemoteSource.login(email, password)
     }
-
+    
     fun getUserInfo(): Single<User> {
         return appRemoteSource.getUserInfo()
     }

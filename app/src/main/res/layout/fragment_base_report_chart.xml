@@ -30,6 +30,12 @@
 
                 <include layout="@layout/view_bill_section_2" />
 
+                <include layout="@layout/view_bill_section_3" />
+
+                <include layout="@layout/view_bill_section_4" />
+
+                <include layout="@layout/view_bill_section_5" />
+
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
