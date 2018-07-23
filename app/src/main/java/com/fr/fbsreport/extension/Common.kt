@@ -98,13 +98,20 @@ fun String.displayDate(): String {
     }
 }
 
+fun String.getNumber(): Long {
+    if (!this.contains(".")) {
+        return this.toLong();
+    }
+    return this.replace(Regex(".?0*$"), "").toLong()
+}
+
 fun Any.formatWithDot(): String {
     return try {
         val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
         val symbols = formatter.decimalFormatSymbols
         symbols.groupingSeparator = '.'
         formatter.decimalFormatSymbols = symbols
-        String.format("%sđ", formatter.format(this))
+        String.format("%sđ", formatter.format(this.toString().getNumber()))
     } catch (e: Exception) {
         throw Throwable("Number invalid")
     }

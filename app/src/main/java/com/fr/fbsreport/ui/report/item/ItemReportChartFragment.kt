@@ -174,7 +174,7 @@ class ItemReportChartFragment : BaseReportChartFragment() {
                 val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section_item, ll_section_1, false)
                 sectionView.txt_name.text = report.name
                 sectionView.txt_quantity.text = report.quantity
-                sectionView.txt_sale.text = report.total.toLong().formatWithDot()
+                sectionView.txt_sale.text = report.total.formatWithDot()
                 ll_section_1.addView(sectionView)
             }
             view_underline_section_1.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE

@@ -119,7 +119,7 @@ class BillReportChartFragment : BaseReportChartFragment() {
                 .doOnSubscribe {
                     if (!swipe_refresh.isRefreshing) view_data.visibility = View.GONE
                 }
-                .doAfterTerminate {
+                .doFinally {
                     getBaseActivity()?.hideLoading()
                     swipe_refresh.isRefreshing = false
                 }
@@ -158,7 +158,7 @@ class BillReportChartFragment : BaseReportChartFragment() {
             FILTER_TYPE_MONTH -> {
                 for (i in 0 until data.charts.size) {
                     val chart = data.charts[i]
-                    val dayOfMonth = chart.time.getDayOfMonth()
+                    val dayOfMonth = chart.time.toInt()
                     chartHashMap[dayOfMonth] = chart.total.toFloat()
                 }
             }
@@ -192,67 +192,93 @@ class BillReportChartFragment : BaseReportChartFragment() {
     }
 
     private fun showSections(sections: ArrayList<Section?>) {
+        // Doanh so theo ca
         sections[0]?.apply {
             ll_section_1.removeAllViews()
             txt_name_section_1.text = name
             for (report in reports) {
                 val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section_bill, ll_section_1, false)
                 sectionView.txt_name.text = report.title
-                sectionView.txt_sale.text = report.total.toLong().formatWithDot()
+                sectionView.txt_sale.text = report.total.formatWithDot()
                 ll_section_1.addView(sectionView)
             }
             view_underline_section_1.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_1.setOnClickListener { (getBaseBottomTabActivity() as HomeActivity).switchTab(INDEX_REPORT, RevenueReportFragment.newInstance(branchCode)) }
+            txt_view_report_1.setOnClickListener {
+                (getBaseBottomTabActivity() as HomeActivity).switchTab(INDEX_REPORT, RevenueReportFragment.newInstance(branchCode))
+                scrollToTop()
+            }
         }
+        // Top 5 mat hang ban chay
         sections[1]?.apply {
             ll_section_2.removeAllViews()
             txt_name_section_2.text = name
             for (report in reports) {
                 val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section_bill, ll_section_2, false)
-                sectionView.txt_name.text = report.title
-                sectionView.txt_sale.text = report.total.toLong().formatWithDot()
+                sectionView.txt_name.text = report.name
+                sectionView.txt_sale.text = report.total.formatWithDot()
                 ll_section_2.addView(sectionView)
             }
             view_underline_section_2.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_2.setOnClickListener { (getBaseBottomTabActivity() as HomeActivity).switchTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode)) }
+            txt_view_report_2.setOnClickListener {
+                (getBaseBottomTabActivity() as HomeActivity).switchTab(INDEX_REPORT, BillReportFragment.newInstance(branchCode))
+                scrollToTop()
+            }
         }
+        // Top 5 hoa don giam gia
         sections[2]?.apply {
             ll_section_3.removeAllViews()
             txt_name_section_3.text = name
             for (report in reports) {
                 val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section_bill, ll_section_3, false)
-                if (type == "item") {
-                    sectionView.txt_name.text = report.name
-                    sectionView.txt_sale.text = report.total.toLong().formatWithDot()
-                }
+                sectionView.txt_name.text = report.saleNum
+                sectionView.txt_sale.text = report.discount.formatWithDot()
                 ll_section_3.addView(sectionView)
             }
             view_underline_section_3.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_3.setOnClickListener { (getBaseBottomTabActivity() as HomeActivity).switchTab(INDEX_REPORT, ItemReportFragment.newInstance(branchCode)) }
+            txt_view_report_3.setOnClickListener {
+                (getBaseBottomTabActivity() as HomeActivity).switchTab(INDEX_REPORT, ItemReportFragment.newInstance(branchCode))
+                scrollToTop()
+            }
         }
+        // Top 5 hoa don huy
         sections[3]?.apply {
             ll_section_4.removeAllViews()
             txt_name_section_4.text = name
             for (report in reports) {
                 val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section_bill, ll_section_4, false)
-                sectionView.txt_name.text = report.title
-                sectionView.txt_sale.text = report.total.toLong().formatWithDot()
+                sectionView.txt_name.text = report.saleNum
+                sectionView.txt_sale.text = report.reason
                 ll_section_4.addView(sectionView)
             }
             view_underline_section_4.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_4.setOnClickListener { (getBaseBottomTabActivity() as HomeActivity).switchTab(INDEX_REPORT, DeleteReportFragment.newInstance(branchCode)) }
+            txt_view_report_4.setOnClickListener {
+                (getBaseBottomTabActivity() as HomeActivity).switchTab(INDEX_REPORT, DeleteReportFragment.newInstance(branchCode))
+                scrollToTop()
+            }
         }
+        // Top 5 hoa don
         sections[4]?.apply {
             ll_section_5.removeAllViews()
             txt_name_section_5.text = name
             for (report in reports) {
                 val sectionView = LayoutInflater.from(context).inflate(R.layout.item_view_section_bill, ll_section_5, false)
-                sectionView.txt_name.text = report.title
-                sectionView.txt_sale.text = report.total.toLong().formatWithDot()
+                sectionView.txt_name.text = report.saleNum
+                sectionView.txt_sale.text = report.total.formatWithDot()
                 ll_section_5.addView(sectionView)
             }
             view_underline_section_5.visibility = if (reports.isEmpty()) View.GONE else View.VISIBLE
-            txt_view_report_5.setOnClickListener { (getBaseBottomTabActivity() as HomeActivity).switchTab(INDEX_REPORT, DiscountReportFragment.newInstance(branchCode)) }
+            txt_view_report_5.setOnClickListener {
+                (getBaseBottomTabActivity() as HomeActivity).switchTab(INDEX_REPORT, DiscountReportFragment.newInstance(branchCode))
+                scrollToTop()
+            }
+        }
+    }
+
+    fun scrollToTop() {
+        view_data.post {
+            view_data.scrollTo(0, 0);
+            view_data.pageScroll(View.FOCUS_UP);
+            view_data.smoothScrollTo(0, 0)
         }
     }
 }

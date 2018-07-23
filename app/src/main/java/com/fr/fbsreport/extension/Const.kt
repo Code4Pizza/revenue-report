@@ -27,3 +27,6 @@ const val FILTER_TYPE_YESTERDAY = "yesterday"
 const val FILTER_TYPE_WEEK = "week"
 const val FILTER_TYPE_MONTH = "month"
 const val FILTER_TYPE_CUSTOM = "custom"
+
+const val VIEW_TEST_1 = 0
+const val VIEW_TEST_2 = 1
